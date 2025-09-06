@@ -5,6 +5,7 @@ window.allQuestions = [
   { question: "Wie heißt der Kontinent, auf dem Sturmwind ist?", answers: ["Kalimdor","Östliche Pestländer","Östliches Königreich","Azeroth"],correct: "Östliches Königreich" }
 ];
 
+
 // Zustandsvariablen
 let questions = [];
 let currentQuestion = 0;
@@ -36,14 +37,12 @@ window.startCountdown = function() {
   score = 0;
   remainingTime = totalTime;
 
-  // defensive: prüfe, ob window.allQuestions existiert
   if (!window.allQuestions || !Array.isArray(window.allQuestions) || window.allQuestions.length === 0) {
-    console.error("Fehler: allQuestions ist nicht definiert oder leer. Prüfe quiz.js und Lade-Pfad.");
+    console.error("Fragen-Pool nicht gefunden.");
     alert("Fehler: Fragen-Pool nicht gefunden. Schau in die Konsole.");
     return;
   }
 
-  // 10 zufällige Fragen auswählen
   questions = pickRandomQuestions(window.allQuestions, 10);
 
   const container = document.getElementById("quiz-container");
@@ -61,8 +60,9 @@ window.startCountdown = function() {
   },1000);
 };
 
+// Gesamt-Rückwärts-Timer starten (defensive)
 function startTotalTimer(){
-  if(totalTimerInterval) return;
+  if(totalTimerInterval) return; // läuft schon
   totalTimerInterval = setInterval(()=>{
     remainingTime--;
     const el = document.getElementById("total-time");
@@ -76,6 +76,15 @@ function startTotalTimer(){
   },1000);
 }
 
+// Gesamt-Timer pausieren (stoppen, aber verbleibenden Wert behalten)
+function pauseTotalTimer(){
+  if(totalTimerInterval){
+    clearInterval(totalTimerInterval);
+    totalTimerInterval = null;
+  }
+}
+
+// Frage laden
 function loadQuestion(){
   if(currentQuestion >= questions.length){ showEnd(); return; }
   const q = questions[currentQuestion];
@@ -106,10 +115,13 @@ function loadQuestion(){
     document.getElementById("answers").appendChild(div);
   });
 
+  // Einzel-Frage-Timer starten
   startTimer();
+  // Gesamt-Timer nur starten/resumen wenn nicht bereits aktiv
   startTotalTimer();
 }
 
+// Einzel-Frage-Timer
 function startTimer(){
   clearInterval(timerInterval);
   timeLeft = 15;
@@ -130,8 +142,13 @@ function startTimer(){
   },1000);
 }
 
+// Antwort prüfen — HIER pausieren wir den Gesamt-Timer
 function checkAnswer(selected, auto=false){
+  // Frage-Timer stoppen
   clearInterval(timerInterval);
+  // Gesamt-Timer pausieren, damit er während der Antwortanzeige nicht weiterläuft
+  pauseTotalTimer();
+
   const q = questions[currentQuestion];
   const result = document.getElementById("result");
   const answers = document.querySelectorAll(".answer-label");
@@ -158,9 +175,22 @@ function checkAnswer(selected, auto=false){
 
   const nextBtnContainer = document.getElementById("next-btn-container");
   if(nextBtnContainer){
-    if(currentQuestion < questions.length-1) nextBtnContainer.innerHTML = `<button onclick="nextQuestion()">Nächste Frage ➡️</button>`;
-    else nextBtnContainer.innerHTML = `<button onclick="showEnd()">Quiz beenden</button>`;
+    if(currentQuestion < questions.length-1) nextBtnContainer.innerHTML = `<button id="next-btn">Nächste Frage ➡️</button>`;
+    else nextBtnContainer.innerHTML = `<button id="end-btn">Quiz beenden</button>`;
   }
+
+  // Verbinde Buttons (DOM wurde neu erstellt)
+  const nb = document.getElementById("next-btn");
+  if(nb) nb.onclick = function(){
+    // Beim Weiterklicken: Gesamt-Timer wieder starten und zur nächsten Frage springen
+    startTotalTimer();
+    nextQuestion();
+  };
+  const eb = document.getElementById("end-btn");
+  if(eb) eb.onclick = function(){
+    // beim Beenden ebenfalls totalTimer stoppen endgültig
+    showEnd();
+  };
 }
 
 function nextQuestion(){
