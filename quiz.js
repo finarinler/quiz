@@ -30,6 +30,50 @@ function pickRandomQuestions(all, n){
   return shuffleArray([...all]).slice(0,n);
 }
 
+// ----- NEU: Farbinterpolations-Funktion -----
+// Input: percent in [0,100] (Rest-Prozent der Frage-Timer)
+// Output: CSS hex color string like "#rrggbb"
+function lerp(a, b, t) {
+  return Math.round(a + (b - a) * t);
+}
+function rgbToHex(r,g,b){
+  return "#" + [r,g,b].map(v => v.toString(16).padStart(2,'0')).join('');
+}
+function hexToRgb(hex){
+  const h = hex.replace('#','');
+  return [parseInt(h.substring(0,2),16), parseInt(h.substring(2,4),16), parseInt(h.substring(4,6),16)];
+}
+
+// Farben: grün (viel Zeit), gelb (mittig), rot (wenig Zeit)
+const COLOR_GREEN = "#6fba3c";   // viel Zeit
+const COLOR_YELLOW = "#ffe88c";  // mittel
+const COLOR_RED = "#d42e2e";     // wenig
+
+function getTimerColor(percent){
+  // percent: 0..100
+  const p = Math.max(0, Math.min(100, percent)) / 100;
+  if (p > 0.5) {
+    // interpolate yellow -> green (p=0.5 => yellow, p=1 => green)
+    const t = (p - 0.5) / 0.5; // 0..1
+    const [yr, yg, yb] = hexToRgb(COLOR_YELLOW);
+    const [gr, gg, gb] = hexToRgb(COLOR_GREEN);
+    const r = lerp(yr, gr, t);
+    const g = lerp(yg, gg, t);
+    const b = lerp(yb, gb, t);
+    return rgbToHex(r,g,b);
+  } else {
+    // interpolate red -> yellow (p=0 => red, p=0.5 => yellow)
+    const t = p / 0.5; // 0..1
+    const [rr, rg, rb] = hexToRgb(COLOR_RED);
+    const [yr, yg, yb] = hexToRgb(COLOR_YELLOW);
+    const r = lerp(rr, yr, t);
+    const g = lerp(rg, yg, t);
+    const b = lerp(rb, yb, t);
+    return rgbToHex(r,g,b);
+  }
+}
+// -------------------------------------------
+
 // globale Start-Funktion
 window.startCountdown = function() {
   // reset
@@ -60,9 +104,8 @@ window.startCountdown = function() {
   },1000);
 };
 
-// Gesamt-Rückwärts-Timer starten (defensive)
 function startTotalTimer(){
-  if(totalTimerInterval) return; // läuft schon
+  if(totalTimerInterval) return;
   totalTimerInterval = setInterval(()=>{
     remainingTime--;
     const el = document.getElementById("total-time");
@@ -76,7 +119,6 @@ function startTotalTimer(){
   },1000);
 }
 
-// Gesamt-Timer pausieren (stoppen, aber verbleibenden Wert behalten)
 function pauseTotalTimer(){
   if(totalTimerInterval){
     clearInterval(totalTimerInterval);
@@ -84,7 +126,6 @@ function pauseTotalTimer(){
   }
 }
 
-// Frage laden
 function loadQuestion(){
   if(currentQuestion >= questions.length){ showEnd(); return; }
   const q = questions[currentQuestion];
@@ -115,13 +156,10 @@ function loadQuestion(){
     document.getElementById("answers").appendChild(div);
   });
 
-  // Einzel-Frage-Timer starten
   startTimer();
-  // Gesamt-Timer nur starten/resumen wenn nicht bereits aktiv
   startTotalTimer();
 }
 
-// Einzel-Frage-Timer
 function startTimer(){
   clearInterval(timerInterval);
   timeLeft = 15;
@@ -129,24 +167,38 @@ function startTimer(){
   const timeText = document.getElementById("time-text");
   if (timerBar) timerBar.style.width = "100%";
   if (timeText) timeText.textContent = `${timeLeft}s`;
+
+  // initial Farbe setzen
+  if (timerBar) {
+    const col = getTimerColor(100);
+    timerBar.style.background = `linear-gradient(90deg, ${col}, ${col})`;
+  }
+
   timerInterval = setInterval(()=>{
     timeLeft--;
     let percent = (timeLeft/15)*100;
-    if (timerBar) timerBar.style.width = percent + "%";
-    if (timeText) timeText.textContent = `${timeLeft}s`;
+    if (percent < 0) percent = 0;
+    const timerBarLocal = document.getElementById("timer-bar");
+    const timeTextLocal = document.getElementById("time-text");
+
+    if (timerBarLocal) {
+      timerBarLocal.style.width = percent + "%";
+      // Farbe basierend auf Prozent setzen
+      const color = getTimerColor(percent);
+      timerBarLocal.style.background = `linear-gradient(90deg, ${color}, ${color})`;
+    }
+    if (timeTextLocal) timeTextLocal.textContent = `${timeLeft}s`;
     if(timeLeft <=0){
       clearInterval(timerInterval);
-      if (timeText) timeText.textContent="0s";
+      if (timeTextLocal) timeTextLocal.textContent="0s";
       checkAnswer(null,true);
     }
   },1000);
 }
 
-// Antwort prüfen — HIER pausieren wir den Gesamt-Timer
 function checkAnswer(selected, auto=false){
-  // Frage-Timer stoppen
   clearInterval(timerInterval);
-  // Gesamt-Timer pausieren, damit er während der Antwortanzeige nicht weiterläuft
+  // Pause Gesamt-Timer während Antwort-Anzeige
   pauseTotalTimer();
 
   const q = questions[currentQuestion];
@@ -175,20 +227,17 @@ function checkAnswer(selected, auto=false){
 
   const nextBtnContainer = document.getElementById("next-btn-container");
   if(nextBtnContainer){
-    if(currentQuestion < questions.length-1) nextBtnContainer.innerHTML = `<button id="next-btn">Nächste Frage ➡️</button>`;
+    if(currentQuestion < questions.length-1) nextBtnContainer.innerHTML = `<button id="next-btn">Nächste Frage</button>`;
     else nextBtnContainer.innerHTML = `<button id="end-btn">Quiz beenden</button>`;
   }
 
-  // Verbinde Buttons (DOM wurde neu erstellt)
   const nb = document.getElementById("next-btn");
   if(nb) nb.onclick = function(){
-    // Beim Weiterklicken: Gesamt-Timer wieder starten und zur nächsten Frage springen
-    startTotalTimer();
+    startTotalTimer(); // resume total timer
     nextQuestion();
   };
   const eb = document.getElementById("end-btn");
   if(eb) eb.onclick = function(){
-    // beim Beenden ebenfalls totalTimer stoppen endgültig
     showEnd();
   };
 }
@@ -204,7 +253,7 @@ function showEnd(){
     totalTimerInterval = null;
   }
   document.getElementById("quiz-container").innerHTML=`
-    <h2>Quiz beendet! 🎉</h2>
+    <h2>Quiz beendet!</h2>
     <p>Dein Punktestand: <strong style="color:#ffe88c">${score}</strong></p>
     <p>Restzeit: ${remainingTime}s</p>
   `;
