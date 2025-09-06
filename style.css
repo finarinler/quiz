@@ -47,10 +47,8 @@ button:hover {
   box-shadow: 0 0 15px #ffe88c;
 }
 
-/* Labels für klickbare Antworten */
+/* Antworten als zentrierte Boxen */
 .answer-label {
-  display: flex;
-  align-items: center;
   background: rgba(50,50,50,0.85);
   margin: 8px 0;
   padding: 12px;
@@ -59,6 +57,9 @@ button:hover {
   border: 1px solid #bfa259;
   text-shadow: 1px 1px 2px #000;
   transition: all 0.3s ease;
+  text-align: center;        /* Text zentriert */
+  font-size: 18px;
+  font-weight: bold;
 }
 
 .answer-label:hover {
@@ -66,28 +67,14 @@ button:hover {
   box-shadow: 0 0 10px #ffe88c;
 }
 
-/* Radio-Buttons sichtbar machen */
-.answer-label input[type="radio"] {
-  margin-right: 10px;
-  cursor: pointer;
-}
-
 .correct { 
   background: rgba(50,80,30,0.9) !important; 
   border: 2px solid #6fba3c; 
-  animation: glow 0.8s ease-in-out;
 }
 
 .wrong { 
   background: rgba(80,30,30,0.9) !important; 
   border: 2px solid #d42e2e; 
-  animation: glow 0.8s ease-in-out;
-}
-
-@keyframes glow {
-  0% { box-shadow: 0 0 5px #fff; }
-  50% { box-shadow: 0 0 20px #ffe88c; }
-  100% { box-shadow: 0 0 5px #fff; }
 }
 
 .progress-bar-container {
