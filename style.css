@@ -57,7 +57,7 @@ button:hover {
   border: 1px solid #bfa259;
   text-shadow: 1px 1px 2px #000;
   transition: all 0.3s ease;
-  text-align: center;        /* Text zentriert */
+  text-align: center;
   font-size: 18px;
   font-weight: bold;
 }
@@ -108,11 +108,13 @@ button:hover {
   border:1px solid #bfa259;
 }
 
+/* Die Timer-Bar selbst: Breite schrumpft, Hintergrundfarbe wird per JS gesetzt.
+   Übergang für Farbe hinzugefügt, damit der Farbwechsel weich wirkt. */
 .timer-bar {
   height:100%;
-  background:#d42e2e;
   width:100%;
-  transition:width 1s linear;
+  background: linear-gradient(90deg, #6fba3c, #6fba3c); /* default grün */
+  transition: width 1s linear, background 0.25s linear;
 }
 
 .time-text {
