@@ -6,56 +6,67 @@ const questions = [
 ];
 
 // Variablen
-let questions = [], currentQuestion = 0, score = 0, timeLeft = 15;
-let timerInterval = null, totalTime = 150, remainingTime = totalTime, totalTimerInterval = null;
+let questions = [];  // <-- als let deklarieren, kann später überschrieben werden
+let currentQuestion = 0;
+let score = 0;
+let timeLeft = 15;
+let timerInterval = null;
+
+let totalTime = 150; // 10 Fragen x 15 Sekunden
+let remainingTime = totalTime;
+let totalTimerInterval = null;
 
 // Hilfsfunktionen
 function shuffleArray(array) {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
+  for (let i = array.length -1; i>0; i--){
+    const j = Math.floor(Math.random() * (i+1));
     [array[i], array[j]] = [array[j], array[i]];
   }
   return array;
 }
 
-function pickRandomQuestions(allQuestions, n) {
-  return shuffleArray([...allQuestions]).slice(0, n);
+function pickRandomQuestions(allQuestions, n){
+  return shuffleArray([...allQuestions]).slice(0,n);
 }
 
-// Countdown starten und Fragen auswählen
+// Countdown starten
 function startCountdown() {
   questions = pickRandomQuestions(allQuestions, 10);
   const container = document.getElementById("quiz-container");
   container.innerHTML = `<h2>Bereit?</h2><div class="countdown" id="countdown">3</div>`;
   let countdown = 3;
   const countdownElement = document.getElementById("countdown");
-  const interval = setInterval(() => {
+  const interval = setInterval(()=>{
     countdown--;
     if(countdown>0) countdownElement.textContent = countdown;
-    else { clearInterval(interval); countdownElement.textContent="Los!"; setTimeout(loadQuestion,1000);}
+    else {
+      clearInterval(interval);
+      countdownElement.textContent = "Los!";
+      setTimeout(loadQuestion,1000);
+    }
   },1000);
 }
 
 // Gesamt-Rückwärts-Timer starten
-function startTotalTimer() {
+function startTotalTimer(){
   if(totalTimerInterval) return;
-  totalTimerInterval = setInterval(() => {
+  totalTimerInterval = setInterval(()=>{
     remainingTime--;
     document.getElementById("total-time").textContent = `Restzeit: ${remainingTime}s`;
-    if(remainingTime <= 0){
+    if(remainingTime <=0){
       clearInterval(totalTimerInterval);
-      remainingTime = 0;
+      remainingTime =0;
       document.getElementById("total-time").textContent = `Restzeit: 0s`;
       showEnd();
     }
-  }, 1000);
+  },1000);
 }
 
 // Frage laden
-function loadQuestion() {
+function loadQuestion(){
   if(currentQuestion >= questions.length){ showEnd(); return; }
   const q = questions[currentQuestion];
-  document.getElementById("quiz-container").innerHTML=`
+  document.getElementById("quiz-container").innerHTML = `
     <div id="total-time" class="quiz-time">Restzeit: ${remainingTime}s</div>
     <div class="progress-text">Frage ${currentQuestion+1} von ${questions.length}</div>
     <div class="progress-bar-container"><div class="progress-bar" id="progress-bar"></div></div>
@@ -70,42 +81,44 @@ function loadQuestion() {
     <div id="next-btn-container"></div>
   `;
 
-  const progressPercent = (currentQuestion/questions.length)*100;
+  const progressPercent = (currentQuestion / questions.length) * 100;
   document.getElementById("progress-bar").style.width = progressPercent + "%";
 
-  shuffleArray([...q.answers]).forEach(ans => {
-      const div = document.createElement("div");
-      div.classList.add("answer-label");
-      div.textContent = ans;
-      div.addEventListener("click", function() {
-          checkAnswer(ans);
-      });
-      document.getElementById("answers").appendChild(div);
+  shuffleArray([...q.answers]).forEach(ans=>{
+    const div = document.createElement("div");
+    div.classList.add("answer-label");
+    div.textContent = ans;
+    div.addEventListener("click", ()=>checkAnswer(ans));
+    document.getElementById("answers").appendChild(div);
   });
 
   startTimer();
   startTotalTimer();
 }
 
-// Einzel-Frage-Timer starten
-function startTimer() {
+// Einzel-Frage-Timer
+function startTimer(){
   clearInterval(timerInterval);
   timeLeft = 15;
   const timerBar = document.getElementById("timer-bar");
   const timeText = document.getElementById("time-text");
   timerBar.style.width = "100%";
   timeText.textContent = `${timeLeft}s`;
-  timerInterval = setInterval(() => {
+  timerInterval = setInterval(()=>{
     timeLeft--;
     let percent = (timeLeft/15)*100;
     timerBar.style.width = percent + "%";
     timeText.textContent = `${timeLeft}s`;
-    if(timeLeft <= 0){ clearInterval(timerInterval); timeText.textContent="0s"; checkAnswer(null,true); }
-  }, 1000);
+    if(timeLeft <=0){
+      clearInterval(timerInterval);
+      timeText.textContent="0s";
+      checkAnswer(null,true);
+    }
+  },1000);
 }
 
 // Antwort prüfen
-function checkAnswer(selected, auto=false) {
+function checkAnswer(selected, auto=false){
   clearInterval(timerInterval);
   const q = questions[currentQuestion];
   const result = document.getElementById("result");
@@ -119,36 +132,35 @@ function checkAnswer(selected, auto=false) {
 
   let points = 0;
   if(selected === q.correct){
-    points = 10 + timeLeft;  // Punkte + Restzeit dieser Frage
+    points = 10 + timeLeft;
     score += points;
     result.textContent = `Richtig! (+${points} Punkte)`;
     result.style.color = "green";
   } else if(auto){
     result.textContent = `Zeit abgelaufen! Richtig: ${q.correct}`;
     result.style.color = "red";
-  } else{
+  } else {
     result.textContent = `Falsch! Richtig: ${q.correct}`;
     result.style.color = "red";
   }
 
   document.getElementById("score").innerHTML = `Punkte: <span style="color:#ffe88c">${score}</span>`;
 
-  const nextBtnContainer=document.getElementById("next-btn-container");
-  if(currentQuestion < questions.length - 1) nextBtnContainer.innerHTML = `<button onclick="nextQuestion()">Nächste Frage ➡️</button>`;
+  const nextBtnContainer = document.getElementById("next-btn-container");
+  if(currentQuestion < questions.length-1) nextBtnContainer.innerHTML = `<button onclick="nextQuestion()">Nächste Frage</button>`;
   else nextBtnContainer.innerHTML = `<button onclick="showEnd()">Quiz beenden</button>`;
 }
 
-// Nächste Frage
 function nextQuestion(){
   currentQuestion++;
   loadQuestion();
 }
 
 // Quiz beenden
-function showEnd() {
+function showEnd(){
   clearInterval(totalTimerInterval);
   document.getElementById("quiz-container").innerHTML=`
-    <h2>Quiz beendet! 🎉</h2>
+    <h2>Quiz beendet!</h2>
     <p>Dein Punktestand: <strong style="color:#ffe88c">${score}</strong></p>
     <p>Restzeit: ${remainingTime}s</p>
   `;
