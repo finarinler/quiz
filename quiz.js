@@ -147,7 +147,7 @@ function checkAnswer(selected, auto=false){
   document.getElementById("score").innerHTML = `Punkte: <span style="color:#ffe88c">${score}</span>`;
 
   const nextBtnContainer = document.getElementById("next-btn-container");
-  if(currentQuestion < questions.length-1) nextBtnContainer.innerHTML = `<button onclick="nextQuestion()">Nächste Frage ➡️</button>`;
+  if(currentQuestion < questions.length-1) nextBtnContainer.innerHTML = `<button onclick="nextQuestion()">Nächste Frage</button>`;
   else nextBtnContainer.innerHTML = `<button onclick="showEnd()">Quiz beenden</button>`;
 }
 
@@ -160,8 +160,9 @@ function nextQuestion(){
 function showEnd(){
   clearInterval(totalTimerInterval);
   document.getElementById("quiz-container").innerHTML=`
-    <h2>Quiz beendet! 🎉</h2>
+    <h2>Quiz beendet!</h2>
     <p>Dein Punktestand: <strong style="color:#ffe88c">${score}</strong></p>
     <p>Restzeit: ${remainingTime}s</p>
   `;
 }
+
