@@ -204,7 +204,7 @@ function checkAnswer(selected, auto=false){
 
   let points = 0;
   if(selected === q.correct){
-    points = 10 + timeLeft;
+    points = 10 + timeLeft + remainingTime;
     score += points;
     if (result) { result.textContent = `Richtig! (+${points} Punkte)`; result.style.color = "green"; }
   } else if(auto){
@@ -247,7 +247,7 @@ function showEnd(){
   document.getElementById("quiz-container").innerHTML=`
     <h2>Quiz beendet!</h2>
     <p>Dein Punktestand: <strong style="color:#ffe88c">${score}</strong></p>
-    <p>Restzeit: ${remainingTime}s</p>
   `;
 }
+
 
