@@ -6,7 +6,8 @@ const questions = [
 ];
 
 // Variablen
-let questions = [], currentQuestion = 0, score = 0, timeLeft = 15, timerInterval;
+let questions = [], currentQuestion = 0, score = 0, timeLeft = 15;
+let timerInterval = null, totalTime = 150, remainingTime = totalTime, totalTimerInterval = null;
 
 // Hilfsfunktionen
 function shuffleArray(array) {
@@ -23,7 +24,7 @@ function pickRandomQuestions(allQuestions, n) {
 
 // Countdown starten und Fragen auswählen
 function startCountdown() {
-  questions = pickRandomQuestions(allQuestions, 10); // 10 Fragen pro Quiz
+  questions = pickRandomQuestions(allQuestions, 10);
   const container = document.getElementById("quiz-container");
   container.innerHTML = `<h2>Bereit?</h2><div class="countdown" id="countdown">3</div>`;
   let countdown = 3;
@@ -35,11 +36,27 @@ function startCountdown() {
   },1000);
 }
 
+// Gesamt-Rückwärts-Timer starten
+function startTotalTimer() {
+  if(totalTimerInterval) return;
+  totalTimerInterval = setInterval(() => {
+    remainingTime--;
+    document.getElementById("total-time").textContent = `Restzeit: ${remainingTime}s`;
+    if(remainingTime <= 0){
+      clearInterval(totalTimerInterval);
+      remainingTime = 0;
+      document.getElementById("total-time").textContent = `Restzeit: 0s`;
+      showEnd();
+    }
+  }, 1000);
+}
+
 // Frage laden
 function loadQuestion() {
   if(currentQuestion >= questions.length){ showEnd(); return; }
   const q = questions[currentQuestion];
   document.getElementById("quiz-container").innerHTML=`
+    <div id="total-time" class="quiz-time">Restzeit: ${remainingTime}s</div>
     <div class="progress-text">Frage ${currentQuestion+1} von ${questions.length}</div>
     <div class="progress-bar-container"><div class="progress-bar" id="progress-bar"></div></div>
     <h2 id="question">${q.question}</h2>
@@ -56,7 +73,6 @@ function loadQuestion() {
   const progressPercent = (currentQuestion/questions.length)*100;
   document.getElementById("progress-bar").style.width = progressPercent + "%";
 
-  const answersDiv = document.getElementById("answers");
   shuffleArray([...q.answers]).forEach(ans => {
       const div = document.createElement("div");
       div.classList.add("answer-label");
@@ -64,59 +80,76 @@ function loadQuestion() {
       div.addEventListener("click", function() {
           checkAnswer(ans);
       });
-      answersDiv.appendChild(div);
+      document.getElementById("answers").appendChild(div);
   });
 
   startTimer();
+  startTotalTimer();
 }
 
-// Timer starten
+// Einzel-Frage-Timer starten
 function startTimer() {
   clearInterval(timerInterval);
-  timeLeft=15;
-  const timerBar=document.getElementById("timer-bar");
-  const timeText=document.getElementById("time-text");
-  timerBar.style.width="100%";
-  timeText.textContent=`${timeLeft}s`;
-  timerInterval=setInterval(()=>{
+  timeLeft = 15;
+  const timerBar = document.getElementById("timer-bar");
+  const timeText = document.getElementById("time-text");
+  timerBar.style.width = "100%";
+  timeText.textContent = `${timeLeft}s`;
+  timerInterval = setInterval(() => {
     timeLeft--;
-    let percent=(timeLeft/15)*100;
-    timerBar.style.width=percent+"%";
-    timeText.textContent=`${timeLeft}s`;
-    if(timeLeft<=0){ clearInterval(timerInterval); timeText.textContent="0s"; checkAnswer(null,true); }
-  },1000);
+    let percent = (timeLeft/15)*100;
+    timerBar.style.width = percent + "%";
+    timeText.textContent = `${timeLeft}s`;
+    if(timeLeft <= 0){ clearInterval(timerInterval); timeText.textContent="0s"; checkAnswer(null,true); }
+  }, 1000);
 }
 
 // Antwort prüfen
 function checkAnswer(selected, auto=false) {
   clearInterval(timerInterval);
-  const q=questions[currentQuestion];
-  const result=document.getElementById("result");
-  const answers=document.querySelectorAll(".answer-label");
-  
+  const q = questions[currentQuestion];
+  const result = document.getElementById("result");
+  const answers = document.querySelectorAll(".answer-label");
+
   answers.forEach(div=>{
     div.style.pointerEvents = "none";
     if(div.textContent === q.correct) div.classList.add("correct");
     if(selected && div.textContent === selected && div.textContent !== q.correct) div.classList.add("wrong");
   });
 
-  if(selected===q.correct){ let points=10+timeLeft; score+=points; result.textContent=`Richtig! (+${points} Punkte)`; result.style.color="green";}
-  else if(auto){ result.textContent=`Zeit abgelaufen! Richtig wäre: ${q.correct}`; result.style.color="red";}
-  else{ result.textContent=`Falsch! Richtig wäre: ${q.correct}`; result.style.color="red";}
+  let points = 0;
+  if(selected === q.correct){
+    points = 10 + timeLeft;  // Punkte + Restzeit dieser Frage
+    score += points;
+    result.textContent = `Richtig! (+${points} Punkte)`;
+    result.style.color = "green";
+  } else if(auto){
+    result.textContent = `Zeit abgelaufen! Richtig: ${q.correct}`;
+    result.style.color = "red";
+  } else{
+    result.textContent = `Falsch! Richtig: ${q.correct}`;
+    result.style.color = "red";
+  }
 
-  document.getElementById("score").innerHTML=`Punkte: <span style="color:#ffe88c">${score}</span>`;
+  document.getElementById("score").innerHTML = `Punkte: <span style="color:#ffe88c">${score}</span>`;
 
   const nextBtnContainer=document.getElementById("next-btn-container");
-  if(currentQuestion<questions.length-1) nextBtnContainer.innerHTML=`<button onclick="nextQuestion()">Nächste Frage</button>`;
-  else nextBtnContainer.innerHTML=`<button onclick="showEnd()">Quiz beenden</button>`;
+  if(currentQuestion < questions.length - 1) nextBtnContainer.innerHTML = `<button onclick="nextQuestion()">Nächste Frage ➡️</button>`;
+  else nextBtnContainer.innerHTML = `<button onclick="showEnd()">Quiz beenden</button>`;
 }
 
-function nextQuestion(){ currentQuestion++; loadQuestion(); }
+// Nächste Frage
+function nextQuestion(){
+  currentQuestion++;
+  loadQuestion();
+}
 
 // Quiz beenden
 function showEnd() {
+  clearInterval(totalTimerInterval);
   document.getElementById("quiz-container").innerHTML=`
-    <h2>Quiz beendet!</h2>
+    <h2>Quiz beendet! 🎉</h2>
     <p>Dein Punktestand: <strong style="color:#ffe88c">${score}</strong></p>
+    <p>Restzeit: ${remainingTime}s</p>
   `;
 }
