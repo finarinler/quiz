@@ -5,8 +5,10 @@ const questions = [
   { question: "Wie heißt der Kontinent, auf dem Sturmwind ist?", answers: ["Kalimdor","Östliche Pestländer","Östliches Königreich","Azeroth"],correct: "Östliches Königreich" }
 ];
 
-let currentQuestion = 0, score = 0, timeLeft = 15, timerInterval;
+// Variablen
+let questions = [], currentQuestion = 0, score = 0, timeLeft = 15, timerInterval;
 
+// Hilfsfunktionen
 function shuffleArray(array) {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -15,10 +17,13 @@ function shuffleArray(array) {
   return array;
 }
 
-function startCountdown() {
-  // Fragen zufällig mischen
-  shuffleArray(questions);
+function pickRandomQuestions(allQuestions, n) {
+  return shuffleArray([...allQuestions]).slice(0, n);
+}
 
+// Countdown starten und Fragen auswählen
+function startCountdown() {
+  questions = pickRandomQuestions(allQuestions, 10); // 10 Fragen pro Quiz
   const container = document.getElementById("quiz-container");
   container.innerHTML = `<h2>Bereit?</h2><div class="countdown" id="countdown">3</div>`;
   let countdown = 3;
@@ -30,6 +35,7 @@ function startCountdown() {
   },1000);
 }
 
+// Frage laden
 function loadQuestion() {
   if(currentQuestion >= questions.length){ showEnd(); return; }
   const q = questions[currentQuestion];
@@ -64,6 +70,7 @@ function loadQuestion() {
   startTimer();
 }
 
+// Timer starten
 function startTimer() {
   clearInterval(timerInterval);
   timeLeft=15;
@@ -80,6 +87,7 @@ function startTimer() {
   },1000);
 }
 
+// Antwort prüfen
 function checkAnswer(selected, auto=false) {
   clearInterval(timerInterval);
   const q=questions[currentQuestion];
@@ -99,15 +107,16 @@ function checkAnswer(selected, auto=false) {
   document.getElementById("score").innerHTML=`Punkte: <span style="color:#ffe88c">${score}</span>`;
 
   const nextBtnContainer=document.getElementById("next-btn-container");
-  if(currentQuestion<questions.length-1) nextBtnContainer.innerHTML=`<button onclick="nextQuestion()">Nächste Frage ➡️</button>`;
+  if(currentQuestion<questions.length-1) nextBtnContainer.innerHTML=`<button onclick="nextQuestion()">Nächste Frage</button>`;
   else nextBtnContainer.innerHTML=`<button onclick="showEnd()">Quiz beenden</button>`;
 }
 
 function nextQuestion(){ currentQuestion++; loadQuestion(); }
 
+// Quiz beenden
 function showEnd() {
   document.getElementById("quiz-container").innerHTML=`
-    <h2>Quiz beendet! 🎉</h2>
+    <h2>Quiz beendet!</h2>
     <p>Dein Punktestand: <strong style="color:#ffe88c">${score}</strong></p>
   `;
 }
