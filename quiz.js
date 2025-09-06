@@ -5,7 +5,7 @@ const questions = [
   { question: "Wie heißt der Kontinent, auf dem Sturmwind ist?", answers: ["Kalimdor","Östliche Pestländer","Östliches Königreich","Azeroth"],correct: "Östliches Königreich" }
 ];
 
-// Globale Variablen
+// veränderliche Zustandsvariablen (let)
 let questions = [];
 let currentQuestion = 0;
 let score = 0;
@@ -29,9 +29,16 @@ function pickRandomQuestions(allQuestions, n){
   return shuffleArray([...allQuestions]).slice(0,n);
 }
 
-// Countdown starten
+// Make startCountdown global so the HTML can call it
 window.startCountdown = function() {
+  // ensure we start fresh
+  currentQuestion = 0;
+  score = 0;
+  remainingTime = totalTime;
+
+  // pick questions once per quiz
   questions = pickRandomQuestions(allQuestions, 10);
+
   const container = document.getElementById("quiz-container");
   container.innerHTML = `<h2>Bereit?</h2><div class="countdown" id="countdown">3</div>`;
   let countdown = 3;
@@ -45,24 +52,23 @@ window.startCountdown = function() {
       setTimeout(loadQuestion,1000);
     }
   },1000);
-}
+};
 
-// Gesamt-Rückwärts-Timer starten
 function startTotalTimer(){
   if(totalTimerInterval) return;
   totalTimerInterval = setInterval(()=>{
     remainingTime--;
-    document.getElementById("total-time").textContent = `Restzeit: ${remainingTime}s`;
+    const el = document.getElementById("total-time");
+    if (el) el.textContent = `Restzeit: ${remainingTime}s`;
     if(remainingTime <=0){
       clearInterval(totalTimerInterval);
+      totalTimerInterval = null;
       remainingTime =0;
-      document.getElementById("total-time").textContent = `Restzeit: 0s`;
       showEnd();
     }
   },1000);
 }
 
-// Frage laden
 function loadQuestion(){
   if(currentQuestion >= questions.length){ showEnd(); return; }
   const q = questions[currentQuestion];
@@ -96,28 +102,26 @@ function loadQuestion(){
   startTotalTimer();
 }
 
-// Einzel-Frage-Timer
 function startTimer(){
   clearInterval(timerInterval);
   timeLeft = 15;
   const timerBar = document.getElementById("timer-bar");
   const timeText = document.getElementById("time-text");
-  timerBar.style.width = "100%";
-  timeText.textContent = `${timeLeft}s`;
+  if (timerBar) timerBar.style.width = "100%";
+  if (timeText) timeText.textContent = `${timeLeft}s`;
   timerInterval = setInterval(()=>{
     timeLeft--;
     let percent = (timeLeft/15)*100;
-    timerBar.style.width = percent + "%";
-    timeText.textContent = `${timeLeft}s`;
+    if (timerBar) timerBar.style.width = percent + "%";
+    if (timeText) timeText.textContent = `${timeLeft}s`;
     if(timeLeft <=0){
       clearInterval(timerInterval);
-      timeText.textContent="0s";
+      if (timeText) timeText.textContent="0s";
       checkAnswer(null,true);
     }
   },1000);
 }
 
-// Antwort prüfen
 function checkAnswer(selected, auto=false){
   clearInterval(timerInterval);
   const q = questions[currentQuestion];
@@ -134,21 +138,21 @@ function checkAnswer(selected, auto=false){
   if(selected === q.correct){
     points = 10 + timeLeft;
     score += points;
-    result.textContent = `Richtig! (+${points} Punkte)`;
-    result.style.color = "green";
+    if (result) { result.textContent = `Richtig! (+${points} Punkte)`; result.style.color = "green"; }
   } else if(auto){
-    result.textContent = `Zeit abgelaufen! Richtig: ${q.correct}`;
-    result.style.color = "red";
+    if (result) { result.textContent = `Zeit abgelaufen! Richtig: ${q.correct}`; result.style.color = "red"; }
   } else {
-    result.textContent = `Falsch! Richtig: ${q.correct}`;
-    result.style.color = "red";
+    if (result) { result.textContent = `Falsch! Richtig: ${q.correct}`; result.style.color = "red"; }
   }
 
-  document.getElementById("score").innerHTML = `Punkte: <span style="color:#ffe88c">${score}</span>`;
+  const scoreEl = document.getElementById("score");
+  if (scoreEl) scoreEl.innerHTML = `Punkte: <span style="color:#ffe88c">${score}</span>`;
 
   const nextBtnContainer = document.getElementById("next-btn-container");
-  if(currentQuestion < questions.length-1) nextBtnContainer.innerHTML = `<button onclick="nextQuestion()">Nächste Frage</button>`;
-  else nextBtnContainer.innerHTML = `<button onclick="showEnd()">Quiz beenden</button>`;
+  if(nextBtnContainer){
+    if(currentQuestion < questions.length-1) nextBtnContainer.innerHTML = `<button onclick="nextQuestion()">Nächste Frage ➡️</button>`;
+    else nextBtnContainer.innerHTML = `<button onclick="showEnd()">Quiz beenden</button>`;
+  }
 }
 
 function nextQuestion(){
@@ -156,13 +160,12 @@ function nextQuestion(){
   loadQuestion();
 }
 
-// Quiz beenden
 function showEnd(){
   clearInterval(totalTimerInterval);
+  totalTimerInterval = null;
   document.getElementById("quiz-container").innerHTML=`
-    <h2>Quiz beendet!</h2>
+    <h2>Quiz beendet! 🎉</h2>
     <p>Dein Punktestand: <strong style="color:#ffe88c">${score}</strong></p>
     <p>Restzeit: ${remainingTime}s</p>
   `;
 }
-
