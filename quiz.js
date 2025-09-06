@@ -1,14 +1,14 @@
 const questions = [
-  { question: "Was ist die Hauptstadt von Azeroth?", answers: ["Stormwind","Orgrimmar","Darnassus"], correct: "Stormwind" },
-  { question: "Welches Tier ist am größten in Azeroth?", answers: ["Murloc","Riesenbär","Onyxia"], correct: "Riesenbär" },
-  { question: "Welche Farbe hat das Mana von Magiern?", answers: ["Blau","Grün","Rot"], correct: "Blau" }
+  { question: "Was ist die Hauptstadt von Dragonflight?", answers: ["Sturmwind","Orgrimmar","Valdrakken","Dornogal"], correct: "Valdrakken" },
+  { question: "Wie heißt der erste Anführer der Horde?", answers: ["Thrall","Garrosh","Vol'jin","Sylvanas"], correct: "Thrall" },
+  { question: "Welche Farbe hat der Energiebalken von schurken?", answers: ["Blau","Grün","Rot","Gelb"], correct: "Gelb" }
 ];
 
 let currentQuestion = 0, score = 0, timeLeft = 15, timerInterval;
 
 function startCountdown() {
   const container = document.getElementById("quiz-container");
-  container.innerHTML = `<h2>Bereit?</h2><div class="countdown" id="countdown">3</div>`;
+  container.innerHTML = `<h1>Bereit?</h1><div class="countdown" id="countdown">3</div>`;
   let countdown = 3;
   const countdownElement = document.getElementById("countdown");
   const interval = setInterval(() => {
@@ -96,3 +96,4 @@ function showEnd() {
     <p>Dein Punktestand: <strong style="color:#ffe88c">${score}</strong></p>
   `;
 }
+
