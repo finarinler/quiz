@@ -99,8 +99,9 @@ function nextQuestion(){ currentQuestion++; loadQuestion(); }
 
 function showEnd() {
   document.getElementById("quiz-container").innerHTML=`
-    <h2>Quiz beendet! 🎉</h2>
+    <h2>Quiz beendet!</h2>
     <p>Dein Punktestand: <strong style="color:#ffe88c">${score}</strong></p>
   `;
 }
+
 
