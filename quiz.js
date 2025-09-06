@@ -61,15 +61,15 @@ window.startCountdown = function() {
   questions = pickRandomQuestions(window.allQuestions, 10);
 
   const container = document.getElementById("quiz-container");
-  container.innerHTML = `<h2>Bereit?</h2><div class="countdown" id="countdown">3</div>`;
-  let countdown = 3;
+  container.innerHTML = `<h2>Bereit?</h2><div class="countdown" id="countdown">5</div>`;
+  let countdown = 5;
   const countdownElement = document.getElementById("countdown");
   const interval = setInterval(()=>{
     countdown--;
     if(countdown>0) countdownElement.textContent = countdown;
     else {
       clearInterval(interval);
-      countdownElement.textContent = "Los!";
+      countdownElement.textContent = "<h1>Los!</h1>";
       setTimeout(loadQuestion,1000);
     }
   },1000);
@@ -105,7 +105,7 @@ function pauseTotalTimer(){
   }
 }
 
-// Frage laden (jetzt mit total-timer-DOM oberhalb der Frage)
+// Frage laden
 function loadQuestion(){
   if(currentQuestion >= questions.length){ showEnd(); return; }
   const q = questions[currentQuestion];
@@ -160,7 +160,7 @@ function loadQuestion(){
 // Einzel-Frage-Timer (setzt Farbe der timer-bar jede Sekunde)
 function startTimer(){
   clearInterval(timerInterval);
-  timeLeft = 15;
+  timeLeft = 25;
   const timerBar = document.getElementById("timer-bar");
   const timeText = document.getElementById("time-text");
   if (timerBar) timerBar.style.width = "100%";
@@ -169,7 +169,7 @@ function startTimer(){
 
   timerInterval = setInterval(()=>{
     timeLeft--;
-    let percent = Math.max(0, (timeLeft / 15) * 100);
+    let percent = Math.max(0, (timeLeft / 25) * 100);
     const timerBarLocal = document.getElementById("timer-bar");
     const timeTextLocal = document.getElementById("time-text");
 
@@ -210,7 +210,7 @@ function checkAnswer(selected, auto=false){
   } else if(auto){
     if (result) { result.textContent = `Zeit abgelaufen! Richtig: ${q.correct}`; result.style.color = "red"; }
   } else {
-    if (result) { result.textContent = `Falsch! Richtig: ${q.correct}`; result.style.color = "red"; }
+    if (result) { result.textContent = `Falsch! Richtig: ${q.correct}`; result.style.color = "red"; } {result.textContent = `Restzeit = (+${points} Punkte)`; result.style.color = "green"; }
   }
 
   const scoreEl = document.getElementById("score");
@@ -249,6 +249,7 @@ function showEnd(){
     <p>Dein Punktestand: <strong style="color:#ffe88c">${score + remainingTime}</strong></p>
   `;
 }
+
 
 
 
