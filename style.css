@@ -1,6 +1,6 @@
 body {
   font-family: 'Cinzel', serif;
-  background: url('background.jpg') no-repeat center center fixed;
+  background: url('pics/background.jpg') no-repeat center center fixed;
   background-size: cover;
   display:flex;
   justify-content:center;
@@ -132,5 +132,6 @@ label:hover {
   font-size:18px;
   text-shadow: 1px 1px 2px #000;
 }
+
 
 
