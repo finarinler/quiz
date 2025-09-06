@@ -207,14 +207,14 @@ function checkAnswer(selected, auto=false){
   if(selected === q.correct){
     points = 10 + timeLeft;
     score += points;
-    if (result) { result.textContent = `Richtig! (+$points} Punkte)`; result.style.color = "green"; }
+    if (result) { result.textContent = `Richtig! (+${points} Punkte)`; result.style.color = "green"; }
   } else if(auto){
     if (result) { result.textContent = `Zeit abgelaufen! Richtig: ${q.correct}`; result.style.color = "red"; }
   } else {
     points = timeLeft;
     score += points;
     if (result) { result.textContent = `Falsch! Richtig: ${q.correct}`; result.style.color = "orange";   }
-    if (result) { result.textContent = `(+${points} Bonuspunkte durch Restzeit)`; result.style.color = "green"; }
+                { result.textContent = `(+${points} Bonuspunkte durch Restzeit)`; result.style.color = "green"; }
   }
 
   const scoreEl = document.getElementById("score");
@@ -253,6 +253,7 @@ function showEnd(){
     <p>Dein Punktestand: <strong style="color:#ffe88c">${score + remainingTime}</strong></p>
   `;
 }
+
 
 
 
