@@ -9,10 +9,10 @@ window.allQuestions = [
 let questions = [];
 let currentQuestion = 0;
 let score = 0;
-let timeLeft = 22;
+let timeLeft = 25;
 let timerInterval = null;
 
-let totalTime = 220; // 10 Fragen x 15 Sekunden
+let totalTime = 250; // 10 Fragen x 15 Sekunden
 let remainingTime = totalTime;
 let totalTimerInterval = null;
 
@@ -249,6 +249,7 @@ function showEnd(){
     <p>Dein Punktestand: <strong style="color:#ffe88c">${score + remainingTime}</strong></p>
   `;
 }
+
 
 
 
