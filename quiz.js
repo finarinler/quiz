@@ -70,7 +70,7 @@ window.startCountdown = function() {
     if(countdown>0) countdownElement.textContent = countdown;
     else {
       clearInterval(interval);
-      countdownElement.textContent = `<h1>"Los!"</h1>`;
+      countdownElement.textContent = "Los!";
       setTimeout(loadQuestion,1000);
     }
   },1000);
@@ -206,7 +206,7 @@ function checkAnswer(selected, auto=false){
   let points = 0 + remainingTime;
   if(selected === q.correct){
     points = 10 + timeLeft;
-    score += points + fpoints;
+    score += points;
     if (result) { result.textContent = `Richtig! (+${points} Punkte)`; result.style.color = "green"; }
   } else if(auto){
     if (result) { result.textContent = `Zeit abgelaufen! Richtig: ${q.correct}`; result.style.color = "red"; }
@@ -250,6 +250,7 @@ function showEnd(){
     <p>Dein Punktestand: <strong style="color:#ffe88c">${score + remainingTime}</strong></p>
   `;
 }
+
 
 
 
