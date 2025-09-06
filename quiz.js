@@ -1,6 +1,6 @@
 const questions = [
   { question: "Was ist die Hauptstadt von Dragonflight?", answers: ["Dalaran","Orgrimmar","Dornogal","Valdrakken"], correct: "Valdrakken" },
-  { question: "Welches Tier ist am größten in Azeroth?", answers: ["Murloc","Riesenbär","Onyxia"], correct: "Riesenbär" },
+  { question: "Wer war kein Anführer der Horde?", answers: ["Arthas","Vol'jin","Thrall","Garrosh"], correct: "Arthas" },
   { question: "Welche Farbe hat der Energiebalken von Wildheitsdruiden?", answers: ["Blau","Gelb","Rot","Grün"], correct: "Gelb" }
 ];
 
@@ -103,3 +103,4 @@ function showEnd() {
     <p>Dein Punktestand: <strong style="color:#ffe88c">${score}</strong></p>
   `;
 }
+
