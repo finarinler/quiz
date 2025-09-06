@@ -1,0 +1,134 @@
+body {
+  font-family: 'Cinzel', serif;
+  background: url('https://i.imgur.com/xYF9g5M.jpg') no-repeat center center fixed;
+  background-size: cover;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+  margin:0;
+  color: #f0e6d2;
+}
+
+.quiz-container {
+  background: rgba(25,25,25,0.85);
+  padding: 30px;
+  border-radius: 20px;
+  max-width: 650px;
+  width: 100%;
+  text-align:center;
+  border: 3px solid #bfa259;
+  box-shadow: 0 0 25px #000;
+}
+
+h2 {
+  margin-bottom: 15px;
+  color: #f0d07b;
+  text-shadow: 2px 2px 5px #000;
+}
+
+button {
+  margin-top: 15px;
+  padding: 12px;
+  width: 100%;
+  border: 2px solid #bfa259;
+  border-radius: 12px;
+  background: linear-gradient(#806030, #bfa259);
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  text-shadow: 1px 1px 2px #000;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  background: linear-gradient(#bfa259, #806030);
+  box-shadow: 0 0 15px #ffe88c;
+}
+
+label {
+  display:block;
+  background: rgba(50,50,50,0.85);
+  margin: 8px 0;
+  padding: 12px;
+  border-radius: 10px;
+  cursor:pointer;
+  border: 1px solid #bfa259;
+  transition: all 0.3s ease;
+  text-shadow: 1px 1px 2px #000;
+}
+
+label:hover {
+  background: rgba(80,50,20,0.9);
+  box-shadow: 0 0 10px #ffe88c;
+}
+
+.correct { 
+  background: rgba(50,80,30,0.9) !important; 
+  border: 2px solid #6fba3c; 
+  animation: glow 0.8s ease-in-out;
+}
+
+.wrong { 
+  background: rgba(80,30,30,0.9) !important; 
+  border: 2px solid #d42e2e; 
+  animation: glow 0.8s ease-in-out;
+}
+
+@keyframes glow {
+  0% { box-shadow: 0 0 5px #fff; }
+  50% { box-shadow: 0 0 20px #ffe88c; }
+  100% { box-shadow: 0 0 5px #fff; }
+}
+
+.progress-bar-container {
+  width:100%;
+  height:18px;
+  background:#222;
+  border-radius:10px;
+  overflow:hidden;
+  margin-bottom:15px;
+  border:1px solid #bfa259;
+}
+
+.progress-bar {
+  height:100%;
+  width:0%;
+  background:#bfa259;
+  transition:width 0.5s ease;
+}
+
+.timer-wrapper {
+  margin-top:20px;
+}
+
+.timer-container {
+  width:100%;
+  background:#222;
+  border-radius:8px;
+  overflow:hidden;
+  height:22px;
+  margin-top:5px;
+  border:1px solid #bfa259;
+}
+
+.timer-bar {
+  height:100%;
+  background:#d42e2e;
+  width:100%;
+  transition:width 1s linear;
+}
+
+.time-text {
+  font-weight:bold;
+  color:#ffe88c;
+  text-shadow: 1px 1px 2px #000;
+}
+
+.result, .score, .countdown {
+  margin-top:15px;
+  font-weight:bold;
+  font-size:18px;
+  text-shadow: 1px 1px 2px #000;
+}
