@@ -40,16 +40,13 @@ function loadQuestion() {
 
   const answersDiv = document.getElementById("answers");
   q.answers.forEach(ans => {
-      const label = document.createElement("label");
-      label.classList.add("answer-label");
-      label.innerHTML = `
-        <input type="radio" name="answer" value="${ans}">
-        <img src="https://i.imgur.com/2yR7o8B.png" style="width:20px;margin-right:8px;vertical-align:middle;"> ${ans}
-      `;
-      label.querySelector("input").addEventListener("change", function() {
-          checkAnswer(this.value);
+      const div = document.createElement("div");
+      div.classList.add("answer-label");
+      div.textContent = ans;
+      div.addEventListener("click", function() {
+          checkAnswer(ans);
       });
-      answersDiv.appendChild(label);
+      answersDiv.appendChild(div);
   });
 
   startTimer();
@@ -75,13 +72,12 @@ function checkAnswer(selected, auto=false) {
   clearInterval(timerInterval);
   const q=questions[currentQuestion];
   const result=document.getElementById("result");
-  const answers=document.getElementsByName("answer");
+  const answers=document.querySelectorAll(".answer-label");
   
-  answers.forEach(radio=>{
-    radio.disabled=true;
-    const label=radio.parentElement;
-    if(radio.value===q.correct) label.classList.add("correct");
-    if(radio.value===selected && radio.value!==q.correct) label.classList.add("wrong");
+  answers.forEach(div=>{
+    div.style.pointerEvents = "none"; // blockiert weitere Klicks
+    if(div.textContent === q.correct) div.classList.add("correct");
+    if(selected && div.textContent === selected && div.textContent !== q.correct) div.classList.add("wrong");
   });
 
   if(selected===q.correct){ let points=10+timeLeft; score+=points; result.textContent=`Richtig! (+${points} Punkte)`; result.style.color="green";}
@@ -91,7 +87,7 @@ function checkAnswer(selected, auto=false) {
   document.getElementById("score").innerHTML=`Punkte: <span style="color:#ffe88c">${score}</span>`;
 
   const nextBtnContainer=document.getElementById("next-btn-container");
-  if(currentQuestion<questions.length-1) nextBtnContainer.innerHTML=`<button onclick="nextQuestion()">Nächste Frage ➡️</button>`;
+  if(currentQuestion<questions.length-1) nextBtnContainer.innerHTML=`<button onclick="nextQuestion()">Nächste Frage</button>`;
   else nextBtnContainer.innerHTML=`<button onclick="showEnd()">Quiz beenden</button>`;
 }
 
