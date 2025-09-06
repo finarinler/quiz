@@ -5,8 +5,8 @@ const questions = [
   { question: "Wie heißt der Kontinent, auf dem Sturmwind ist?", answers: ["Kalimdor","Östliche Pestländer","Östliches Königreich","Azeroth"],correct: "Östliches Königreich" }
 ];
 
-// veränderliche Zustandsvariablen (let)
-let questions = [];
+// änderbare Zustandsvariablen (let)
+let questions = [];           // <- hier ist es nur "let", nicht "const"
 let currentQuestion = 0;
 let score = 0;
 let timeLeft = 15;
@@ -29,9 +29,9 @@ function pickRandomQuestions(allQuestions, n){
   return shuffleArray([...allQuestions]).slice(0,n);
 }
 
-// Make startCountdown global so the HTML can call it
+// Start-Funktion global machen
 window.startCountdown = function() {
-  // ensure we start fresh
+  // reset / fresh start
   currentQuestion = 0;
   score = 0;
   remainingTime = totalTime;
@@ -88,7 +88,8 @@ function loadQuestion(){
   `;
 
   const progressPercent = (currentQuestion / questions.length) * 100;
-  document.getElementById("progress-bar").style.width = progressPercent + "%";
+  const pb = document.getElementById("progress-bar");
+  if (pb) pb.style.width = progressPercent + "%";
 
   shuffleArray([...q.answers]).forEach(ans=>{
     const div = document.createElement("div");
@@ -161,8 +162,10 @@ function nextQuestion(){
 }
 
 function showEnd(){
-  clearInterval(totalTimerInterval);
-  totalTimerInterval = null;
+  if (totalTimerInterval) {
+    clearInterval(totalTimerInterval);
+    totalTimerInterval = null;
+  }
   document.getElementById("quiz-container").innerHTML=`
     <h2>Quiz beendet! 🎉</h2>
     <p>Dein Punktestand: <strong style="color:#ffe88c">${score}</strong></p>
