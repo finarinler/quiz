@@ -11,24 +11,53 @@ body {
 }
 
 .quiz-container {
-  background: rgba(25,25,25,0.85);
-  padding: 30px;
-  border-radius: 20px;
-  max-width: 650px;
+  background: rgba(25,25,25,0.92);
+  padding: 24px;
+  border-radius: 16px;
+  max-width: 720px;
   width: 100%;
   text-align:center;
   border: 3px solid #bfa259;
-  box-shadow: 0 0 25px #000;
+  box-shadow: 0 0 30px #000;
 }
 
+/* Gesamt-Timer oberhalb aller Fragen */
+.total-timer-wrapper {
+  width: 100%;
+  margin-bottom: 12px;
+  text-align: left;
+}
+.total-time-text {
+  font-size: 14px;
+  color: #ffe88c;
+  margin-bottom: 6px;
+  font-weight: bold;
+  text-shadow: 1px 1px 2px #000;
+}
+.total-timer-container {
+  width: 100%;
+  background:#111;
+  border-radius: 10px;
+  overflow:hidden;
+  height:18px;
+  border:1px solid #bfa259;
+}
+.total-timer-bar {
+  height:100%;
+  width:100%;
+  background: linear-gradient(90deg, #6fba3c, #6fba3c);
+  transition: width 1s linear, background 0.25s linear;
+}
+
+/* restliches bisheriges Styling */
 h2 {
-  margin-bottom: 15px;
+  margin-bottom: 10px;
   color: #f0d07b;
   text-shadow: 2px 2px 5px #000;
 }
 
 button {
-  margin-top: 15px;
+  margin-top: 10px;
   padding: 12px;
   width: 100%;
   border: 2px solid #bfa259;
@@ -56,24 +85,24 @@ button:hover {
   cursor: pointer;
   border: 1px solid #bfa259;
   text-shadow: 1px 1px 2px #000;
-  transition: all 0.3s ease;
+  transition: all 0.25s ease;
   text-align: center;
   font-size: 18px;
   font-weight: bold;
 }
 
 .answer-label:hover {
-  background: rgba(80,50,20,0.9);
+  background: rgba(80,50,20,0.95);
   box-shadow: 0 0 10px #ffe88c;
 }
 
 .correct { 
-  background: rgba(50,80,30,0.9) !important; 
+  background: rgba(50,80,30,0.95) !important; 
   border: 2px solid #6fba3c; 
 }
 
 .wrong { 
-  background: rgba(80,30,30,0.9) !important; 
+  background: rgba(80,30,30,0.95) !important; 
   border: 2px solid #d42e2e; 
 }
 
@@ -83,7 +112,7 @@ button:hover {
   background:#222;
   border-radius:10px;
   overflow:hidden;
-  margin-bottom:15px;
+  margin-bottom:10px;
   border:1px solid #bfa259;
 }
 
@@ -95,7 +124,8 @@ button:hover {
 }
 
 .timer-wrapper {
-  margin-top:20px;
+  margin-top:14px;
+  text-align:left;
 }
 
 .timer-container {
@@ -108,12 +138,11 @@ button:hover {
   border:1px solid #bfa259;
 }
 
-/* Die Timer-Bar selbst: Breite schrumpft, Hintergrundfarbe wird per JS gesetzt.
-   Übergang für Farbe hinzugefügt, damit der Farbwechsel weich wirkt. */
+/* Frage-Timer-Bar: Farbe wird per JS gesetzt, Übergang für Weichheit */
 .timer-bar {
   height:100%;
   width:100%;
-  background: linear-gradient(90deg, #6fba3c, #6fba3c); /* default grün */
+  background: linear-gradient(90deg, #6fba3c, #6fba3c);
   transition: width 1s linear, background 0.25s linear;
 }
 
@@ -124,8 +153,8 @@ button:hover {
 }
 
 .result, .score, .countdown {
-  margin-top:15px;
+  margin-top:12px;
   font-weight:bold;
-  font-size:18px;
+  font-size:16px;
   text-shadow: 1px 1px 2px #000;
 }
