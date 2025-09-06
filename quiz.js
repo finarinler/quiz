@@ -218,7 +218,7 @@ function checkAnswer(selected, auto=false){
 
   const nextBtnContainer = document.getElementById("next-btn-container");
   if(nextBtnContainer){
-    if(currentQuestion < questions.length-1) nextBtnContainer.innerHTML = `<button id="next-btn">Nächste Frage ➡️</button>`;
+    if(currentQuestion < questions.length-1) nextBtnContainer.innerHTML = `<button id="next-btn">Nächste Frage</button>`;
     else nextBtnContainer.innerHTML = `<button id="end-btn">Quiz beenden</button>`;
   }
 
@@ -245,8 +245,9 @@ function showEnd(){
     totalTimerInterval = null;
   }
   document.getElementById("quiz-container").innerHTML=`
-    <h2>Quiz beendet! 🎉</h2>
+    <h2>Quiz beendet!</h2>
     <p>Dein Punktestand: <strong style="color:#ffe88c">${score}</strong></p>
     <p>Restzeit: ${remainingTime}s</p>
   `;
 }
+
