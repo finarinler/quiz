@@ -5,8 +5,8 @@ const questions = [
   { question: "Wie heißt der Kontinent, auf dem Sturmwind ist?", answers: ["Kalimdor","Östliche Pestländer","Östliches Königreich","Azeroth"],correct: "Östliches Königreich" }
 ];
 
-// Variablen
-let questions = [];  // <-- als let deklarieren, kann später überschrieben werden
+// Globale Variablen
+let questions = [];
 let currentQuestion = 0;
 let score = 0;
 let timeLeft = 15;
@@ -30,7 +30,7 @@ function pickRandomQuestions(allQuestions, n){
 }
 
 // Countdown starten
-function startCountdown() {
+window.startCountdown = function() {
   questions = pickRandomQuestions(allQuestions, 10);
   const container = document.getElementById("quiz-container");
   container.innerHTML = `<h2>Bereit?</h2><div class="countdown" id="countdown">3</div>`;
@@ -147,7 +147,7 @@ function checkAnswer(selected, auto=false){
   document.getElementById("score").innerHTML = `Punkte: <span style="color:#ffe88c">${score}</span>`;
 
   const nextBtnContainer = document.getElementById("next-btn-container");
-  if(currentQuestion < questions.length-1) nextBtnContainer.innerHTML = `<button onclick="nextQuestion()">Nächste Frage</button>`;
+  if(currentQuestion < questions.length-1) nextBtnContainer.innerHTML = `<button onclick="nextQuestion()">Nächste Frage ➡️</button>`;
   else nextBtnContainer.innerHTML = `<button onclick="showEnd()">Quiz beenden</button>`;
 }
 
@@ -160,7 +160,7 @@ function nextQuestion(){
 function showEnd(){
   clearInterval(totalTimerInterval);
   document.getElementById("quiz-container").innerHTML=`
-    <h2>Quiz beendet!</h2>
+    <h2>Quiz beendet! 🎉</h2>
     <p>Dein Punktestand: <strong style="color:#ffe88c">${score}</strong></p>
     <p>Restzeit: ${remainingTime}s</p>
   `;
