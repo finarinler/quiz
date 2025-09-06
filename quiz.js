@@ -257,10 +257,11 @@ function showEnd(){
     <h2>Quiz beendet!</h2>
     <p>Dein Punktestand: <strong style="color:#ffe88c">${score}</strong></p>
     <p>Deine Restzeit: <strong style="color:#ffe88c">${remainingTime}</strong></p>
-    <p>Deine richtigen Antworten: <strong style="color:#ffe88c">${correctCount}</strong></p>
+    <p>Deine richtigen Antworten: <strong style="color:#ffe88c">${correctCount}</strong> (+${bonus} Bonuspunkte)</p>
     <p>Dein Endstand: <strong style="color:#ffe88c">${finalScore}</strong></p>
   `;
 }
+
 
 
 
