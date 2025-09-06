@@ -203,15 +203,16 @@ function checkAnswer(selected, auto=false){
     if(selected && div.textContent === selected && div.textContent !== q.correct) div.classList.add("wrong");
   });
 
-  let points = 0 + remainingTime;
+  let points = 0;
   if(selected === q.correct){
-    points = 10 + timeLeft;
-    score += points;
-    if (result) { result.textContent = `Richtig! (+${points} Punkte)`; result.style.color = "green"; }
+    rpoints = 10 + timeLeft;
+    fpoints = timeLeft;
+    score += rpoints || fpoints;
+    if (result) { result.textContent = `Richtig! (+${rpoints} Punkte)`; result.style.color = "green"; }
   } else if(auto){
     if (result) { result.textContent = `Zeit abgelaufen! Richtig: ${q.correct}`; result.style.color = "red"; }
   } else {
-    if (result) { result.textContent = `Falsch! Richtig: ${q.correct}`; result.style.color = "red";  }
+    if (result) { result.textContent = `Falsch! Richtig: ${q.correct} <br> (+${fpoints} Punkte)`; result.style.color = "red";  }
   }
 
   const scoreEl = document.getElementById("score");
@@ -250,6 +251,7 @@ function showEnd(){
     <p>Dein Punktestand: <strong style="color:#ffe88c">${score + remainingTime}</strong></p>
   `;
 }
+
 
 
 
