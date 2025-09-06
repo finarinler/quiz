@@ -1,27 +1,28 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-<meta charset="UTF-8">
-<title>WoW Quiz</title>
-<link rel="stylesheet" href="style.css">
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap" rel="stylesheet">
-<link rel="icon" type="image/png" sizes="32x32" href="pics/wow_favicon.png">
-<link rel="shortcut icon" href="pics/wow_favicon.ico" type="image/x-icon">
+  <meta charset="utf-8" />
+  <title>WoW Quiz</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap" rel="stylesheet">
+  <!-- favicon (optional) -->
+  <link rel="icon" type="image/png" sizes="32x32" href="/wow_favicon.png">
+  <link rel="shortcut icon" href="pics/wow_favicon.ico" type="image/x-icon">
 </head>
 <body>
-<div class="quiz-container" id="quiz-container">
-  <h2>Willkommen zum WoW-Quiz</h2>
-  <p>Klicke auf den Button, um zu starten.</p>
-  <button id="start-btn">Quiz starten</button>
-  <div class="countdown" id="countdown"></div>
-</div>
+  <div class="quiz-container" id="quiz-container">
+    <h2>Willkommen zum WoW-Quiz 🎉</h2>
+    <p>Klicke auf den Button, um zu starten.</p>
+    <button id="start-btn">Quiz starten</button>
+    <div class="countdown" id="countdown"></div>
+  </div>
 
-<script src="quiz.js"></script>
-<script>
-  // Start-Button global verbinden
-  document.getElementById("start-btn").onclick = startCountdown;
-</script>
+  <!-- nur EINE Einbindung der quiz.js -->
+  <script src="quiz.js"></script>
+
+  <!-- Button verbinden (erst nachdem quiz.js geladen ist) -->
+  <script>
+    document.getElementById("start-btn").onclick = window.startCountdown;
+  </script>
 </body>
 </html>
-
-
