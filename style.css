@@ -10,7 +10,7 @@ body {
   color: #f0e6d2;
 }
 
-.quiz-container {
+.quiz-container, .quiz-container2 {
   background: rgba(25,25,25,0.92);
   padding: 24px;
   border-radius: 16px;
@@ -158,3 +158,4 @@ button:hover {
   font-size:16px;
   text-shadow: 1px 1px 2px #000;
 }
+
