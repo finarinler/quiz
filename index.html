@@ -5,25 +5,30 @@
   <title>WoW Quiz</title>
   <link rel="stylesheet" href="style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap" rel="stylesheet">
-  <!-- favicon (optional) -->
   <link rel="icon" type="image/png" sizes="32x32" href="/wow_favicon.png">
 </head>
 <body>
   <div class="quiz-container" id="quiz-container">
-    <h2>Willkommen zum WoW-Quiz</h2>
+    <h2>Willkommen zum WoW-Quiz 🎉</h2>
     <p>Klicke auf den Button, um zu starten.</p>
     <button id="start-btn">Quiz starten</button>
     <div class="countdown" id="countdown"></div>
   </div>
 
-  <!-- nur EINE Einbindung der quiz.js -->
+  <!-- EINE Einbindung der quiz.js -->
   <script src="quiz.js"></script>
 
   <!-- Button verbinden (erst nachdem quiz.js geladen ist) -->
   <script>
-    document.getElementById("start-btn").onclick = window.startCountdown;
+    // defensive: warte, bis startCountdown wirklich existiert
+    (function attach() {
+      if (typeof window.startCountdown === 'function') {
+        document.getElementById("start-btn").onclick = window.startCountdown;
+      } else {
+        // try again kurz später (falls script noch parsing)
+        setTimeout(attach, 50);
+      }
+    })();
   </script>
 </body>
 </html>
-
-
