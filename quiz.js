@@ -1,14 +1,14 @@
 const questions = [
-  { question: "Was ist die Hauptstadt von Dragonflight?", answers: ["Sturmwind","Orgrimmar","Valdrakken","Dornogal"], correct: "Valdrakken" },
-  { question: "Wie heißt der erste Anführer der Horde?", answers: ["Thrall","Garrosh","Vol'jin","Sylvanas"], correct: "Thrall" },
-  { question: "Welche Farbe hat der Energiebalken von schurken?", answers: ["Blau","Grün","Rot","Gelb"], correct: "Gelb" }
+  { question: "Was ist die Hauptstadt von Dragonflight?", answers: ["Dalaran","Orgrimmar","Dornogal","Valdrakken"], correct: "Valdrakken" },
+  { question: "Welches Tier ist am größten in Azeroth?", answers: ["Murloc","Riesenbär","Onyxia"], correct: "Riesenbär" },
+  { question: "Welche Farbe hat der Energiebalken von Wildheitsdruiden?", answers: ["Blau","Gelb","Rot","Grün"], correct: "Gelb" }
 ];
 
 let currentQuestion = 0, score = 0, timeLeft = 15, timerInterval;
 
 function startCountdown() {
   const container = document.getElementById("quiz-container");
-  container.innerHTML = `<h1>Bereit?</h1><div class="countdown" id="countdown">3</div>`;
+  container.innerHTML = `<h2>Bereit?</h2><div class="countdown" id="countdown">3</div>`;
   let countdown = 3;
   const countdownElement = document.getElementById("countdown");
   const interval = setInterval(() => {
@@ -38,11 +38,16 @@ function loadQuestion() {
   const progressPercent = (currentQuestion/questions.length)*100;
   document.getElementById("progress-bar").style.width = progressPercent + "%";
 
-  const answersDiv=document.getElementById("answers");
-  q.answers.forEach(ans=>{
-    const label=document.createElement("label");
-    label.innerHTML=`<img src="https://i.imgur.com/2yR7o8B.png" style="width:20px;margin-right:8px;vertical-align:middle;"> ${ans}`;
-    answersDiv.appendChild(label);
+  const answersDiv = document.getElementById("answers");
+  q.answers.forEach((ans, index) => {
+      const label = document.createElement("label");
+      label.innerHTML = `<input type="radio" name="answer" value="${ans}"> 
+                         <img src="https://i.imgur.com/2yR7o8B.png" style="width:20px;margin-right:8px;vertical-align:middle;"> ${ans}`;
+      // Korrektes Event binden
+      label.querySelector("input").addEventListener("change", function() {
+          checkAnswer(this.value);
+      });
+      answersDiv.appendChild(label);
   });
 
   startTimer();
@@ -69,7 +74,7 @@ function checkAnswer(selected, auto=false) {
   const q=questions[currentQuestion];
   const result=document.getElementById("result");
   const answers=document.getElementsByName("answer");
-  if(!selected && !auto) return;
+  
   answers.forEach(radio=>{
     radio.disabled=true;
     const label=radio.parentElement;
@@ -96,4 +101,3 @@ function showEnd() {
     <p>Dein Punktestand: <strong style="color:#ffe88c">${score}</strong></p>
   `;
 }
-
