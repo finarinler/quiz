@@ -9,6 +9,7 @@ window.allQuestions = [
 // Zustandsvariablen
 let questions = [];
 let currentQuestion = 0;
+let correctCount = 0;
 let score = 0;
 let timeLeft = 25;
 let timerInterval = null;
@@ -205,13 +206,14 @@ function checkAnswer(selected, auto=false){
 
   let points = 0;
   if(selected === q.correct){
+    correctCount++;
     points = 10 + timeLeft;
     score += points;
     if (result) { result.textContent = `Richtig! (+${points} Punkte)`; result.style.color = "green"; }
   } else if(auto){
     if (result) { result.textContent = `Zeit abgelaufen! Richtig: ${q.correct}`; result.style.color = "red"; }
   } else {
-    points = timeLeft/2;
+    points = Math.floor ( timeLeft / 2 );
     score += points;
     if (result) { result.textContent = `Falsch! Richtig: ${q.correct}`; result.style.color = "orange"; }
   }
@@ -247,11 +249,19 @@ function showEnd(){
     clearInterval(totalTimerInterval);
     totalTimerInterval = null;
   }
+
+  let bonus = correctCount * 10;
+  let finalScore = score + bonus + remainingTime
+  
   document.getElementById("quiz-container").innerHTML=`
     <h2>Quiz beendet!</h2>
-    <p>Dein Punktestand: <strong style="color:#ffe88c">${score + remainingTime}</strong></p>
+    <p>Dein Punktestand: <strong style="color:#ffe88c">${score}</strong></p>
+    <p>Deine Restzeit: <strong style="color:#ffe88c">${remainingTime}</strong></p>
+    <p>Deine richtigen Antworten: <strong style="color:#ffe88c">${correctCount}</strong></p>
+    <p>Dein Endstand: <strong style="color:#ffe88c">${finalScore}</strong></p>
   `;
 }
+
 
 
 
