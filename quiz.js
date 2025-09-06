@@ -69,7 +69,7 @@ window.startCountdown = function() {
     if(countdown>0) countdownElement.textContent = countdown;
     else {
       clearInterval(interval);
-      countdownElement.textContent = "<h1>Los!</h1>";
+      countdownElement.textContent = `<h1>"Los!"</h1>`;
       setTimeout(loadQuestion,1000);
     }
   },1000);
@@ -249,6 +249,7 @@ function showEnd(){
     <p>Dein Punktestand: <strong style="color:#ffe88c">${score + remainingTime}</strong></p>
   `;
 }
+
 
 
 
