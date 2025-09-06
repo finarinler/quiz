@@ -39,11 +39,13 @@ function loadQuestion() {
   document.getElementById("progress-bar").style.width = progressPercent + "%";
 
   const answersDiv = document.getElementById("answers");
-  q.answers.forEach((ans, index) => {
+  q.answers.forEach(ans => {
       const label = document.createElement("label");
-      label.innerHTML = `<input type="radio" name="answer" value="${ans}"> 
-                         <img src="https://i.imgur.com/2yR7o8B.png" style="width:20px;margin-right:8px;vertical-align:middle;"> ${ans}`;
-      // Korrektes Event binden
+      label.classList.add("answer-label");
+      label.innerHTML = `
+        <input type="radio" name="answer" value="${ans}">
+        <img src="https://i.imgur.com/2yR7o8B.png" style="width:20px;margin-right:8px;vertical-align:middle;"> ${ans}
+      `;
       label.querySelector("input").addEventListener("change", function() {
           checkAnswer(this.value);
       });
