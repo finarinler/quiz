@@ -7,6 +7,14 @@ const questions = [
 
 let currentQuestion = 0, score = 0, timeLeft = 15, timerInterval;
 
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+
 function startCountdown() {
   const container = document.getElementById("quiz-container");
   container.innerHTML = `<h2>Bereit?</h2><div class="countdown" id="countdown">3</div>`;
@@ -40,7 +48,7 @@ function loadQuestion() {
   document.getElementById("progress-bar").style.width = progressPercent + "%";
 
   const answersDiv = document.getElementById("answers");
-  q.answers.forEach(ans => {
+  shuffleArray([...q.answers]).forEach(ans => {
       const div = document.createElement("div");
       div.classList.add("answer-label");
       div.textContent = ans;
@@ -76,7 +84,7 @@ function checkAnswer(selected, auto=false) {
   const answers=document.querySelectorAll(".answer-label");
   
   answers.forEach(div=>{
-    div.style.pointerEvents = "none"; // blockiert weitere Klicks
+    div.style.pointerEvents = "none";
     if(div.textContent === q.correct) div.classList.add("correct");
     if(selected && div.textContent === selected && div.textContent !== q.correct) div.classList.add("wrong");
   });
@@ -88,7 +96,7 @@ function checkAnswer(selected, auto=false) {
   document.getElementById("score").innerHTML=`Punkte: <span style="color:#ffe88c">${score}</span>`;
 
   const nextBtnContainer=document.getElementById("next-btn-container");
-  if(currentQuestion<questions.length-1) nextBtnContainer.innerHTML=`<button onclick="nextQuestion()">Nächste Frage</button>`;
+  if(currentQuestion<questions.length-1) nextBtnContainer.innerHTML=`<button onclick="nextQuestion()">Nächste Frage ➡️</button>`;
   else nextBtnContainer.innerHTML=`<button onclick="showEnd()">Quiz beenden</button>`;
 }
 
@@ -96,10 +104,7 @@ function nextQuestion(){ currentQuestion++; loadQuestion(); }
 
 function showEnd() {
   document.getElementById("quiz-container").innerHTML=`
-    <h2>Quiz beendet!</h2>
+    <h2>Quiz beendet! 🎉</h2>
     <p>Dein Punktestand: <strong style="color:#ffe88c">${score}</strong></p>
   `;
 }
-
-
-
