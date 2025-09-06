@@ -1,12 +1,12 @@
-const allquestions = [
+window.allQuestions = [
   { question: "Was ist die Hauptstadt von Dragonflight?", answers: ["Dalaran","Orgrimmar","Dornogal","Valdrakken"], correct: "Valdrakken" },
   { question: "Wer war kein Anführer der Horde?", answers: ["Arthas","Vol'jin","Thrall","Garrosh"], correct: "Arthas" },
   { question: "Welche Farbe hat der Energiebalken von Wildheitsdruiden?", answers: ["Blau","Gelb","Rot","Grün"], correct: "Gelb" },
   { question: "Wie heißt der Kontinent, auf dem Sturmwind ist?", answers: ["Kalimdor","Östliche Pestländer","Östliches Königreich","Azeroth"],correct: "Östliches Königreich" }
 ];
 
-// änderbare Zustandsvariablen (let)
-let questions = [];           // <- hier ist es nur "let", nicht "const"
+// Zustandsvariablen
+let questions = [];
 let currentQuestion = 0;
 let score = 0;
 let timeLeft = 15;
@@ -25,19 +25,26 @@ function shuffleArray(array) {
   return array;
 }
 
-function pickRandomQuestions(allQuestions, n){
-  return shuffleArray([...allQuestions]).slice(0,n);
+function pickRandomQuestions(all, n){
+  return shuffleArray([...all]).slice(0,n);
 }
 
-// Start-Funktion global machen
+// globale Start-Funktion
 window.startCountdown = function() {
-  // reset / fresh start
+  // reset
   currentQuestion = 0;
   score = 0;
   remainingTime = totalTime;
 
-  // pick questions once per quiz
-  questions = pickRandomQuestions(allQuestions, 10);
+  // defensive: prüfe, ob window.allQuestions existiert
+  if (!window.allQuestions || !Array.isArray(window.allQuestions) || window.allQuestions.length === 0) {
+    console.error("Fehler: allQuestions ist nicht definiert oder leer. Prüfe quiz.js und Lade-Pfad.");
+    alert("Fehler: Fragen-Pool nicht gefunden. Schau in die Konsole.");
+    return;
+  }
+
+  // 10 zufällige Fragen auswählen
+  questions = pickRandomQuestions(window.allQuestions, 10);
 
   const container = document.getElementById("quiz-container");
   container.innerHTML = `<h2>Bereit?</h2><div class="countdown" id="countdown">3</div>`;
@@ -151,7 +158,7 @@ function checkAnswer(selected, auto=false){
 
   const nextBtnContainer = document.getElementById("next-btn-container");
   if(nextBtnContainer){
-    if(currentQuestion < questions.length-1) nextBtnContainer.innerHTML = `<button onclick="nextQuestion()">Nächste Frage</button>`;
+    if(currentQuestion < questions.length-1) nextBtnContainer.innerHTML = `<button onclick="nextQuestion()">Nächste Frage ➡️</button>`;
     else nextBtnContainer.innerHTML = `<button onclick="showEnd()">Quiz beenden</button>`;
   }
 }
@@ -167,10 +174,8 @@ function showEnd(){
     totalTimerInterval = null;
   }
   document.getElementById("quiz-container").innerHTML=`
-    <h2>Quiz beendet!</h2>
+    <h2>Quiz beendet! 🎉</h2>
     <p>Dein Punktestand: <strong style="color:#ffe88c">${score}</strong></p>
     <p>Restzeit: ${remainingTime}s</p>
   `;
 }
-
-
