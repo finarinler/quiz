@@ -1,7 +1,7 @@
 const questions = [
-  { question: "Was ist die Hauptstadt von Frankreich?", answers: ["Berlin","Paris","Rom"], correct: "Paris" },
-  { question: "Welches Tier ist das größte Landsäugetier?", answers: ["Elefant","Giraffe","Nilpferd"], correct: "Elefant" },
-  { question: "Welche Farbe hat Chlorophyll?", answers: ["Blau","Grün","Gelb"], correct: "Grün" }
+  { question: "Was ist die Hauptstadt von Azeroth?", answers: ["Stormwind","Orgrimmar","Darnassus"], correct: "Stormwind" },
+  { question: "Welches Tier ist am größten in Azeroth?", answers: ["Murloc","Riesenbär","Onyxia"], correct: "Riesenbär" },
+  { question: "Welche Farbe hat das Mana von Magiern?", answers: ["Blau","Grün","Rot"], correct: "Blau" }
 ];
 
 let currentQuestion = 0, score = 0, timeLeft = 15, timerInterval;
@@ -41,7 +41,7 @@ function loadQuestion() {
   const answersDiv=document.getElementById("answers");
   q.answers.forEach(ans=>{
     const label=document.createElement("label");
-    label.innerHTML=`<input type="radio" name="answer" value="${ans}" onchange="checkAnswer(this.value)"> ${ans}`;
+    label.innerHTML=`<img src="https://i.imgur.com/2yR7o8B.png" style="width:20px;margin-right:8px;vertical-align:middle;"> ${ans}`;
     answersDiv.appendChild(label);
   });
 
@@ -81,7 +81,7 @@ function checkAnswer(selected, auto=false) {
   else if(auto){ result.textContent=`Zeit abgelaufen! Richtig wäre: ${q.correct}`; result.style.color="red";}
   else{ result.textContent=`Falsch! Richtig wäre: ${q.correct}`; result.style.color="red";}
 
-  document.getElementById("score").textContent=`Punkte: ${score}`;
+  document.getElementById("score").innerHTML=`Punkte: <span style="color:#ffe88c">${score}</span>`;
 
   const nextBtnContainer=document.getElementById("next-btn-container");
   if(currentQuestion<questions.length-1) nextBtnContainer.innerHTML=`<button onclick="nextQuestion()">Nächste Frage ➡️</button>`;
@@ -93,6 +93,6 @@ function nextQuestion(){ currentQuestion++; loadQuestion(); }
 function showEnd() {
   document.getElementById("quiz-container").innerHTML=`
     <h2>Quiz beendet! 🎉</h2>
-    <p>Dein Punktestand: <strong>${score}</strong></p>
+    <p>Dein Punktestand: <strong style="color:#ffe88c">${score}</strong></p>
   `;
 }
