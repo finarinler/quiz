@@ -16,6 +16,9 @@ function shuffleArray(array) {
 }
 
 function startCountdown() {
+  // Fragen zufällig mischen
+  shuffleArray(questions);
+
   const container = document.getElementById("quiz-container");
   container.innerHTML = `<h2>Bereit?</h2><div class="countdown" id="countdown">3</div>`;
   let countdown = 3;
