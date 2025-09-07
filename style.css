@@ -196,3 +196,14 @@ summary h2 {
   transform: translateY(0);
   pointer-events: auto; /* Macht sie klickbar, wenn sichtbar */
 }
+
+/* Animation für Blinken */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.blink-text {
+  animation: blink 1.5s infinite;
+}
+
