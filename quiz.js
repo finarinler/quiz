@@ -141,33 +141,20 @@ function loadQuestion(){
   const pb = document.getElementById("progress-bar");
   if (pb) pb.style.width = progressPercent + "%";
 
-// Timer direkt starten
-startTimer();
-startTotalTimer();
+  // Timer direkt starten
+  startTimer();
+  startTotalTimer();
 
-// Antwort-Countdown einbauen
-let answerCountdown = 5;
+  // Antworten sofort einblenden
 const answersDiv = document.getElementById("answers");
-answersDiv.innerHTML = `<em>Antworten in ${answerCountdown}...</em>`;
-
-const countdownInterval = setInterval(() => {
-  answerCountdown--;
-  if (answerCountdown > 0) {
-    answersDiv.innerHTML = `<em>Antworten in ${answerCountdown}...</em>`;
-  } else {
-    clearInterval(countdownInterval);
-    answersDiv.innerHTML = ""; // Countdown löschen
-
-    // Antworten jetzt einblenden
-    shuffleArray([...q.answers]).forEach(ans => {
-      const div = document.createElement("div");
-      div.classList.add("answer-label");
-      div.textContent = ans;
-      div.addEventListener("click", ()=>checkAnswer(ans));
-      answersDiv.appendChild(div);
-    });
-  }
-}, 1000);
+answersDiv.innerHTML = "";
+shuffleArray([...q.answers]).forEach(ans => {
+  const div = document.createElement("div");
+  div.classList.add("answer-label");
+  div.textContent = ans;
+  div.addEventListener("click", ()=>checkAnswer(ans));
+  answersDiv.appendChild(div);
+});
 
   // Gesamt-Timer-HTML oben
   document.getElementById("quiz-container").innerHTML = `
@@ -326,6 +313,7 @@ function showEnd(){
     <h2>Dein Endstand: <strong> ${finalScore}</strong></h2>
   `;
 }
+
 
 
 
