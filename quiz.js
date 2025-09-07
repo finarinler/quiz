@@ -181,10 +181,6 @@ function startTimer(){
     let percent = (timeLeft/30)*100;
     timerBar.style.width = percent + "%";
 
-    if (timeLeft > 10) timerBar.className = "timer-bar green";
-    else if (timeLeft > 5) timerBar.className = "timer-bar yellow";
-    else timerBar.className = "timer-bar red";
-
     timeText.textContent = `${timeLeft}s`;
     if(timeLeft <=0){
       clearInterval(timerInterval);
@@ -268,6 +264,7 @@ function showEnd(){
     <h2>Dein Endstand: <strong> ${finalScore}</strong></h2>
   `;
 }
+
 
 
 
