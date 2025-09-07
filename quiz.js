@@ -20,6 +20,8 @@ window.allQuestions = [
   { question: "Welche Erweiterung erschien nicht im November?", answers: ["Wrath of the Lich King - 2008","Warlords of Draenor - 2014","Shadowlands - 2020","Burning Crusade - 2007"], correct: "Burning Crusade - 2007" },
   { question: "Welche Klasse können 'Kul Tiraner' 2025 nicht werden?", answers: ["Druiden","Schamane","Paladin","Mönch"], correct: "Paladin" },
   { question: "Wie heißt der Allianzanführer aus 'Die Exodar'?", answers: ["Prophet Velen","Hochexarch Turalyon","Valeera Sanguinar","Vereesa Windrunner"], correct: "Prophet Velen" },
+  { question: "Welches Minievent findet immer im November statt?", answers: ["Tag der Toten","Piratentag","Wanderfest","Ruf des Skarabäus"], correct: "Tag der Toten" },
+  { question: "Wer oder was ist 'Michael 'Schmutz' Fink'?", answers: ["Angellehrer in Theramore","Kochlehrer in Sturmwind","Flugmeister in Gilneas","Gastwirt in Boralus"], correct:"Angellehrer in Theramore" },
 ];
 
 // Hintergrund-Bilder
@@ -365,6 +367,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 });
+
 
 
 
