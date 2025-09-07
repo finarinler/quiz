@@ -214,12 +214,14 @@ function checkAnswer(selected, auto=false){
     if (result) { result.textContent = `Richtig! (+${points} Punkte)`; result.style.color = "green"; }
   } else if(auto){
     timeOverCount++;
-    if (result) { result.textContent = `Zeit abgelaufen! Richtig: ${q.correct}`; result.style.color = "red"; }
+    points = 5 * currentQuestion;
+    score -= points;
+    if (result) { result.textContent = `Zeit abgelaufen! (-${points} Punkte) Richtig: ${q.correct}`; result.style.color = "red"; }
   } else {
     falseCount ++;
     points = Math.floor ( timeLeft / 5 );
     score += points;
-    if (result) { result.textContent = `Falsch! Richtig: ${q.correct}`; result.style.color = "orange"; }
+    if (result) { result.textContent = `Falsch! (+${points} Bonuspunkte) Richtig: ${q.correct}`; result.style.color = "orange"; }
   }
 
   const scoreEl = document.getElementById("score");
@@ -269,6 +271,7 @@ function showEnd(){
     <h2>Dein Endstand: <strong>${finalScore}</strong></h2>
   `;
 }
+
 
 
 
