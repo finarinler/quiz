@@ -31,6 +31,13 @@ const backgrounds = [
   "url('pics/assets/bg12.jpg')",
 ];
 
+// Dynamischer Farbverlauf
+function getSmoothColor(percent) {
+  // percent: 0 = rot, 100 = grün
+  const hue = (percent * 120) / 100; // 0 = rot, 120 = grün
+  return `hsl(${hue}, 100%, 50%)`;
+}
+
 // Zustandsvariablen
 let questions = [];
 let currentQuestion = 0;
@@ -92,10 +99,7 @@ function startTotalTimer(){
     remainingTime--;
     let percent = (remainingTime / totalTime) * 100;
     totalBar.style.width = percent + "%";
-
-    if (remainingTime > totalTime * 0.5) totalBar.className = "total-bar green";
-    else if (remainingTime > totalTime * 0.2) totalBar.className = "total-bar yellow";
-    else totalBar.className = "total-bar red";
+    totalBar.style.backgroundColor = getSmoothColor(percent);
 
     totalText.textContent = `${remainingTime}s`;
 
@@ -264,6 +268,7 @@ function showEnd(){
     <h2>Dein Endstand: <strong> ${finalScore}</strong></h2>
   `;
 }
+
 
 
 
