@@ -45,7 +45,7 @@ let totalTime = 600; // 20 Fragen x 30 Sekunden
 let remainingTime = totalTime;
 let totalTimerInterval = null;
 
-// Hilfsfunktionen
+// Shuffle
 function shuffleArray(array) {
   for (let i = array.length -1; i>0; i--){
     const j = Math.floor(Math.random() * (i+1));
@@ -53,9 +53,14 @@ function shuffleArray(array) {
   }
   return array;
 }
-
 function pickRandomQuestions(all, n){
   return shuffleArray([...all]).slice(0,n);
+}
+
+// Smooth Color Helper
+function getSmoothColor(percent) {
+  const hue = (percent * 120) / 100; // 0=rot, 120=grün
+  return `linear-gradient(to right, hsl(${hue}, 100%, 50%), hsl(${hue}, 100%, 35%))`;
 }
 
 // Start
@@ -65,11 +70,11 @@ window.startCountdown = function() {
   correctCount = 0;
   remainingTime = totalTime;
 
-  questions = pickRandomQuestions(window.allQuestions, 20);
+  questions = pickRandomQuestions(window.allQuestions, 10);
 
   const container = document.getElementById("quiz-container");
-  container.innerHTML = `<h2>Bereit?</h2><div class="countdown" id="countdown">5</div>`;
-  let countdown = 5;
+  container.innerHTML = `<h2>Bereit?</h2><div class="countdown" id="countdown">3</div>`;
+  let countdown = 3;
   const countdownElement = document.getElementById("countdown");
   const interval = setInterval(()=>{
     countdown--;
@@ -92,11 +97,7 @@ function startTotalTimer(){
     remainingTime--;
     let percent = (remainingTime / totalTime) * 100;
     totalBar.style.width = percent + "%";
-
-    if (remainingTime > totalTime * 0.66) totalBar.className = "total-bar green";
-    else if (remainingTime > totalTime * 0.33) totalBar.className = "total-bar yellow";
-    else totalBar.className = "total-bar red";
-
+    totalBar.style.background = getSmoothColor(percent);
     totalText.textContent = `${remainingTime}s`;
 
     if(remainingTime <=0){
@@ -125,28 +126,29 @@ function loadQuestion(){
   document.body.style.backgroundSize = "cover";
   document.body.style.backgroundPosition = "center";
 
-document.getElementById("quiz-container").innerHTML = `
-  <div class="total-wrapper">
-    <span class="time-text" id="total-text">${remainingTime}s</span>
-    <div class="total-container"><div class="total-bar green" id="total-bar"></div></div>
-  </div>
-  <div class="progress-text">Frage ${currentQuestion+1} von ${questions.length}</div>
-  <div class="progress-bar-container"><div class="progress-bar" id="progress-bar"></div></div>
-  <h2 id="question">${q.question}</h2>
-  <div id="answers"></div>
-  <div class="timer-wrapper">
-    <span class="time-text" id="time-text">30s</span>
-    <div class="timer-container"><div class="timer-bar green" id="timer-bar"></div></div>
-  </div>
-  <div class="result" id="result"></div>
-  <div class="score" id="score">Punkte: ${score}</div>
-  <div id="next-btn-container"></div>
-`;
+  document.getElementById("quiz-container").innerHTML = `
+    <div class="total-wrapper">
+      <span class="time-text" id="total-text">${remainingTime}s</span>
+      <div class="total-container"><div class="total-bar" id="total-bar"></div></div>
+    </div>
+    <div class="progress-text">Frage ${currentQuestion+1} von ${questions.length}</div>
+    <div class="progress-bar-container"><div class="progress-bar" id="progress-bar"></div></div>
+    <h2 id="question">${q.question}</h2>
+    <div id="answers"></div>
+    <div class="timer-wrapper">
+      <span class="time-text" id="time-text">15s</span>
+      <div class="timer-container"><div class="timer-bar" id="timer-bar"></div></div>
+    </div>
+    <div class="result" id="result"></div>
+    <div class="score" id="score">Punkte: ${score}</div>
+    <div id="next-btn-container"></div>
+  `;
 
+  // Progress-Balken
   const progressPercent = (currentQuestion / questions.length) * 100;
   document.getElementById("progress-bar").style.width = progressPercent + "%";
 
-  // Antworten sofort einblenden
+  // Antworten einblenden
   const answersDiv = document.getElementById("answers");
   answersDiv.innerHTML = "";
   shuffleArray([...q.answers]).forEach(ans=>{
@@ -164,24 +166,21 @@ document.getElementById("quiz-container").innerHTML = `
 // Frage-Timer
 function startTimer(){
   clearInterval(timerInterval);
-  timeLeft = 30;
+  timeLeft = 15;
   const timerBar = document.getElementById("timer-bar");
   const timeText = document.getElementById("time-text");
 
   timerBar.style.width = "100%";
-  timerBar.className = "timer-bar green"; // start grün
+  timerBar.style.background = getSmoothColor(100);
   timeText.textContent = `${timeLeft}s`;
 
   timerInterval = setInterval(()=>{
     timeLeft--;
-    let percent = (timeLeft/30)*100;
+    let percent = (timeLeft/15)*100;
     timerBar.style.width = percent + "%";
-
-    if (timeLeft > 20) timerBar.className = "timer-bar green";
-    else if (timeLeft > 10) timerBar.className = "timer-bar yellow";
-    else timerBar.className = "timer-bar red";
-
+    timerBar.style.background = getSmoothColor(percent);
     timeText.textContent = `${timeLeft}s`;
+
     if(timeLeft <=0){
       clearInterval(timerInterval);
       timeText.textContent="0s";
@@ -264,6 +263,7 @@ function showEnd(){
     <h2>Dein Endstand: <strong> ${finalScore}</strong></h2>
   `;
 }
+
 
 
 
