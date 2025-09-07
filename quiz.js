@@ -263,14 +263,15 @@ function showEnd(){
   
   document.getElementById("quiz-container").innerHTML=`
     <h2>Quiz beendet!</h2>
-    <p>Dein Punktestand: <strong style="color:#ffe88c">${score}</strong></p>
-    <p>Deine Restzeit: <strong style="color:#ffe88c">${remainingTime}</strong></p>
-    <p>Deine richtigen Antworten: <strong style="color:#ffe88c">${correctCount}</strong> <style="color:green">(+${bonus} Bonuspunkte)</style></p>
-    <p>Deine falschen Antworten: <strong style="color:#ffe88c">${falseCount}</strong> <style="color:orange">(+${bonus2} Bonuspunkte)</style></p>
-    <p>Abgelaufene Zeit: <strong style="color:#ffe88c">${timeOverCount}</strong> <style="color:red">(-${bonus3} Punkte)</style></p>
-    <h2>Dein Endstand: <strong>${finalScore}</strong></h2>
+    <p>Dein Punktestand: <strong style="color:#ffe88c"> ${score}</strong></p>
+    <p>Deine Restzeit: <strong style="color:#ffe88c"> ${remainingTime}</strong></p>
+    <p>Deine richtigen Antworten: <strong style="color:#ffe88c">${correctCount}</strong> <style="color:green"> (+${bonus} Bonuspunkte)</style></p>
+    <p>Deine falschen Antworten: <strong style="color:#ffe88c">${falseCount}</strong> <style="color:orange"> (+${bonus2} Bonuspunkte)</style></p>
+    <p>Abgelaufene Zeit: <strong style="color:#ffe88c">${timeOverCount}</strong> <style="color:red"> (-${bonus3} Punkte)</style></p>
+    <h2>Dein Endstand: <strong> ${finalScore}</strong></h2>
   `;
 }
+
 
 
 
