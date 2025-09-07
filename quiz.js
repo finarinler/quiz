@@ -9,7 +9,7 @@ window.allQuestions = [
   { question: "Mit welchem Raid wurde der mythische Raidmodus eingeführt?", answers: ["Terrasse des Endlosen Frühlings","Thron des Donners","Schlacht um Orgrimmar","Das Herz der Angst"], correct: "Schlacht um Orgrimmar" },
   { question: "Welches AddOn erschien nach Wrath of the Lich King?", answers: ["Warlords of Draenor","Burning Crusade","Mists of Pandaria","Cataclysm"], correct: "Cataclysm" },
   { question: "Wann ging es zurück nach Karazhan?", answers: ["Battle for Azeroth","Warlords of Draenor","Legion","Cataclysm"], correct: "Legion" },
-  { question: "In welche Instanz ging es in Mists of Pandaria?", answers: ["Das Scharlachrote Kloster","Metbrauerei Glutbräu","Auchindoun","Todesminen"], correct: "Das Scharlachrote Kloster" },
+  { question: "Welche Instanz wurde in Mists of Pandaria überarbeitet?", answers: ["Das Scharlachrote Kloster","Metbrauerei Glutbräu","Auchindoun","Todesminen"], correct: "Das Scharlachrote Kloster" },
   { question: "Welches ist kein Raid aus Battle for Azeroth?", answers: ["Schlacht von Dazar'alor","Tiegel der Stürme","Der Ewige Palast","Der Schrein des Sturms"], correct: "Der Schrein des Sturms" },
   { question: "Wo war Hemet Nesingwary erstmals mit seiner Jagdgesellschaft?", answers: ["Azurblaues Gebirge - Dragonflight","Nagrand - Burning Crusade","Schlingendorntal - Classic","Zuldazar - Battle for Azeroth"], correct: "Schlingendorntal - Classic" },
   { question: "Wer oder was ist 'Antros'?", answers: ["Gastwirt in Oribos","Questmob in Maldraxxus","Weltboss in Zereth Mortis","Händler im Schlund"], correct: "Weltboss in Zereth Mortis" },
@@ -360,6 +360,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 });
+
 
 
 
