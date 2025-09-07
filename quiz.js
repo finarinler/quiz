@@ -173,17 +173,14 @@ function startTimer(){
   const timeText = document.getElementById("time-text");
 
   timerBar.style.width = "100%";
-  timerBar.className = "timer-bar green"; // start grün
+  timerBar.style.backgroundColor = getSmoothColor(100);
   timeText.textContent = `${timeLeft}s`;
 
   timerInterval = setInterval(()=>{
     timeLeft--;
     let percent = (timeLeft/30)*100;
     timerBar.style.width = percent + "%";
-
-    if (timeLeft > 20) timerBar.className = "timer-bar green";
-    else if (timeLeft > 10) timerBar.className = "timer-bar yellow";
-    else timerBar.className = "timer-bar red";
+    timerBar.style.backgroundColor = getSmoothColor(percent);
 
     timeText.textContent = `${timeLeft}s`;
     if(timeLeft <=0){
@@ -268,6 +265,7 @@ function showEnd(){
     <h2>Dein Endstand: <strong> ${finalScore}</strong></h2>
   `;
 }
+
 
 
 
