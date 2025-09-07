@@ -142,6 +142,7 @@ function startTotalTimer(){
 }
 
 // Frage laden - nur dynamischen Content ändern
+// Frage laden - nur dynamischen Content ändern
 function loadQuestion(){
   if(currentQuestion >= questions.length){ 
     showEnd(); 
@@ -185,7 +186,8 @@ function loadQuestion(){
   setTimeout(() => {
     const answersDiv = document.getElementById("answers");
     if (answersDiv) {
-      answersDiv.innerHTML = ""; // Antwortenbereich leeren
+      answersDiv.innerHTML = "";
+      
       const answerElements = []; // Temporäres Array für die Antwort-Divs
 
       shuffleArray([...q.answers]).forEach(ans=>{
@@ -194,14 +196,15 @@ function loadQuestion(){
         div.textContent = ans;
         div.addEventListener("click", ()=>checkAnswer(ans));
         answersDiv.appendChild(div);
-        answerElements.push(div); // Div zum Array hinzufügen
+        answerElements.push(div);
       });
-
-      setTimeout(() => {
-        answerElements.forEach(div => {
+      
+      // Jede Antwort mit einer gestaffelten Verzögerung einblenden
+      answerElements.forEach((div, index) => {
+        setTimeout(() => {
           div.classList.add('visible');
-        });
-      }, 50); // 50ms Verzögerung nach dem Hinzufügen der Elemente zum DOM
+        }, index * 100); // Verzögert die Anzeige jedes Elements um 100ms
+      });
     }
   }, 5000); // 5000 Millisekunden = 5 Sekunden
 }
@@ -343,5 +346,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 });
+
 
 
