@@ -60,7 +60,7 @@ function pickRandomQuestions(all, n){
 // Smooth Color Helper
 function getSmoothColor(percent) {
   const hue = (percent * 120) / 100; // 0=rot, 120=grün
-  return `linear-gradient(to right, hsl(${hue}, 100%, 50%), hsl(${hue}, 100%, 35%))`;
+  return `linear-gradient(to right, hsl(${hue}, 100%, 66%), hsl(${hue}, 100%, 33%))`;
 }
 
 // Start
@@ -70,11 +70,11 @@ window.startCountdown = function() {
   correctCount = 0;
   remainingTime = totalTime;
 
-  questions = pickRandomQuestions(window.allQuestions, 10);
+  questions = pickRandomQuestions(window.allQuestions, 20);
 
   const container = document.getElementById("quiz-container");
-  container.innerHTML = `<h2>Bereit?</h2><div class="countdown" id="countdown">3</div>`;
-  let countdown = 3;
+  container.innerHTML = `<h2>Bereit?</h2><div class="countdown" id="countdown">5</div>`;
+  let countdown = 5;
   const countdownElement = document.getElementById("countdown");
   const interval = setInterval(()=>{
     countdown--;
@@ -136,7 +136,7 @@ function loadQuestion(){
     <h2 id="question">${q.question}</h2>
     <div id="answers"></div>
     <div class="timer-wrapper">
-      <span class="time-text" id="time-text">15s</span>
+      <span class="time-text" id="time-text">30s</span>
       <div class="timer-container"><div class="timer-bar" id="timer-bar"></div></div>
     </div>
     <div class="result" id="result"></div>
@@ -166,7 +166,7 @@ function loadQuestion(){
 // Frage-Timer
 function startTimer(){
   clearInterval(timerInterval);
-  timeLeft = 15;
+  timeLeft = 30;
   const timerBar = document.getElementById("timer-bar");
   const timeText = document.getElementById("time-text");
 
@@ -176,7 +176,7 @@ function startTimer(){
 
   timerInterval = setInterval(()=>{
     timeLeft--;
-    let percent = (timeLeft/15)*100;
+    let percent = (timeLeft/30)*100;
     timerBar.style.width = percent + "%";
     timerBar.style.background = getSmoothColor(percent);
     timeText.textContent = `${timeLeft}s`;
@@ -263,6 +263,7 @@ function showEnd(){
     <h2>Dein Endstand: <strong> ${finalScore}</strong></h2>
   `;
 }
+
 
 
 
