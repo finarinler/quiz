@@ -59,7 +59,7 @@ function pickRandomQuestions(all, n){
 
 // Smooth Color Helper
 function getSmoothColor(percent) {
-  const hue = (percent * 120) / 100; // 0=rot, 120=grün
+  const hue = (percent * 100) / 100; // 0=rot, 100=grün
   return `linear-gradient(to right, hsl(${hue}, 100%, 66%), hsl(${hue}, 100%, 33%))`;
 }
 
@@ -263,6 +263,7 @@ function showEnd(){
     <h2>Dein Endstand: <strong> ${finalScore}</strong></h2>
   `;
 }
+
 
 
 
