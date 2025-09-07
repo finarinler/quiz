@@ -20,7 +20,15 @@ const backgrounds = [
   "url('pics/assets/bg1.jpg')",
   "url('pics/assets/bg2.jpg')",
   "url('pics/assets/bg3.jpg')",
-  "url('pics/assets/bg4.jpg')"
+  "url('pics/assets/bg4.jpg')",
+  "url('pics/assets/bg5.jpg')",
+  "url('pics/assets/bg6.jpg')",
+  "url('pics/assets/bg7.jpg')",
+  "url('pics/assets/bg8.jpg')",
+  "url('pics/assets/bg9.jpg')",
+  "url('pics/assets/bg10.jpg')",
+  "url('pics/assets/bg11.jpg')",
+  "url('pics/assets/bg12.jpg')",
 ];
 
 // Zustandsvariablen
@@ -246,3 +254,4 @@ function showEnd(){
     <h2>Dein Endstand: <strong> ${finalScore}</strong></h2>
   `;
 }
+
