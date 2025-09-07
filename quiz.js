@@ -143,7 +143,6 @@ function startTotalTimer(){
 }
 
 // Frage laden - nur dynamischen Content ändern
-// Frage laden - nur dynamischen Content ändern
 function loadQuestion(){
   if(currentQuestion >= questions.length){ 
     showEnd(); 
@@ -183,30 +182,31 @@ function loadQuestion(){
   // Timer sofort starten
   startTimer();
 
-  // Antworten erst nach 5 Sekunden anzeigen und dann smooth einblenden
-  setTimeout(() => {
-    const answersDiv = document.getElementById("answers");
-    if (answersDiv) {
-      answersDiv.innerHTML = "";
-      
-      const answerElements = []; // Temporäres Array für die Antwort-Divs
+  // Hinweis anzeigen, dass Antworten generiert werden
+  const answersDiv = document.getElementById("answers");
+  answersDiv.innerHTML = `<p style="color: #bfa259; font-weight: bold;">Antworten werden generiert...</p>`;
 
-      shuffleArray([...q.answers]).forEach(ans=>{
-        const div = document.createElement("div");
-        div.classList.add("answer-label");
-        div.textContent = ans;
-        div.addEventListener("click", ()=>checkAnswer(ans));
-        answersDiv.appendChild(div);
-        answerElements.push(div);
-      });
-      
-      // Jede Antwort mit einer gestaffelten Verzögerung einblenden
-      answerElements.forEach((div, index) => {
-        setTimeout(() => {
-          div.classList.add('visible');
-        }, index * 100); // Verzögert die Anzeige jedes Elements um 100ms
-      });
-    }
+  // Antworten nach 5 Sekunden anzeigen und smooth einblenden
+  setTimeout(() => {
+    answersDiv.innerHTML = ""; // Hinweis entfernen
+    
+    const answerElements = [];
+
+    shuffleArray([...q.answers]).forEach(ans=>{
+      const div = document.createElement("div");
+      div.classList.add("answer-label");
+      div.textContent = ans;
+      div.addEventListener("click", ()=>checkAnswer(ans));
+      answersDiv.appendChild(div);
+      answerElements.push(div);
+    });
+    
+    // Jede Antwort mit einer gestaffelten Verzögerung einblenden (jetzt 150ms statt 100ms)
+    answerElements.forEach((div, index) => {
+      setTimeout(() => {
+        div.classList.add('visible');
+      }, index * 150); // Verzögerung um 150ms, um den Effekt zu verlangsamen
+    });
   }, 5000); // 5000 Millisekunden = 5 Sekunden
 }
 
@@ -347,6 +347,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 });
+
 
 
 
