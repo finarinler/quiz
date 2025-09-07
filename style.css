@@ -175,8 +175,12 @@ summary h2 {
 
 .game-screen.active {
   display: block;
-
 }
 
+#question {
+  font-size: 28px; /* oder 28px, 32px je nach Wunsch */
+  font-weight: bold;
+  margin-bottom: 20px;
+}
 
 
