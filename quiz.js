@@ -184,7 +184,7 @@ function loadQuestion(){
 
   // Hinweis anzeigen, dass Antworten generiert werden
   const answersDiv = document.getElementById("answers");
-  answersDiv.innerHTML = `<p style="color: #bfa259; font-weight: bold;">Antworten werden generiert...</p>`;
+  answersDiv.innerHTML = `<p class="blink-text" style="color: #bfa259; font-weight: bold;">Antworten werden generiert...</p>`;
 
   // Antworten nach 5 Sekunden anzeigen und smooth einblenden
   setTimeout(() => {
@@ -347,6 +347,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 });
+
 
 
 
