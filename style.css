@@ -166,19 +166,5 @@ button:hover {
   text-shadow: 1px 1px 2px #000;
 }
 
-/* Für Farbverläufe */
-.timer-bar.green, .total-bar.green { background: linear-gradient(to right, #4caf50, #81c784); }
-.timer-bar.yellow, .total-bar.yellow { background: linear-gradient(to right, #ffeb3b, #fbc02d); }
-.timer-bar.red, .total-bar.red { background: linear-gradient(to right, #f44336, #e53935); }
-
-.timer-container, .total-container {
-  width: 100%;
-  height: 20px;
-  background: rgba(0,0,0,0.5);
-  border-radius: 8px;
-  margin-top: 8px;
-  overflow: hidden;
-}
-
 
 
