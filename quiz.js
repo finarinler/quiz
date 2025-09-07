@@ -315,7 +315,6 @@ function showEnd(){
     <p>Abgelaufene Zeit: <strong style="color:#ffe88c">${timeOverCount}</strong> <span style="color:red">(-${bonus3} Punkte)</span></p>
     <hr style="border-color: #bfa259; margin: 20px 0;">
     <h2>Dein Endstand: <strong style="color:#ffe88c">${finalScore}</strong></h2>
-    <button onclick="location.reload()">Nochmal spielen</button>
   `;
 }
 
@@ -325,4 +324,5 @@ document.addEventListener('DOMContentLoaded', function() {
   if (startBtn) {
     startBtn.onclick = window.startCountdown;
   }
+
 });
