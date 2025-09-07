@@ -148,7 +148,7 @@ function loadQuestion(){
     return; 
   }
   
-  const q = questions[currentQuestion];
+
 
   const answersDiv = document.getElementById("answers");
 if (answersDiv) {
@@ -345,6 +345,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
 });
+
 
 
 
