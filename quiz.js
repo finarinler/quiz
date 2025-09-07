@@ -122,21 +122,6 @@ function loadQuestion(){
   if(currentQuestion >= questions.length){ showEnd(); return; }
   const q = questions[currentQuestion];
   
-  document.getElementById("quiz-container").innerHTML = `
-    <div id="total-time" class="quiz-time">Restzeit: ${remainingTime}s</div>
-    <div class="progress-text">Frage ${currentQuestion+1} von ${questions.length}</div>
-    <div class="progress-bar-container"><div class="progress-bar" id="progress-bar"></div></div>
-    <h2 id="question">${q.question}</h2>
-    <div id="answers"><em>Antworten werden geladen...</em></div>
-    <div class="timer-wrapper">
-      <span class="time-text" id="time-text">15s</span>
-      <div class="timer-container"><div class="timer-bar" id="timer-bar"></div></div>
-    </div>
-    <div class="result" id="result"></div>
-    <div class="score" id="score">Punkte: ${score}</div>
-    <div id="next-btn-container"></div>
-  `;
-
   const progressPercent = (currentQuestion / questions.length) * 100;
   const pb = document.getElementById("progress-bar");
   if (pb) pb.style.width = progressPercent + "%";
@@ -313,6 +298,7 @@ function showEnd(){
     <h2>Dein Endstand: <strong> ${finalScore}</strong></h2>
   `;
 }
+
 
 
 
