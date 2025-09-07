@@ -1,6 +1,6 @@
 body {
   font-family: 'Cinzel', serif;
-  background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+  background: url('pics/assets/bg1.jpg');
   display:flex;
   justify-content:center;
   align-items:center;
@@ -176,4 +176,5 @@ summary h2 {
 
 .game-screen.active {
   display: block;
+
 }
