@@ -1,6 +1,7 @@
 body {
   font-family: 'Cinzel', serif;
-  background: url('pics/assets/bg1.jpg') no-repeat center center fixed;;
+  background: url('pics/assets/bg1.jpg') no-repeat center center fixed;
+  background-size: cover;
   display:flex;
   justify-content:center;
   align-items:center;
@@ -178,4 +179,5 @@ summary h2 {
   display: block;
 
 }
+
 
