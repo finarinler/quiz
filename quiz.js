@@ -367,13 +367,16 @@ function showEnd(){
 }
 
 // Start-Button Event
+// Start-Button Event
 document.addEventListener('DOMContentLoaded', function() {
   const startBtn = document.getElementById("start-btn");
   if (startBtn) {
-    startBtn.onclick = window.startCountdown;
+    startBtn.addEventListener("click", () => {
+      startCountdown();
+    });
   }
-
 });
+
 
 
 
