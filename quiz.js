@@ -93,8 +93,8 @@ function startTotalTimer(){
     let percent = (remainingTime / totalTime) * 100;
     totalBar.style.width = percent + "%";
 
-    if (remainingTime > totalTime * 0.5) totalBar.className = "total-bar green";
-    else if (remainingTime > totalTime * 0.2) totalBar.className = "total-bar yellow";
+    if (remainingTime > totalTime * 0.66) totalBar.className = "total-bar green";
+    else if (remainingTime > totalTime * 0.33) totalBar.className = "total-bar yellow";
     else totalBar.className = "total-bar red";
 
     totalText.textContent = `${remainingTime}s`;
@@ -177,8 +177,8 @@ function startTimer(){
     let percent = (timeLeft/30)*100;
     timerBar.style.width = percent + "%";
 
-    if (timeLeft > 10) timerBar.className = "timer-bar green";
-    else if (timeLeft > 5) timerBar.className = "timer-bar yellow";
+    if (timeLeft > 20) timerBar.className = "timer-bar green";
+    else if (timeLeft > 10) timerBar.className = "timer-bar yellow";
     else timerBar.className = "timer-bar red";
 
     timeText.textContent = `${timeLeft}s`;
@@ -264,6 +264,7 @@ function showEnd(){
     <h2>Dein Endstand: <strong> ${finalScore}</strong></h2>
   `;
 }
+
 
 
 
