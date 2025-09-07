@@ -1,3 +1,4 @@
+// Fragen-Pool (global)
 window.allQuestions = [
   { question: "Was ist die Hauptstadt von Dragonflight?", answers: ["Dalaran","Orgrimmar","Dornogal","Valdrakken"], correct: "Valdrakken" },
   { question: "Wer war kein Anführer der Horde?", answers: ["Arthas","Vol'jin","Thrall","Garrosh"], correct: "Arthas" },
@@ -14,6 +15,14 @@ window.allQuestions = [
   
 ];
 
+// Hintergrund-Bilder
+const backgrounds = [
+  "url('pics/assets/bg1.jpg')",
+  "url('pics/assets/bg2.jpg')",
+  "url('pics/assets/bg3.jpg')",
+  "url('pics/assets/bg4.jpg')"
+];
+
 // Zustandsvariablen
 let questions = [];
 let currentQuestion = 0;
@@ -28,47 +37,25 @@ let totalTime = 600; // 20 Fragen x 30 Sekunden
 let remainingTime = totalTime;
 let totalTimerInterval = null;
 
-// Farb-Helper (lerp + hex<->rgb)
-function lerp(a, b, t) { return Math.round(a + (b - a) * t); }
-function rgbToHex(r,g,b){ return "#" + [r,g,b].map(v => v.toString(16).padStart(2,'0')).join(''); }
-function hexToRgb(hex){ const h = hex.replace('#',''); return [parseInt(h.substring(0,2),16), parseInt(h.substring(2,4),16), parseInt(h.substring(4,6),16)]; }
-
-// Farben: grün, gelb, rot
-const COLOR_GREEN = "#6fba3c";
-const COLOR_YELLOW = "#ffe88c";
-const COLOR_RED = "#d42e2e";
-
-// percent: 0..100
-function getTimerColor(percent){
-  const p = Math.max(0, Math.min(100, percent)) / 100;
-  if (p > 0.5) {
-    const t = (p - 0.5) / 0.5;
-    const [yr, yg, yb] = hexToRgb(COLOR_YELLOW);
-    const [gr, gg, gb] = hexToRgb(COLOR_GREEN);
-    return rgbToHex(lerp(yr, gr, t), lerp(yg, gg, t), lerp(yb, gb, t));
-  } else {
-    const t = p / 0.5;
-    const [rr, rg, rb] = hexToRgb(COLOR_RED);
-    const [yr, yg, yb] = hexToRgb(COLOR_YELLOW);
-    return rgbToHex(lerp(rr, yr, t), lerp(rg, yg, t), lerp(rb, yb, t));
+// Hilfsfunktionen
+function shuffleArray(array) {
+  for (let i = array.length -1; i>0; i--){
+    const j = Math.floor(Math.random() * (i+1));
+    [array[i], array[j]] = [array[j], array[i]];
   }
+  return array;
 }
 
-// Shuffler + Picker
-function shuffleArray(array){ for (let i = array.length -1; i>0; i--){ const j = Math.floor(Math.random()*(i+1)); [array[i], array[j]] = [array[j], array[i]]; } return array; }
-function pickRandomQuestions(all, n){ return shuffleArray([...all]).slice(0,n); }
+function pickRandomQuestions(all, n){
+  return shuffleArray([...all]).slice(0,n);
+}
 
-// globale Start-Funktion
+// Start
 window.startCountdown = function() {
   currentQuestion = 0;
   score = 0;
+  correctCount = 0;
   remainingTime = totalTime;
-
-  if (!window.allQuestions || !Array.isArray(window.allQuestions) || window.allQuestions.length === 0) {
-    console.error("Fragen-Pool nicht gefunden.");
-    alert("Fehler: Fragen-Pool nicht gefunden. Schau in die Konsole.");
-    return;
-  }
 
   questions = pickRandomQuestions(window.allQuestions, 20);
 
@@ -87,29 +74,27 @@ window.startCountdown = function() {
   },1000);
 };
 
-// Gesamt-Timer starten/resume
+// Gesamt-Timer
 function startTotalTimer(){
   if(totalTimerInterval) return;
   totalTimerInterval = setInterval(()=>{
     remainingTime--;
-    const totalBar = document.querySelector(".total-timer-bar");
-    const totalText = document.querySelector(".total-time-text");
-    const percent = Math.max(0, (remainingTime / totalTime) * 100);
-    if (totalBar) {
-      totalBar.style.width = percent + "%";
-      const col = getTimerColor(percent);
-      totalBar.style.background = `linear-gradient(90deg, ${col}, ${col})`;
+    const el = document.getElementById("total-time");
+    if (el) {
+      el.textContent = `Gesamtzeit: ${remainingTime}s`;
+      const percent = remainingTime / totalTime;
+      if (percent > 0.5) el.style.color = "limegreen";
+      else if (percent > 0.2) el.style.color = "gold";
+      else el.style.color = "red";
     }
-    if (totalText) totalText.textContent = `Restzeit: ${remainingTime}s`;
-    if (remainingTime <= 0) {
+    if(remainingTime <=0){
       clearInterval(totalTimerInterval);
       totalTimerInterval = null;
       remainingTime = 0;
       showEnd();
     }
-  }, 1000);
+  },1000);
 }
-
 function pauseTotalTimer(){
   if(totalTimerInterval){
     clearInterval(totalTimerInterval);
@@ -121,103 +106,73 @@ function pauseTotalTimer(){
 function loadQuestion(){
   if(currentQuestion >= questions.length){ showEnd(); return; }
   const q = questions[currentQuestion];
-  
-  const progressPercent = (currentQuestion / questions.length) * 100;
-  document.getElementByID("progress-bar").style.width = progressPercent + "%";
 
-  // Timer direkt starten
-  startTimer();
-  startTotalTimer();
+  // Zufälliger Hintergrund
+  const randomBg = backgrounds[Math.floor(Math.random() * backgrounds.length)];
+  document.body.style.backgroundImage = randomBg;
+  document.body.style.backgroundSize = "cover";
+  document.body.style.backgroundPosition = "center";
 
-  // Antworten sofort einblenden
-const answersDiv = document.getElementById("answers");
-answersDiv.innerHTML = "";
-shuffleArray([...q.answers]).forEach(ans => {
-  const div = document.createElement("div");
-  div.classList.add("answer-label");
-  div.textContent = ans;
-  div.addEventListener("click", ()=>checkAnswer(ans));
-  answersDiv.appendChild(div);
-});
-
-  // Gesamt-Timer-HTML oben
   document.getElementById("quiz-container").innerHTML = `
-    <div class="total-timer-wrapper">
-      <div class="total-time-text">Restzeit: ${remainingTime}s</div>
-      <div class="total-timer-container"><div class="total-timer-bar" id="total-timer-bar"></div></div>
-    </div>
-
+    <div id="total-time" class="quiz-time">Gesamtzeit: ${remainingTime}s</div>
     <div class="progress-text">Frage ${currentQuestion+1} von ${questions.length}</div>
     <div class="progress-bar-container"><div class="progress-bar" id="progress-bar"></div></div>
     <h2 id="question">${q.question}</h2>
     <div id="answers"></div>
-
     <div class="timer-wrapper">
-      <span class="time-text" id="time-text">30s</span>
+      <span class="time-text" id="time-text">15s</span>
       <div class="timer-container"><div class="timer-bar" id="timer-bar"></div></div>
     </div>
-
     <div class="result" id="result"></div>
     <div class="score" id="score">Punkte: ${score}</div>
     <div id="next-btn-container"></div>
   `;
 
   const progressPercent = (currentQuestion / questions.length) * 100;
-  const pb = document.getElementById("progress-bar");
-  if (pb) pb.style.width = progressPercent + "%";
+  document.getElementById("progress-bar").style.width = progressPercent + "%";
 
+  // Antworten sofort einblenden
+  const answersDiv = document.getElementById("answers");
+  answersDiv.innerHTML = "";
   shuffleArray([...q.answers]).forEach(ans=>{
     const div = document.createElement("div");
     div.classList.add("answer-label");
     div.textContent = ans;
     div.addEventListener("click", ()=>checkAnswer(ans));
-    document.getElementById("answers").appendChild(div);
+    answersDiv.appendChild(div);
   });
 
-  // setze initialen Zustand des Gesamt-Timers (Breite + Farbe)
-  const totalBar = document.getElementById("total-timer-bar");
-  if (totalBar) {
-    const percent = Math.max(0, (remainingTime / totalTime) * 100);
-    totalBar.style.width = percent + "%";
-    totalBar.style.background = `linear-gradient(90deg, ${getTimerColor(percent)}, ${getTimerColor(percent)})`;
-  }
-
-  // Frage-Timer starten + Gesamt-Timer (resume falls pausiert)
   startTimer();
   startTotalTimer();
 }
 
-// Einzel-Frage-Timer (setzt Farbe der timer-bar jede Sekunde)
+// Frage-Timer
 function startTimer(){
   clearInterval(timerInterval);
-  timeLeft = 30;
+  timeLeft = 15;
   const timerBar = document.getElementById("timer-bar");
   const timeText = document.getElementById("time-text");
   if (timerBar) timerBar.style.width = "100%";
   if (timeText) timeText.textContent = `${timeLeft}s`;
-  if (timerBar) timerBar.style.background = `linear-gradient(90deg, ${getTimerColor(100)}, ${getTimerColor(100)})`;
-
   timerInterval = setInterval(()=>{
     timeLeft--;
-    let percent = Math.max(0, (timeLeft / 30) * 100);
-    const timerBarLocal = document.getElementById("timer-bar");
-    const timeTextLocal = document.getElementById("time-text");
-
-    if (timerBarLocal) {
-      timerBarLocal.style.width = percent + "%";
-      const color = getTimerColor(percent);
-      timerBarLocal.style.background = `linear-gradient(90deg, ${color}, ${color})`;
+    let percent = (timeLeft/15)*100;
+    if (timerBar) {
+      timerBar.style.width = percent + "%";
+      if (percent > 50) timerBar.style.backgroundColor = "limegreen";
+      else if (percent > 20) timerBar.style.backgroundColor = "gold";
+      else timerBar.style.backgroundColor = "red";
     }
-    if (timeTextLocal) timeTextLocal.textContent = `${timeLeft}s`;
+    if (timeText) timeText.textContent = `${timeLeft}s`;
     if(timeLeft <=0){
       clearInterval(timerInterval);
-      if (timeTextLocal) timeTextLocal.textContent="0s";
+      if (timeText) timeText.textContent="0s";
       checkAnswer(null,true);
     }
   },1000);
 }
 
-// Antwort prüfen: pausiert Gesamt-Timer solange die Antwort angezeigt wird
+// Antwort prüfen
 function checkAnswer(selected, auto=false){
   clearInterval(timerInterval);
   pauseTotalTimer();
@@ -250,25 +205,18 @@ function checkAnswer(selected, auto=false){
     if (result) { result.textContent = `Falsch! (+${points} Bonuspunkte) Richtig: ${q.correct}`; result.style.color = "orange"; }
   }
 
-  const scoreEl = document.getElementById("score");
-  if (scoreEl) scoreEl.innerHTML = `Punkte: <span style="color:#ffe88c">${score}</span>`;
+  document.getElementById("score").innerHTML = `Punkte: <span style="color:#ffe88c">${score}</span>`;
 
   const nextBtnContainer = document.getElementById("next-btn-container");
-  if(nextBtnContainer){
-    if(currentQuestion < questions.length-1) nextBtnContainer.innerHTML = `<button id="next-btn">Nächste Frage</button>`;
-    else nextBtnContainer.innerHTML = `<button id="end-btn">Quiz beenden</button>`;
-  }
+  if(currentQuestion < questions.length-1)
+    nextBtnContainer.innerHTML = `<button id="next-btn">Nächste Frage</button>`;
+  else
+    nextBtnContainer.innerHTML = `<button id="end-btn">Quiz beenden</button>`;
 
   const nb = document.getElementById("next-btn");
-  if(nb) nb.onclick = function(){
-    // resume total timer beim weitermachen
-    startTotalTimer();
-    nextQuestion();
-  };
+  if(nb) nb.onclick = ()=>{ startTotalTimer(); nextQuestion(); };
   const eb = document.getElementById("end-btn");
-  if(eb) eb.onclick = function(){
-    showEnd();
-  };
+  if(eb) eb.onclick = ()=>{ showEnd(); };
 }
 
 function nextQuestion(){
@@ -281,6 +229,7 @@ function showEnd(){
     clearInterval(totalTimerInterval);
     totalTimerInterval = null;
   }
+
 
   let bonus = correctCount * 10;
   let bonus2 = falseCount *5;
@@ -297,19 +246,3 @@ function showEnd(){
     <h2>Dein Endstand: <strong> ${finalScore}</strong></h2>
   `;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
