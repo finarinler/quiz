@@ -7,8 +7,7 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <!-- Start Screen -->
-  <div class="quiz-container" id="start-screen">
+  <div class="quiz-container active" id="start-screen">
     <h1>Willkommen zum WoW-Quiz</h1><br>
     <p>Klicke auf den Button, um zu starten.</p>
     <button id="start-btn">Quiz starten</button>
@@ -28,15 +27,12 @@
     </details>
   </div>
 
-  <!-- Countdown Screen -->
-  <div class="quiz-container game-screen" id="countdown-screen">
+  <div class="quiz-container" id="countdown-screen">
     <h2>Bereit?</h2>
     <div class="countdown" id="countdown">5</div>
   </div>
 
-  <!-- Game Screen -->
-  <div class="quiz-container game-screen" id="game-screen">
-    <!-- Fixed Total Timer - bleibt immer sichtbar -->
+  <div class="quiz-container" id="game-screen">
     <div class="total-wrapper">
       <span class="time-text" id="total-text">600s</span>
       <div class="total-container">
@@ -44,19 +40,14 @@
       </div>
     </div>
     
-    <!-- Dynamic Content Area -->
     <div id="dynamic-content">
-      <!-- Hier wird der Inhalt dynamisch geladen -->
-    </div>
+      </div>
   </div>
 
-  <!-- End Screen -->
-  <div class="quiz-container game-screen" id="end-screen">
+  <div class="quiz-container" id="end-screen">
     <div id="end-content">
-      <!-- Endergebnis wird hier eingefügt -->
-    </div>
+      </div>
   </div>
   <script src="quiz.js"></script>
 </body>
-
 </html>
