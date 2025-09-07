@@ -85,16 +85,20 @@ window.startCountdown = function() {
 // Gesamt-Timer
 function startTotalTimer(){
   if(totalTimerInterval) return;
+  const totalBar = document.getElementById("total-bar");
+  const totalText = document.getElementById("total-text");
+
   totalTimerInterval = setInterval(()=>{
     remainingTime--;
-    const el = document.getElementById("total-time");
-    if (el) {
-      el.textContent = `Gesamtzeit: ${remainingTime}s`;
-      const percent = remainingTime / totalTime;
-      if (percent > 0.5) el.style.color = "limegreen";
-      else if (percent > 0.2) el.style.color = "gold";
-      else el.style.color = "red";
-    }
+    let percent = (remainingTime / totalTime) * 100;
+    totalBar.style.width = percent + "%";
+
+    if (remainingTime > totalTime * 0.5) totalBar.className = "total-bar green";
+    else if (remainingTime > totalTime * 0.2) totalBar.className = "total-bar yellow";
+    else totalBar.className = "total-bar red";
+
+    totalText.textContent = `${remainingTime}s`;
+
     if(remainingTime <=0){
       clearInterval(totalTimerInterval);
       totalTimerInterval = null;
@@ -121,20 +125,23 @@ function loadQuestion(){
   document.body.style.backgroundSize = "cover";
   document.body.style.backgroundPosition = "center";
 
-  document.getElementById("quiz-container").innerHTML = `
-    <div id="total-time" class="quiz-time">Gesamtzeit: ${remainingTime}s</div>
-    <div class="progress-text">Frage ${currentQuestion+1} von ${questions.length}</div>
-    <div class="progress-bar-container"><div class="progress-bar" id="progress-bar"></div></div>
-    <h2 id="question">${q.question}</h2>
-    <div id="answers"></div>
-    <div class="timer-wrapper">
-      <span class="time-text" id="time-text">30s</span>
-      <div class="timer-container"><div class="timer-bar" id="timer-bar"></div></div>
-    </div>
-    <div class="result" id="result"></div>
-    <div class="score" id="score">Punkte: ${score}</div>
-    <div id="next-btn-container"></div>
-  `;
+document.getElementById("quiz-container").innerHTML = `
+  <div class="total-wrapper">
+    <span class="time-text" id="total-text">${remainingTime}s</span>
+    <div class="total-container"><div class="total-bar green" id="total-bar"></div></div>
+  </div>
+  <div class="progress-text">Frage ${currentQuestion+1} von ${questions.length}</div>
+  <div class="progress-bar-container"><div class="progress-bar" id="progress-bar"></div></div>
+  <h2 id="question">${q.question}</h2>
+  <div id="answers"></div>
+  <div class="timer-wrapper">
+    <span class="time-text" id="time-text">15s</span>
+    <div class="timer-container"><div class="timer-bar green" id="timer-bar"></div></div>
+  </div>
+  <div class="result" id="result"></div>
+  <div class="score" id="score">Punkte: ${score}</div>
+  <div id="next-btn-container"></div>
+`;
 
   const progressPercent = (currentQuestion / questions.length) * 100;
   document.getElementById("progress-bar").style.width = progressPercent + "%";
@@ -160,21 +167,24 @@ function startTimer(){
   timeLeft = 30;
   const timerBar = document.getElementById("timer-bar");
   const timeText = document.getElementById("time-text");
-  if (timerBar) timerBar.style.width = "100%";
-  if (timeText) timeText.textContent = `${timeLeft}s`;
+
+  timerBar.style.width = "100%";
+  timerBar.className = "timer-bar green"; // start grün
+  timeText.textContent = `${timeLeft}s`;
+
   timerInterval = setInterval(()=>{
     timeLeft--;
-    let percent = (timeLeft/30)*100;
-    if (timerBar) {
-      timerBar.style.width = percent + "%";
-      if (percent > 50) timerBar.style.backgroundColor = "limegreen";
-      else if (percent > 20) timerBar.style.backgroundColor = "gold";
-      else timerBar.style.backgroundColor = "red";
-    }
-    if (timeText) timeText.textContent = `${timeLeft}s`;
+    let percent = (timeLeft/15)*100;
+    timerBar.style.width = percent + "%";
+
+    if (timeLeft > 10) timerBar.className = "timer-bar green";
+    else if (timeLeft > 5) timerBar.className = "timer-bar yellow";
+    else timerBar.className = "timer-bar red";
+
+    timeText.textContent = `${timeLeft}s`;
     if(timeLeft <=0){
       clearInterval(timerInterval);
-      if (timeText) timeText.textContent="0s";
+      timeText.textContent="0s";
       checkAnswer(null,true);
     }
   },1000);
@@ -254,6 +264,7 @@ function showEnd(){
     <h2>Dein Endstand: <strong> ${finalScore}</strong></h2>
   `;
 }
+
 
 
 
