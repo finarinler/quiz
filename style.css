@@ -182,3 +182,17 @@ summary h2 {
   font-weight: bold;
   margin-bottom: 20px;
 }
+
+/* Smooth Einblenden für Antworten */
+.answer-label {
+  opacity: 0;
+  transform: translateY(10px); /* Optional: leicht von unten nach oben gleiten */
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out; /* Übergänge definieren */
+  pointer-events: none; /* Macht sie unklickbar, solange unsichtbar */
+}
+
+.answer-label.visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto; /* Macht sie klickbar, wenn sichtbar */
+}
