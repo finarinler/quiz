@@ -181,18 +181,27 @@ function loadQuestion(){
   // Timer sofort starten
   startTimer();
 
-  // Antworten erst nach 5 Sekunden anzeigen
+  // Antworten erst nach 5 Sekunden anzeigen und dann smooth einblenden
   setTimeout(() => {
     const answersDiv = document.getElementById("answers");
     if (answersDiv) {
-      answersDiv.innerHTML = "";
+      answersDiv.innerHTML = ""; // Antwortenbereich leeren
+      const answerElements = []; // Temporäres Array für die Antwort-Divs
+
       shuffleArray([...q.answers]).forEach(ans=>{
         const div = document.createElement("div");
         div.classList.add("answer-label");
         div.textContent = ans;
         div.addEventListener("click", ()=>checkAnswer(ans));
         answersDiv.appendChild(div);
+        answerElements.push(div); // Div zum Array hinzufügen
       });
+
+      setTimeout(() => {
+        answerElements.forEach(div => {
+          div.classList.add('visible');
+        });
+      }, 50); // 50ms Verzögerung nach dem Hinzufügen der Elemente zum DOM
     }
   }, 5000); // 5000 Millisekunden = 5 Sekunden
 }
@@ -334,4 +343,5 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 });
+
 
