@@ -219,7 +219,7 @@ function checkAnswer(selected, auto=false){
     if (result) { result.textContent = `Zeit abgelaufen! (-${points} Punkte) Richtig: ${q.correct}`; result.style.color = "red"; }
   } else {
     falseCount ++;
-    points = Math.floor 2 + ( timeLeft / 5 );
+    points = Math.floor ( 2 + timeLeft / 5 );
     score += points;
     if (result) { result.textContent = `Falsch! (+${points} Bonuspunkte) Richtig: ${q.correct}`; result.style.color = "orange"; }
   }
@@ -271,6 +271,7 @@ function showEnd(){
     <h2>Dein Endstand: <strong>${finalScore}</strong></h2>
   `;
 }
+
 
 
 
