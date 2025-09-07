@@ -10,6 +10,8 @@ window.allQuestions = [
 let questions = [];
 let currentQuestion = 0;
 let correctCount = 0;
+let falseCount = 0;
+let timeOverCount = 0;
 let score = 0;
 let timeLeft = 25;
 let timerInterval = null;
@@ -211,8 +213,12 @@ function checkAnswer(selected, auto=false){
     score += points;
     if (result) { result.textContent = `Richtig! (+${points} Punkte)`; result.style.color = "green"; }
   } else if(auto){
-    if (result) { result.textContent = `Zeit abgelaufen! Richtig: ${q.correct}`; result.style.color = "red"; }
+    timeOverCount++;
+    points = 15;
+    score -= points;
+    if (result) { result.textContent = `Zeit abgelaufen! Richtig: ${q.correct} (-${points} Punkte)`; result.style.color = "red"; }
   } else {
+    falseCount ++;
     points = Math.floor ( timeLeft / 2 );
     score += points;
     if (result) { result.textContent = `Falsch! Richtig: ${q.correct}`; result.style.color = "orange"; }
@@ -251,23 +257,20 @@ function showEnd(){
   }
 
   let bonus = correctCount * 10;
-  let finalScore = score + bonus + remainingTime
+  let bonus2 = falseCount *5;
+  let bonus3 = timeOverCount * 15;
+  let finalScore = score + bonus + bonus2 + remainingTime - bonus3
   
   document.getElementById("quiz-container").innerHTML=`
     <h2>Quiz beendet!</h2>
     <p>Dein Punktestand: <strong style="color:#ffe88c">${score}</strong></p>
     <p>Deine Restzeit: <strong style="color:#ffe88c">${remainingTime}</strong></p>
-    <p>Deine richtigen Antworten: <strong style="color:#ffe88c">${correctCount}</strong> (+${bonus} Bonuspunkte)</p>
-    <h2>Dein Endstand: <strong style="color:#ffe88c">${finalScore}</strong></h2>
+    <p>Deine richtigen Antworten: <strong style="color:#ffe88c">${correctCount}</strong> <style="color:green">(+${bonus} Bonuspunkte)</style></p>
+    <p>Deine falschen Antworten: <strong style="color:#ffe88c">${falseCount}</strong> <style="color:orange">(+${bonus2} Bonuspunkte)</style></p>
+    <p>Abgelaufene Zeit: <strong style="color:#ffe88c">${timeOverCount}</strong> <style="color:red">(-${bonus3} Punkte)</style></p>
+    <h2>Dein Endstand: <strong>${finalScore}</strong></h2>
   `;
 }
-
-
-
-
-
-
-
 
 
 
