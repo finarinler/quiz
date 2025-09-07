@@ -8,8 +8,6 @@ body {
   min-height:100vh;
   margin:0;
   color: #f0e6d2;
-  padding: 20px;
-  box-sizing: border-box;
 }
 
 .quiz-container {
@@ -179,5 +177,6 @@ summary h2 {
   display: block;
 
 }
+
 
 
