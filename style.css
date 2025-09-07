@@ -168,7 +168,7 @@ summary h2 {
   display: inline;
 }
 
-/* Game Screen Layout */
+/* Screen Layouts */
 .quiz-container {
   display: none;
 }
@@ -178,10 +178,7 @@ summary h2 {
 }
 
 #question {
-  font-size: 28px; /* oder 28px, 32px je nach Wunsch */
+  font-size: 28px;
   font-weight: bold;
   margin-bottom: 20px;
 }
-
-
-
