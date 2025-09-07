@@ -123,8 +123,7 @@ function loadQuestion(){
   const q = questions[currentQuestion];
   
   const progressPercent = (currentQuestion / questions.length) * 100;
-  const pb = document.getElementById("progress-bar");
-  if (pb) pb.style.width = progressPercent + "%";
+  document.getElementByID("progress-bar").style.width = progressPercent + "%";
 
   // Timer direkt starten
   startTimer();
@@ -298,6 +297,7 @@ function showEnd(){
     <h2>Dein Endstand: <strong> ${finalScore}</strong></h2>
   `;
 }
+
 
 
 
