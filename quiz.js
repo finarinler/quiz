@@ -10,6 +10,7 @@ window.allQuestions = [
   { question: "Wann ging es zurück nach Karazhan?", answers: ["Battle for Azeroth","Warlord of Draenor","Legion","Cataclysm"], correct: "Legion" },
   { question: "In welche Instanz ging es in Mists of Pandaria?", answers: ["Das Scharlachrote Kloster","Metbrauerei Glutbräu","Auchindoun","Todesminen"], correct: "Das Scharlachrote Kloster" },
   { question: "Welches ist kein Raid aus Battle for Azeroth?", answers: ["Schlacht von Dazar'alor","Tiegel der Stürme","Der Ewige Palast","Der Schrein des Sturms"], correct: "Der Schrein des Sturms" },
+  { question: "Wo war Hemet Nesingwary erstmals mit seiner Jagdgesellschaft?", answers: ["Azurblaues Gebirge - Dragonflight","Nagrand - Burning Crusade","Schlingendorntal - Classic","Zuldazar - Battle for Azeroth"], correct: "Schlingendorntal - Classic" },
   
 ];
 
@@ -20,10 +21,10 @@ let correctCount = 0;
 let falseCount = 0;
 let timeOverCount = 0;
 let score = 0;
-let timeLeft = 25;
+let timeLeft = 30;
 let timerInterval = null;
 
-let totalTime = 250; // 10 Fragen x 25 Sekunden
+let totalTime = 600; // 20 Fragen x 30 Sekunden
 let remainingTime = totalTime;
 let totalTimerInterval = null;
 
@@ -69,7 +70,7 @@ window.startCountdown = function() {
     return;
   }
 
-  questions = pickRandomQuestions(window.allQuestions, 10);
+  questions = pickRandomQuestions(window.allQuestions, 20);
 
   const container = document.getElementById("quiz-container");
   container.innerHTML = `<h2>Bereit?</h2><div class="countdown" id="countdown">5</div>`;
@@ -120,6 +121,53 @@ function pauseTotalTimer(){
 function loadQuestion(){
   if(currentQuestion >= questions.length){ showEnd(); return; }
   const q = questions[currentQuestion];
+  
+  document.getElementById("quiz-container").innerHTML = `
+    <div id="total-time" class="quiz-time">Restzeit: ${remainingTime}s</div>
+    <div class="progress-text">Frage ${currentQuestion+1} von ${questions.length}</div>
+    <div class="progress-bar-container"><div class="progress-bar" id="progress-bar"></div></div>
+    <h2 id="question">${q.question}</h2>
+    <div id="answers"><em>Antworten werden geladen...</em></div>
+    <div class="timer-wrapper">
+      <span class="time-text" id="time-text">15s</span>
+      <div class="timer-container"><div class="timer-bar" id="timer-bar"></div></div>
+    </div>
+    <div class="result" id="result"></div>
+    <div class="score" id="score">Punkte: ${score}</div>
+    <div id="next-btn-container"></div>
+  `;
+
+  const progressPercent = (currentQuestion / questions.length) * 100;
+  const pb = document.getElementById("progress-bar");
+  if (pb) pb.style.width = progressPercent + "%";
+
+// Timer direkt starten
+startTimer();
+startTotalTimer();
+
+// Antwort-Countdown einbauen
+let answerCountdown = 5;
+const answersDiv = document.getElementById("answers");
+answersDiv.innerHTML = `<em>Antworten in ${answerCountdown}...</em>`;
+
+const countdownInterval = setInterval(() => {
+  answerCountdown--;
+  if (answerCountdown > 0) {
+    answersDiv.innerHTML = `<em>Antworten in ${answerCountdown}...</em>`;
+  } else {
+    clearInterval(countdownInterval);
+    answersDiv.innerHTML = ""; // Countdown löschen
+
+    // Antworten jetzt einblenden
+    shuffleArray([...q.answers]).forEach(ans => {
+      const div = document.createElement("div");
+      div.classList.add("answer-label");
+      div.textContent = ans;
+      div.addEventListener("click", ()=>checkAnswer(ans));
+      answersDiv.appendChild(div);
+    });
+  }
+}, 1000);
 
   // Gesamt-Timer-HTML oben
   document.getElementById("quiz-container").innerHTML = `
@@ -134,7 +182,7 @@ function loadQuestion(){
     <div id="answers"></div>
 
     <div class="timer-wrapper">
-      <span class="time-text" id="time-text">25s</span>
+      <span class="time-text" id="time-text">30s</span>
       <div class="timer-container"><div class="timer-bar" id="timer-bar"></div></div>
     </div>
 
@@ -171,7 +219,7 @@ function loadQuestion(){
 // Einzel-Frage-Timer (setzt Farbe der timer-bar jede Sekunde)
 function startTimer(){
   clearInterval(timerInterval);
-  timeLeft = 25;
+  timeLeft = 30;
   const timerBar = document.getElementById("timer-bar");
   const timeText = document.getElementById("time-text");
   if (timerBar) timerBar.style.width = "100%";
@@ -180,7 +228,7 @@ function startTimer(){
 
   timerInterval = setInterval(()=>{
     timeLeft--;
-    let percent = Math.max(0, (timeLeft / 25) * 100);
+    let percent = Math.max(0, (timeLeft / 30) * 100);
     const timerBarLocal = document.getElementById("timer-bar");
     const timeTextLocal = document.getElementById("time-text");
 
@@ -278,6 +326,7 @@ function showEnd(){
     <h2>Dein Endstand: <strong> ${finalScore}</strong></h2>
   `;
 }
+
 
 
 
