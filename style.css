@@ -169,11 +169,11 @@ summary h2 {
 }
 
 /* Game Screen Layout */
-.game-screen {
+.quiz-container {
   display: none;
 }
 
-.game-screen.active {
+.quiz-container.active {
   display: block;
 }
 
@@ -182,5 +182,6 @@ summary h2 {
   font-weight: bold;
   margin-bottom: 20px;
 }
+
 
 
