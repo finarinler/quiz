@@ -128,7 +128,7 @@ function loadQuestion(){
     <h2 id="question">${q.question}</h2>
     <div id="answers"></div>
     <div class="timer-wrapper">
-      <span class="time-text" id="time-text">15s</span>
+      <span class="time-text" id="time-text">30s</span>
       <div class="timer-container"><div class="timer-bar" id="timer-bar"></div></div>
     </div>
     <div class="result" id="result"></div>
@@ -164,7 +164,7 @@ function startTimer(){
   if (timeText) timeText.textContent = `${timeLeft}s`;
   timerInterval = setInterval(()=>{
     timeLeft--;
-    let percent = (timeLeft/15)*100;
+    let percent = (timeLeft/30)*100;
     if (timerBar) {
       timerBar.style.width = percent + "%";
       if (percent > 50) timerBar.style.backgroundColor = "limegreen";
@@ -254,5 +254,6 @@ function showEnd(){
     <h2>Dein Endstand: <strong> ${finalScore}</strong></h2>
   `;
 }
+
 
 
