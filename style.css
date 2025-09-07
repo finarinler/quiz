@@ -1,55 +1,32 @@
 body {
   font-family: 'Cinzel', serif;
-  background: url('pics/assets/bg1.jpg') no-repeat center center fixed;
-  background-size: cover;
+  background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
   display:flex;
   justify-content:center;
   align-items:center;
-  height:100vh;
+  min-height:100vh;
   margin:0;
   color: #f0e6d2;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
 .quiz-container {
-  background: rgba(25,25,25,0.92);
+  background: rgba(25,25,25,0.95);
   padding: 24px;
   border-radius: 16px;
   max-width: 720px;
   width: 100%;
   text-align:center;
   border: 3px solid #bfa259;
-  box-shadow: 0 0 30px #000;
+  box-shadow: 0 0 30px rgba(191, 162, 89, 0.3);
 }
 
-/* Gesamt-Timer oberhalb aller Fragen */
-.total-timer-wrapper {
+.total-wrapper {
   width: 100%;
-  margin-bottom: 12px;
+  margin-bottom: 15px;
   text-align: left;
 }
-.total-time-text {
-  font-size: 14px;
-  color: #ffe88c;
-  margin-bottom: 6px;
-  font-weight: bold;
-  text-shadow: 1px 1px 2px #000;
-}
-.total-timer-container {
-  width: 100%;
-  background:#111;
-  border-radius: 10px;
-  overflow:hidden;
-  height:18px;
-  border:1px solid #bfa259;
-}
-.total-timer-bar {
-  height:100%;
-  width:100%;
-  background: linear-gradient(90deg, #6fba3c, #6fba3c);
-  transition: width 1s linear, background 0.25s linear;
-}
-
-/* restliches bisheriges Styling */
 
 h1 {  
   margin-bottom: 10px;
@@ -83,7 +60,6 @@ button:hover {
   box-shadow: 0 0 15px #ffe88c;
 }
 
-/* Antworten als zentrierte Boxen */
 .answer-label {
   background: rgba(50,50,50,0.85);
   margin: 8px 0;
@@ -130,12 +106,19 @@ button:hover {
   transition:width 0.5s ease;
 }
 
+.progress-text {
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #ffe88c;
+  text-shadow: 1px 1px 2px #000;
+}
+
 .timer-wrapper {
   margin-top:14px;
   text-align:left;
 }
 
-.timer-container {
+.timer-container, .total-container {
   width:100%;
   background:#222;
   border-radius:8px;
@@ -145,8 +128,7 @@ button:hover {
   border:1px solid #bfa259;
 }
 
-/* Frage-Timer-Bar: Farbe wird per JS gesetzt, Übergang für Weichheit */
-.timer-bar {
+.timer-bar, .total-bar {
   height:100%;
   width:100%;
   background: linear-gradient(90deg, #6fba3c, #6fba3c);
@@ -166,31 +148,32 @@ button:hover {
   text-shadow: 1px 1px 2px #000;
 }
 
-.total-container, .timer-container {
-  width: 100%;
-  height: 20px;
-  background: rgba(0,0,0,0.5);
-  border-radius: 8px;
-  margin-top: 4px;
-  overflow: hidden;
-  box-shadow: 0 0 10px #000 inset;
-}
-
-/* Dynamische Balken */
-.total-bar, .timer-bar {
-  height: 100%;
-  width: 100%;
-  transition: width 1s linear, background 1s linear;
-  border-radius: 8px;
-}
-
-/* Zeittext */
-.time-text {
-  font-family: "Cinzel", serif;
-  font-size: 14px;
+.countdown {
+  font-size: 48px;
   color: #ffe88c;
-  margin-right: 5px;
+  margin: 20px 0;
+  text-shadow: 2px 2px 4px #000;
 }
 
+details {
+  text-align: left;
+  margin-top: 20px;
+}
 
+summary {
+  cursor: pointer;
+  text-align: center;
+}
 
+summary h2 {
+  display: inline;
+}
+
+/* Game Screen Layout */
+.game-screen {
+  display: none;
+}
+
+.game-screen.active {
+  display: block;
+}

@@ -7,28 +7,27 @@ window.allQuestions = [
   { question: "Welches ist keine Rasse der Horde?", answers: ["Goblin","Gnom","Blutelf","Untote"], correct: "Gnom" },
   { question: "Welche Erweiterung erscheint im Jahr 2026?", answers: ["Cataclysm","The Last Titan","Midnight","Dragonflight"], correct: "Midnight" },
   { question: "Mit welchem Raid wurde der mythische Raidmodus eingeführt?", answers: ["Terrasse des Endlosen Frühlings","Thron des Donners","Schlacht um Orgrimmar","Das Herz der Angst"], correct: "Schlacht um Orgrimmar" },
-  { question: "Welches AddOn erschien Nach Wrath of the Lich King?", answers: ["Warlords of Draenor","Burning Crusade","Mists of Pandaria","Cataclysm"], correct: "Cataclysm" },
-  { question: "Wann ging es zurück nach Karazhan?", answers: ["Battle for Azeroth","Warlord of Draenor","Legion","Cataclysm"], correct: "Legion" },
+  { question: "Welches AddOn erschien nach Wrath of the Lich King?", answers: ["Warlords of Draenor","Burning Crusade","Mists of Pandaria","Cataclysm"], correct: "Cataclysm" },
+  { question: "Wann ging es zurück nach Karazhan?", answers: ["Battle for Azeroth","Warlords of Draenor","Legion","Cataclysm"], correct: "Legion" },
   { question: "In welche Instanz ging es in Mists of Pandaria?", answers: ["Das Scharlachrote Kloster","Metbrauerei Glutbräu","Auchindoun","Todesminen"], correct: "Das Scharlachrote Kloster" },
   { question: "Welches ist kein Raid aus Battle for Azeroth?", answers: ["Schlacht von Dazar'alor","Tiegel der Stürme","Der Ewige Palast","Der Schrein des Sturms"], correct: "Der Schrein des Sturms" },
   { question: "Wo war Hemet Nesingwary erstmals mit seiner Jagdgesellschaft?", answers: ["Azurblaues Gebirge - Dragonflight","Nagrand - Burning Crusade","Schlingendorntal - Classic","Zuldazar - Battle for Azeroth"], correct: "Schlingendorntal - Classic" },
-  
 ];
 
-// Hintergrund-Bilder
+// Hintergrund-Bilder - Fallback Gradients
 const backgrounds = [
-  "url('pics/assets/bg1.jpg')",
-  "url('pics/assets/bg2.jpg')",
-  "url('pics/assets/bg3.jpg')",
-  "url('pics/assets/bg4.jpg')",
-  "url('pics/assets/bg5.jpg')",
-  "url('pics/assets/bg6.jpg')",
-  "url('pics/assets/bg7.jpg')",
-  "url('pics/assets/bg8.jpg')",
-  "url('pics/assets/bg9.jpg')",
-  "url('pics/assets/bg10.jpg')",
-  "url('pics/assets/bg11.jpg')",
-  "url('pics/assets/bg12.jpg')",
+  "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+  "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
+  "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)",
+  "linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)",
+  "linear-gradient(135deg, #fa709a 0%, #fee140 100%)",
+  "linear-gradient(135deg, #30cfd0 0%, #91a7ff 100%)",
+  "linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)",
+  "linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%)",
+  "linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%)",
+  "linear-gradient(135deg, #ff8a80 0%, #ea4c89 100%)",
+  "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+  "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
 ];
 
 // Zustandsvariablen
@@ -45,6 +44,20 @@ let totalTime = 600; // 20 Fragen x 30 Sekunden
 let remainingTime = totalTime;
 let totalTimerInterval = null;
 
+// Screen Management
+function showScreen(screenId) {
+  // Alle Screens verstecken
+  document.querySelectorAll('.quiz-container').forEach(screen => {
+    screen.style.display = 'none';
+  });
+  
+  // Gewünschten Screen anzeigen
+  const targetScreen = document.getElementById(screenId);
+  if (targetScreen) {
+    targetScreen.style.display = 'block';
+  }
+}
+
 // Shuffle
 function shuffleArray(array) {
   for (let i = array.length -1; i>0; i--){
@@ -53,14 +66,20 @@ function shuffleArray(array) {
   }
   return array;
 }
+
 function pickRandomQuestions(all, n){
   return shuffleArray([...all]).slice(0,n);
 }
 
 // Smooth Color Helper
 function getSmoothColor(percent) {
-  const hue = (percent * 100) / 100; // 0=rot, 100=grün
-  return `linear-gradient(to right, hsl(${hue}, 100%, 66%), hsl(${hue}, 100%, 33%))`;
+  let hue;
+  if (percent <= 50) {
+    hue = (percent / 50) * 60; // 0 bis 60 (Rot zu Gelb)
+  } else {
+    hue = 60 + ((percent - 50) / 50) * 60; // 60 bis 120 (Gelb zu Grün)
+  }
+  return `linear-gradient(to right, hsl(${hue}, 100%, 50%), hsl(${hue}, 80%, 40%))`;
 }
 
 // Start
@@ -68,12 +87,15 @@ window.startCountdown = function() {
   currentQuestion = 0;
   score = 0;
   correctCount = 0;
+  falseCount = 0;
+  timeOverCount = 0;
   remainingTime = totalTime;
 
-  questions = pickRandomQuestions(window.allQuestions, 20);
+  questions = pickRandomQuestions(window.allQuestions, Math.min(20, window.allQuestions.length));
 
-  const container = document.getElementById("quiz-container");
-  container.innerHTML = `<h2>Bereit?</h2><div class="countdown" id="countdown">5</div>`;
+  // Countdown Screen zeigen
+  showScreen('countdown-screen');
+  
   let countdown = 5;
   const countdownElement = document.getElementById("countdown");
   const interval = setInterval(()=>{
@@ -82,23 +104,32 @@ window.startCountdown = function() {
     else {
       clearInterval(interval);
       countdownElement.textContent = "Los!";
-      setTimeout(loadQuestion,1000);
+      setTimeout(()=>{
+        showScreen('game-screen');
+        startTotalTimer(); // Gesamttimer starten
+        loadQuestion();
+      }, 1000);
     }
   },1000);
 };
 
-// Gesamt-Timer
+// Gesamt-Timer - läuft kontinuierlich
 function startTotalTimer(){
   if(totalTimerInterval) return;
-  const totalBar = document.getElementById("total-bar");
-  const totalText = document.getElementById("total-text");
 
   totalTimerInterval = setInterval(()=>{
     remainingTime--;
-    let percent = (remainingTime / totalTime) * 100;
-    totalBar.style.width = percent + "%";
-    totalBar.style.background = getSmoothColor(percent);
-    totalText.textContent = `${remainingTime}s`;
+    let percent = Math.max(0, (remainingTime / totalTime) * 100);
+    
+    // Timer-Elemente sind fest im DOM, nicht dynamisch
+    const totalBar = document.getElementById("total-bar");
+    const totalText = document.getElementById("total-text");
+    
+    if (totalBar && totalText) {
+      totalBar.style.width = percent + "%";
+      totalBar.style.background = getSmoothColor(percent);
+      totalText.textContent = `${remainingTime}s`;
+    }
 
     if(remainingTime <=0){
       clearInterval(totalTimerInterval);
@@ -108,29 +139,22 @@ function startTotalTimer(){
     }
   },1000);
 }
-function pauseTotalTimer(){
-  if(totalTimerInterval){
-    clearInterval(totalTimerInterval);
-    totalTimerInterval = null;
-  }
-}
 
-// Frage laden
+// Frage laden - nur dynamischen Content ändern
 function loadQuestion(){
-  if(currentQuestion >= questions.length){ showEnd(); return; }
+  if(currentQuestion >= questions.length){ 
+    showEnd(); 
+    return; 
+  }
+  
   const q = questions[currentQuestion];
 
   // Zufälliger Hintergrund
   const randomBg = backgrounds[Math.floor(Math.random() * backgrounds.length)];
-  document.body.style.backgroundImage = randomBg;
-  document.body.style.backgroundSize = "cover";
-  document.body.style.backgroundPosition = "center";
+  document.body.style.background = randomBg;
 
-  document.getElementById("quiz-container").innerHTML = `
-    <div class="total-wrapper">
-      <span class="time-text" id="total-text">${remainingTime}s</span>
-      <div class="total-container"><div class="total-bar" id="total-bar"></div></div>
-    </div>
+  // Nur den dynamischen Inhalt ändern, nicht das gesamte HTML
+  document.getElementById("dynamic-content").innerHTML = `
     <div class="progress-text">Frage ${currentQuestion+1} von ${questions.length}</div>
     <div class="progress-bar-container"><div class="progress-bar" id="progress-bar"></div></div>
     <h2 id="question">${q.question}</h2>
@@ -145,54 +169,68 @@ function loadQuestion(){
   `;
 
   // Progress-Balken
-  const progressPercent = (currentQuestion / questions.length) * 100;
-  document.getElementById("progress-bar").style.width = progressPercent + "%";
+  const progressPercent = ((currentQuestion + 1) / questions.length) * 100;
+  const progressBar = document.getElementById("progress-bar");
+  if (progressBar) {
+    progressBar.style.width = progressPercent + "%";
+  }
 
   // Antworten einblenden
   const answersDiv = document.getElementById("answers");
-  answersDiv.innerHTML = "";
-  shuffleArray([...q.answers]).forEach(ans=>{
-    const div = document.createElement("div");
-    div.classList.add("answer-label");
-    div.textContent = ans;
-    div.addEventListener("click", ()=>checkAnswer(ans));
-    answersDiv.appendChild(div);
-  });
+  if (answersDiv) {
+    answersDiv.innerHTML = "";
+    shuffleArray([...q.answers]).forEach(ans=>{
+      const div = document.createElement("div");
+      div.classList.add("answer-label");
+      div.textContent = ans;
+      div.addEventListener("click", ()=>checkAnswer(ans));
+      answersDiv.appendChild(div);
+    });
+  }
 
   startTimer();
-  startTotalTimer();
 }
 
 // Frage-Timer
 function startTimer(){
   clearInterval(timerInterval);
   timeLeft = 30;
-  const timerBar = document.getElementById("timer-bar");
-  const timeText = document.getElementById("time-text");
-
-  timerBar.style.width = "100%";
-  timerBar.style.background = getSmoothColor(100);
-  timeText.textContent = `${timeLeft}s`;
 
   timerInterval = setInterval(()=>{
     timeLeft--;
-    let percent = (timeLeft/30)*100;
-    timerBar.style.width = percent + "%";
-    timerBar.style.background = getSmoothColor(percent);
-    timeText.textContent = `${timeLeft}s`;
+    let percent = Math.max(0, (timeLeft/30)*100);
+    
+    const timerBar = document.getElementById("timer-bar");
+    const timeText = document.getElementById("time-text");
+    
+    if (timerBar && timeText) {
+      timerBar.style.width = percent + "%";
+      timerBar.style.background = getSmoothColor(percent);
+      timeText.textContent = `${timeLeft}s`;
+    }
 
     if(timeLeft <=0){
       clearInterval(timerInterval);
-      timeText.textContent="0s";
+      if (timeText) timeText.textContent="0s";
       checkAnswer(null,true);
     }
   },1000);
+  
+  // Initiale Werte setzen
+  setTimeout(() => {
+    const timerBar = document.getElementById("timer-bar");
+    const timeText = document.getElementById("time-text");
+    if (timerBar && timeText) {
+      timerBar.style.width = "100%";
+      timerBar.style.background = getSmoothColor(100);
+      timeText.textContent = `${timeLeft}s`;
+    }
+  }, 100);
 }
 
 // Antwort prüfen
 function checkAnswer(selected, auto=false){
   clearInterval(timerInterval);
-  pauseTotalTimer();
 
   const q = questions[currentQuestion];
   const result = document.getElementById("result");
@@ -209,31 +247,45 @@ function checkAnswer(selected, auto=false){
     correctCount++;
     points = 10 + timeLeft;
     score += points;
-    if (result) { result.textContent = `Richtig! (+${points} Punkte)`; result.style.color = "green"; }
+    if (result) { 
+      result.textContent = `Richtig! (+${points} Punkte)`; 
+      result.style.color = "green"; 
+    }
   } else if(auto){
     timeOverCount++;
-    points = 5 * currentQuestion + 5;
+    points = Math.max(5, 5 * currentQuestion + 5);
     score -= points;
-    if (result) { result.textContent = `Zeit abgelaufen! (-${points} Punkte) Richtig: ${q.correct}`; result.style.color = "red"; }
+    if (result) { 
+      result.textContent = `Zeit abgelaufen! (-${points} Punkte) Richtig: ${q.correct}`; 
+      result.style.color = "red"; 
+    }
   } else {
-    falseCount ++;
-    points = Math.floor ( 2 + timeLeft / 5 );
+    falseCount++;
+    points = Math.floor(2 + timeLeft / 5);
     score += points;
-    if (result) { result.textContent = `Falsch! (+${points} Bonuspunkte) Richtig: ${q.correct}`; result.style.color = "orange"; }
+    if (result) { 
+      result.textContent = `Falsch! (+${points} Bonuspunkte) Richtig: ${q.correct}`; 
+      result.style.color = "orange"; 
+    }
   }
 
-  document.getElementById("score").innerHTML = `Punkte: <span style="color:#ffe88c">${score}</span>`;
+  const scoreElement = document.getElementById("score");
+  if (scoreElement) {
+    scoreElement.innerHTML = `Punkte: <span style="color:#ffe88c">${score}</span>`;
+  }
 
   const nextBtnContainer = document.getElementById("next-btn-container");
-  if(currentQuestion < questions.length-1)
-    nextBtnContainer.innerHTML = `<button id="next-btn">Nächste Frage</button>`;
-  else
-    nextBtnContainer.innerHTML = `<button id="end-btn">Quiz beenden</button>`;
+  if (nextBtnContainer) {
+    if(currentQuestion < questions.length-1)
+      nextBtnContainer.innerHTML = `<button id="next-btn">Nächste Frage</button>`;
+    else
+      nextBtnContainer.innerHTML = `<button id="end-btn">Quiz beenden</button>`;
 
-  const nb = document.getElementById("next-btn");
-  if(nb) nb.onclick = ()=>{ startTotalTimer(); nextQuestion(); };
-  const eb = document.getElementById("end-btn");
-  if(eb) eb.onclick = ()=>{ showEnd(); };
+    const nb = document.getElementById("next-btn");
+    if(nb) nb.onclick = ()=>{ nextQuestion(); };
+    const eb = document.getElementById("end-btn");
+    if(eb) eb.onclick = ()=>{ showEnd(); };
+  }
 }
 
 function nextQuestion(){
@@ -247,28 +299,30 @@ function showEnd(){
     totalTimerInterval = null;
   }
 
-
   let bonus = correctCount * 10;
-  let bonus2 = falseCount *5;
+  let bonus2 = falseCount * 5;
   let bonus3 = timeOverCount * 15;
-  let finalScore = score + bonus + bonus2 + remainingTime - bonus3
+  let finalScore = score + bonus + bonus2 + remainingTime - bonus3;
   
-  document.getElementById("quiz-container").innerHTML=`
+  showScreen('end-screen');
+  
+  document.getElementById("end-content").innerHTML=`
     <h2>Quiz beendet!</h2>
-    <p>Dein Punktestand: <strong style="color:#ffe88c"> ${score}</strong></p>
-    <p>Deine Restzeit: <strong style="color:#ffe88c"> ${remainingTime}</strong></p>
-    <p>Deine richtigen Antworten: <strong style="color:#ffe88c">${correctCount}</strong> <style="color:green"> (+${bonus} Bonuspunkte)</style></p>
-    <p>Deine falschen Antworten: <strong style="color:#ffe88c">${falseCount}</strong> <style="color:orange"> (+${bonus2} Bonuspunkte)</style></p>
-    <p>Abgelaufene Zeit: <strong style="color:#ffe88c">${timeOverCount}</strong> <style="color:red"> (-${bonus3} Punkte)</style></p>
-    <h2>Dein Endstand: <strong> ${finalScore}</strong></h2>
+    <p>Dein Punktestand: <strong style="color:#ffe88c">${score}</strong></p>
+    <p>Deine Restzeit: <strong style="color:#ffe88c">${remainingTime}</strong></p>
+    <p>Deine richtigen Antworten: <strong style="color:#ffe88c">${correctCount}</strong> <span style="color:green">(+${bonus} Bonuspunkte)</span></p>
+    <p>Deine falschen Antworten: <strong style="color:#ffe88c">${falseCount}</strong> <span style="color:orange">(+${bonus2} Bonuspunkte)</span></p>
+    <p>Abgelaufene Zeit: <strong style="color:#ffe88c">${timeOverCount}</strong> <span style="color:red">(-${bonus3} Punkte)</span></p>
+    <hr style="border-color: #bfa259; margin: 20px 0;">
+    <h2>Dein Endstand: <strong style="color:#ffe88c">${finalScore}</strong></h2>
+    <button onclick="location.reload()">Nochmal spielen</button>
   `;
 }
 
-
-
-
-
-
-
-
-
+// Start-Button Event
+document.addEventListener('DOMContentLoaded', function() {
+  const startBtn = document.getElementById("start-btn");
+  if (startBtn) {
+    startBtn.onclick = window.startCountdown;
+  }
+});

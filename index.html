@@ -3,48 +3,57 @@
 <head>
   <meta charset="utf-8" />
   <title>WoW Quiz</title>
-  <link rel="stylesheet" href="style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap" rel="stylesheet">
-  <link rel="icon" type="image/png" sizes="32x32" href="pics/wow_favicon.png">
 </head>
 <body>
-  <div class="quiz-container" id="quiz-container">
+  <!-- Start Screen -->
+  <div class="quiz-container" id="start-screen">
     <h1>Willkommen zum WoW-Quiz</h1><br>
     <p>Klicke auf den Button, um zu starten.</p>
     <button id="start-btn">Quiz starten</button>
-    <div class="countdown" id="countdown"></div>
-    <p></p>
-    <p></p>
-    <p></p>
-    <p><details><summary><h2>Wie funktioniert das Quiz?</h2></summary></p>
-    <p></p>
-    <p>Beantworte alle Fragen die dir gestellt werden</p>
-    <p>Pro Frage hast du 30 Sekunden Zeit</p>
-    <p>Jede Richtig beantwortete Frage gibt dir 10 + die Restzeit der Frage an Punkte</p>
-    <p>Jede Falsch beantwortete Frage gibt die ein paar Bonuspunkte für den Versuch</p>
-    <p>Durch Zeitablauf werden dir Punkte abgezogen</p>
-    <p>Du sammelst nochmals Bonuspunkte aber auch Minuspunkte am Ende ein</p>
-    <p>Am Ende wird die Gesamtrestzeit zu deinen Punkten addiert</p>
-    <p></p>
-    <p><h2>Viel Spaß!</h2></p>
-  </details>
+    
+    <details>
+      <summary><h2>Wie funktioniert das Quiz?</h2></summary>
+      <br>
+      <p>Beantworte alle Fragen die dir gestellt werden</p>
+      <p>Pro Frage hast du 30 Sekunden Zeit</p>
+      <p>Jede richtig beantwortete Frage gibt dir 10 + die Restzeit der Frage an Punkte</p>
+      <p>Jede falsch beantwortete Frage gibt dir ein paar Bonuspunkte für den Versuch</p>
+      <p>Durch Zeitablauf werden dir Punkte abgezogen</p>
+      <p>Du sammelst nochmals Bonuspunkte aber auch Minuspunkte am Ende ein</p>
+      <p>Am Ende wird die Gesamtrestzeit zu deinen Punkten addiert</p>
+      <br>
+      <h1><strong>Viel Spaß!</strong></h1>
+    </details>
   </div>
 
-  <script src="quiz.js"></script>
-  <script>
-    // sichere Bindung des Start-Buttons (warten, bis quiz.js geladen ist)
-    (function attach() {
-      if (typeof window.startCountdown === 'function') {
-        document.getElementById("start-btn").onclick = window.startCountdown;
-      } else {
-        setTimeout(attach, 50);
-      }
-    })();
-  </script>
+  <!-- Countdown Screen -->
+  <div class="quiz-container game-screen" id="countdown-screen">
+    <h2>Bereit?</h2>
+    <div class="countdown" id="countdown">5</div>
+  </div>
+
+  <!-- Game Screen -->
+  <div class="quiz-container game-screen" id="game-screen">
+    <!-- Fixed Total Timer - bleibt immer sichtbar -->
+    <div class="total-wrapper">
+      <span class="time-text" id="total-text">600s</span>
+      <div class="total-container">
+        <div class="total-bar" id="total-bar"></div>
+      </div>
+    </div>
+    
+    <!-- Dynamic Content Area -->
+    <div id="dynamic-content">
+      <!-- Hier wird der Inhalt dynamisch geladen -->
+    </div>
+  </div>
+
+  <!-- End Screen -->
+  <div class="quiz-container game-screen" id="end-screen">
+    <div id="end-content">
+      <!-- Endergebnis wird hier eingefügt -->
+    </div>
+  </div>
 </body>
 </html>
-
-
-
-
-
