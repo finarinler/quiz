@@ -19,7 +19,7 @@ window.allQuestions = [
   { question: "Wie hieß der Drache aus Cataclysm?", answers: ["Neltharion","Nefarian","Nozdormu","Nathanos"], correct: "Neltharion" },
   { question: "Welche Erweiterung erschien nicht im November?", answers: ["Wrath of the Lich King - 2008","Warlords of Draenor - 2014","Shadowlands - 2020","Burning Crusade - 2007"], correct: "Burning Crusade - 2007" },
   { question: "Welche Klasse können 'Kul Tiraner' 2025 nicht werden?", answers: ["Druiden","Schamane","Paladin","Mönch"], correct: "Paladin" },
-  { question: "Wie heißt das Allianzoberhaupt aus 'Die Exodar'?", answers: ["Prophet Velen","Hochexarch Turalyon","Valeera Sanguinar","Vereesa Windrunner"], correct: "Prophet Velen" },
+  { question: "Wie heißt der Allianzanführer aus 'Die Exodar'?", answers: ["Prophet Velen","Hochexarch Turalyon","Valeera Sanguinar","Vereesa Windrunner"], correct: "Prophet Velen" },
 ];
 
 // Hintergrund-Bilder
@@ -365,6 +365,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 });
+
 
 
 
