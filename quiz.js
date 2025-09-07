@@ -14,6 +14,10 @@ window.allQuestions = [
   { question: "Wo war Hemet Nesingwary erstmals mit seiner Jagdgesellschaft?", answers: ["Azurblaues Gebirge - Dragonflight","Nagrand - Burning Crusade","Schlingendorntal - Classic","Zuldazar - Battle for Azeroth"], correct: "Schlingendorntal - Classic" },
   { question: "Wer oder was ist 'Antros'?", answers: ["Gastwirt in Oribos","Questmob in Maldraxxus","Weltboss in Zereth Mortis","Händler im Schlund"], correct: "Weltboss in Zereth Mortis" },
   { question: "Wie heißt der grüne Netherdrache im Unteren Viertel?", answers: ["Barthamus","Malfas","Jorus","Zoya"], correct: "Zoya" },
+  { question: "Welcher Ruffraktion gehört 'König Yokkum' an?", answers: ["Die Söhne Hodirs","Die Kalu'ak","Die Taunka","Der Wyrmruhpakt"], correct: "Die Söhne Hodirs" },
+  { question: "Welches Gebiet sieht wie das Hordelogo aus?", answers: ["Tanaris","Azshara","Schattenhochland","Sümpfe des Elends"], correct: "Azshara" },
+  { question: "Wie hieß der Drache aus Cataclysm?", answers: ["Neltharion","Nefarian","Nozdormu","Furorion"], correct: "Neltharion" },
+  { question: "Welche Erweiterung erschien nicht im November?", answers: ["Wrath of the Lich King - 2008","Warlords of Draenor - 2014","Shadowlands - 2020","Burning Crusade - 2007"], correct: "Burning Crusade - 2007" },
 ];
 
 // Hintergrund-Bilder
@@ -33,7 +37,6 @@ const backgrounds = [
   "url('pics/assets/bg13.jpg')",
   "url('pics/assets/bg14.jpg')",
   "url('pics/assets/bg15.jpg')",
-  "url('pics/assets/bg16.jpg')",
   "url('pics/assets/bg17.jpg')",
   "url('pics/assets/bg18.jpg')",
   "url('pics/assets/bg19.jpg')",
@@ -360,6 +363,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 });
+
 
 
 
