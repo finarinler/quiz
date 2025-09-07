@@ -33,6 +33,7 @@ const backgrounds = [
   "url('pics/assets/bg13.jpg')",
   "url('pics/assets/bg14.jpg')",
   "url('pics/assets/bg15.jpg')",
+  "url('pics/assets/bg16.jpg')",
   "url('pics/assets/bg17.jpg')",
   "url('pics/assets/bg18.jpg')",
   "url('pics/assets/bg19.jpg')",
@@ -359,6 +360,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 });
+
 
 
 
