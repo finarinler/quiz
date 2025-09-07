@@ -49,13 +49,13 @@ let totalTimerInterval = null;
 function showScreen(screenId) {
   // Alle Screens verstecken
   document.querySelectorAll('.quiz-container').forEach(screen => {
-    screen.style.display = 'none';
+    screen.classList.remove('active');
   });
   
   // Gewünschten Screen anzeigen
   const targetScreen = document.getElementById(screenId);
   if (targetScreen) {
-    targetScreen.style.display = 'block';
+    targetScreen.classList.add('active');
   }
 }
 
@@ -142,7 +142,6 @@ function startTotalTimer(){
 }
 
 // Frage laden - nur dynamischen Content ändern
-// Frage laden - nur dynamischen Content ändern
 function loadQuestion(){
   if(currentQuestion >= questions.length){ 
     showEnd(); 
@@ -195,50 +194,6 @@ function loadQuestion(){
 
     startTimer();
   }, 5000); // 5000 Millisekunden = 5 Sekunden
-}
-
-  // Zufälliger Hintergrund
-  const randomBg = backgrounds[Math.floor(Math.random() * backgrounds.length)];
-    document.body.style.backgroundImage = randomBg;
-    document.body.style.backgroundSize = "cover";
-    document.body.style.backgroundPosition = "center";
-
-  // Nur den dynamischen Inhalt ändern, nicht das gesamte HTML
-  document.getElementById("dynamic-content").innerHTML = `
-    <div class="progress-text">Frage ${currentQuestion+1} von ${questions.length}</div>
-    <div class="progress-bar-container"><div class="progress-bar" id="progress-bar"></div></div>
-    <h2 id="question">${q.question}</h2>
-    <div id="answers"></div>
-    <div class="timer-wrapper">
-      <span class="time-text" id="time-text">30s</span>
-      <div class="timer-container"><div class="timer-bar" id="timer-bar"></div></div>
-    </div>
-    <div class="result" id="result"></div>
-    <div class="score" id="score">Punkte: ${score}</div>
-    <div id="next-btn-container"></div>
-  `;
-
-  // Progress-Balken
-  const progressPercent = ((currentQuestion + 1) / questions.length) * 100;
-  const progressBar = document.getElementById("progress-bar");
-  if (progressBar) {
-    progressBar.style.width = progressPercent + "%";
-  }
-
-  // Antworten einblenden
-  const answersDiv = document.getElementById("answers");
-  if (answersDiv) {
-    answersDiv.innerHTML = "";
-    shuffleArray([...q.answers]).forEach(ans=>{
-      const div = document.createElement("div");
-      div.classList.add("answer-label");
-      div.textContent = ans;
-      div.addEventListener("click", ()=>checkAnswer(ans));
-      answersDiv.appendChild(div);
-    });
-  }
-
-  startTimer();
 }
 
 // Frage-Timer
@@ -378,13 +333,3 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 });
-
-
-
-
-
-
-
-
-
-
