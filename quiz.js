@@ -148,8 +148,76 @@ function loadQuestion(){
     return; 
   }
   
-  const q = questions[currentQuestion];
+  const q = questions[currentQuestion]; // WICHTIG: q muss zuerst definiert werden
 
+  // Zufälliger Hintergrund
+  const randomBg = backgrounds[Math.floor(Math.random() * backgrounds.length)];
+  document.body.style.backgroundImage = randomBg;
+  document.body.style.backgroundSize = "cover";
+  document.body.style.backgroundPosition = "center";
+
+  // Nur den dynamischen Inhalt ändern, nicht das gesamte HTML
+  document.getElementById("dynamic-content").innerHTML = `
+    <div class="progress-text">Frage ${currentQuestion+1} von ${questions.length}</div>
+    <div class="progress-bar-container"><div class="progress-bar" id="progress-bar"></div></div>
+    <h2 id="question">${q.question}</h2>
+    <div id="answers"></div>
+    <div class="timer-wrapper">
+      <span class="time-text" id="time-text">30s</span>
+      <div class="timer-container"><div class="timer-bar" id="timer-bar"></div></div>
+    </div>
+    <div class="result" id="result"></div>
+    <div class="score" id="score">Punkte: ${score}</div>
+    <div id="next-btn-container"></div>
+  `;
+
+  // Progress-Balken
+  const progressPercent = ((currentQuestion + 1) / questions.length) * 100;
+  const progressBar = document.getElementById("progress-bar");
+  if (progressBar) {
+    progressBar.style.width = progressPercent + "%";
+  }
+
+  // Timer und nacheinander einblendende Antworten
+  const answersDiv = document.getElementById("answers");
+  if (answersDiv) {
+    let countdown = 5;
+    answersDiv.innerHTML = `<p style='color: #ffe88c; font-size: 20px; font-weight: bold;'>Antworten in: ${countdown}</p>`;
+    
+    const countdownInterval = setInterval(() => {
+      countdown--;
+      if (countdown > 0) {
+        answersDiv.innerHTML = `<p style='color: #ffe88c; font-size: 20px; font-weight: bold;'>Antworten in: ${countdown}</p>`;
+      } else {
+        clearInterval(countdownInterval);
+        answersDiv.innerHTML = "";
+        
+        // Antworten nacheinander einblenden
+        const shuffledAnswers = shuffleArray([...q.answers]);
+        shuffledAnswers.forEach((ans, index) => {
+          setTimeout(() => {
+            const div = document.createElement("div");
+            div.classList.add("answer-label");
+            div.textContent = ans;
+            div.style.opacity = "0";
+            div.style.transform = "translateY(20px)";
+            div.style.transition = "all 0.5s ease";
+            div.addEventListener("click", ()=>checkAnswer(ans));
+            answersDiv.appendChild(div);
+            
+            // Fade-in Animation
+            setTimeout(() => {
+              div.style.opacity = "1";
+              div.style.transform = "translateY(0)";
+            }, 50);
+          }, index * 800);
+        });
+      }
+    }, 1000);
+  }
+
+  startTimer();
+}
   // Zufälliger Hintergrund
   const randomBg = backgrounds[Math.floor(Math.random() * backgrounds.length)];
     document.body.style.backgroundImage = randomBg;
@@ -329,6 +397,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
 });
+
 
 
 
