@@ -157,7 +157,7 @@ function loadQuestion(){
 // Frage-Timer
 function startTimer(){
   clearInterval(timerInterval);
-  timeLeft = 15;
+  timeLeft = 30;
   const timerBar = document.getElementById("timer-bar");
   const timeText = document.getElementById("time-text");
   if (timerBar) timerBar.style.width = "100%";
@@ -254,6 +254,7 @@ function showEnd(){
     <h2>Dein Endstand: <strong> ${finalScore}</strong></h2>
   `;
 }
+
 
 
 
