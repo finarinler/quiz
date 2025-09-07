@@ -203,7 +203,7 @@ function checkAnswer(selected, auto=false){
     if (result) { result.textContent = `Richtig! (+${points} Punkte)`; result.style.color = "green"; }
   } else if(auto){
     timeOverCount++;
-    points = 5 * currentQuestion;
+    points = 5 * currentQuestion + 5;
     score -= points;
     if (result) { result.textContent = `Zeit abgelaufen! (-${points} Punkte) Richtig: ${q.correct}`; result.style.color = "red"; }
   } else {
@@ -254,4 +254,5 @@ function showEnd(){
     <h2>Dein Endstand: <strong> ${finalScore}</strong></h2>
   `;
 }
+
 
