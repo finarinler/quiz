@@ -127,7 +127,7 @@ function loadQuestion(){
     <div id="answers"></div>
 
     <div class="timer-wrapper">
-      <span class="time-text" id="time-text">15s</span>
+      <span class="time-text" id="time-text">25s</span>
       <div class="timer-container"><div class="timer-bar" id="timer-bar"></div></div>
     </div>
 
@@ -214,12 +214,10 @@ function checkAnswer(selected, auto=false){
     if (result) { result.textContent = `Richtig! (+${points} Punkte)`; result.style.color = "green"; }
   } else if(auto){
     timeOverCount++;
-    points = 15;
-    score -= points;
-    if (result) { result.textContent = `Zeit abgelaufen! Richtig: ${q.correct} (-${points} Punkte)`; result.style.color = "red"; }
+    if (result) { result.textContent = `Zeit abgelaufen! Richtig: ${q.correct}`; result.style.color = "red"; }
   } else {
     falseCount ++;
-    points = Math.floor ( timeLeft / 2 );
+    points = Math.floor ( timeLeft / 5 );
     score += points;
     if (result) { result.textContent = `Falsch! Richtig: ${q.correct}`; result.style.color = "orange"; }
   }
@@ -271,6 +269,7 @@ function showEnd(){
     <h2>Dein Endstand: <strong>${finalScore}</strong></h2>
   `;
 }
+
 
 
 
