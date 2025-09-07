@@ -178,6 +178,9 @@ function loadQuestion(){
     progressBar.style.width = progressPercent + "%";
   }
 
+  // Timer sofort starten
+  startTimer();
+
   // Antworten erst nach 5 Sekunden anzeigen
   setTimeout(() => {
     const answersDiv = document.getElementById("answers");
@@ -191,8 +194,6 @@ function loadQuestion(){
         answersDiv.appendChild(div);
       });
     }
-
-    startTimer();
   }, 5000); // 5000 Millisekunden = 5 Sekunden
 }
 
@@ -333,3 +334,4 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 });
+
