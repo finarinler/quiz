@@ -29,7 +29,19 @@ const backgrounds = [
   "url('pics/assets/bg9.jpg')",
   "url('pics/assets/bg10.jpg')",
   "url('pics/assets/bg11.jpg')",
-  "url('pics/assets/bg12.jpg')"
+  "url('pics/assets/bg12.jpg')",
+  "url('pics/assets/bg13.jpg')",
+  "url('pics/assets/bg14.jpg')",
+  "url('pics/assets/bg15.jpg')",
+  "url('pics/assets/bg17.jpg')",
+  "url('pics/assets/bg18.jpg')",
+  "url('pics/assets/bg19.jpg')",
+  "url('pics/assets/bg20.jpg')",
+  "url('pics/assets/bg21.jpg')",
+  "url('pics/assets/bg22.jpg')",
+  "url('pics/assets/bg23.jpg')",
+  "url('pics/assets/bg24.jpg')",
+  "url('pics/assets/bg25.jpg')"
 ];
 
 // Zustandsvariablen
@@ -347,6 +359,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 });
+
 
 
 
