@@ -22,6 +22,8 @@ window.allQuestions = [
   { question: "Wie heißt der Allianzanführer aus 'Die Exodar'?", answers: ["Prophet Velen","Hochexarch Turalyon","Valeera Sanguinar","Vereesa Windrunner"], correct: "Prophet Velen" },
   { question: "Welches Minievent findet immer im November statt?", answers: ["Tag der Toten","Piratentag","Wanderfest","Ruf des Skarabäus"], correct: "Tag der Toten" },
   { question: "Wer oder was ist 'Michael 'Schmutz' Fink'?", answers: ["Angellehrer in Theramore","Kochlehrer in Sturmwind","Flugmeister in Gilneas","Gastwirt in Boralus"], correct:"Angellehrer in Theramore" },
+  { question: "Wo befindet sich die 'Zeitlose Insel'?", answers: ["Östlich in Pandaria","Nördlich auf den Dracheninseln","Westlich im Mahlstrom","Südlich in Zandalar"], correct: "Östlich in Pandaria" },
+  { question: "In welchem Gebiet befindet sich der 'Tempel der Erde'?", answers: ["Tiefenheim","Kun-Lai-Gipfel","Thaldraszus","Drachenöde"], correct: "Tiefenheim" },
 ];
 
 // Hintergrund-Bilder
@@ -367,6 +369,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 });
+
 
 
 
