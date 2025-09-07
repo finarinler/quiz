@@ -148,23 +148,7 @@ function loadQuestion(){
     return; 
   }
   
-
-
-  const answersDiv = document.getElementById("answers");
-if (answersDiv) {
-  answersDiv.innerHTML = "<p style='color: #ffe88c; font-style: italic;'>Antworten werden generiert...</p>";
-  
-  setTimeout(() => {
-    answersDiv.innerHTML = "";
-    shuffleArray([...q.answers]).forEach(ans=>{
-      const div = document.createElement("div");
-      div.classList.add("answer-label");
-      div.textContent = ans;
-      div.addEventListener("click", ()=>checkAnswer(ans));
-      answersDiv.appendChild(div);
-    });
-  }, 5000);
-}
+  const q = questions[currentQuestion];
 
   // Zufälliger Hintergrund
   const randomBg = backgrounds[Math.floor(Math.random() * backgrounds.length)];
@@ -345,6 +329,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
 });
+
 
 
 
