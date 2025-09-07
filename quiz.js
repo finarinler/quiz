@@ -18,6 +18,7 @@ window.allQuestions = [
   { question: "Welches Gebiet sieht wie das Hordelogo aus?", answers: ["Tanaris","Azshara","Schattenhochland","Sümpfe des Elends"], correct: "Azshara" },
   { question: "Wie hieß der Drache aus Cataclysm?", answers: ["Neltharion","Nefarian","Nozdormu","Furorion"], correct: "Neltharion" },
   { question: "Welche Erweiterung erschien nicht im November?", answers: ["Wrath of the Lich King - 2008","Warlords of Draenor - 2014","Shadowlands - 2020","Burning Crusade - 2007"], correct: "Burning Crusade - 2007" },
+  { question: "Welche Klasse können 'Kul Tiraner' 2025 nicht werden?", answers: ["Druiden","Schamane","Paladin","Mönch"], correct: "Paladin" },
 ];
 
 // Hintergrund-Bilder
@@ -363,6 +364,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 });
+
 
 
 
