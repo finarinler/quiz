@@ -151,7 +151,9 @@ function loadQuestion(){
 
   // Zufälliger Hintergrund
   const randomBg = backgrounds[Math.floor(Math.random() * backgrounds.length)];
-  document.body.style.background = randomBg;
+    document.body.style.backgroundImage = randomBg;
+    document.body.style.backgroundSize = "cover";
+    document.body.style.backgroundPosition = "center";
 
   // Nur den dynamischen Inhalt ändern, nicht das gesamte HTML
   document.getElementById("dynamic-content").innerHTML = `
@@ -326,4 +328,5 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
 });
+
 
