@@ -142,6 +142,7 @@ function startTotalTimer(){
 }
 
 // Frage laden - nur dynamischen Content ändern
+// Frage laden - nur dynamischen Content ändern
 function loadQuestion(){
   if(currentQuestion >= questions.length){ 
     showEnd(); 
@@ -195,6 +196,7 @@ function loadQuestion(){
     startTimer();
   }, 5000); // 5000 Millisekunden = 5 Sekunden
 }
+
   // Zufälliger Hintergrund
   const randomBg = backgrounds[Math.floor(Math.random() * backgrounds.length)];
     document.body.style.backgroundImage = randomBg;
@@ -367,15 +369,16 @@ function showEnd(){
 }
 
 // Start-Button Event
-// Start-Button Event
 document.addEventListener('DOMContentLoaded', function() {
   const startBtn = document.getElementById("start-btn");
   if (startBtn) {
     startBtn.addEventListener("click", () => {
+      showScreen('countdown-screen');
       startCountdown();
     });
   }
 });
+
 
 
 
