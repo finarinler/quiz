@@ -135,7 +135,7 @@ document.getElementById("quiz-container").innerHTML = `
   <h2 id="question">${q.question}</h2>
   <div id="answers"></div>
   <div class="timer-wrapper">
-    <span class="time-text" id="time-text">15s</span>
+    <span class="time-text" id="time-text">30s</span>
     <div class="timer-container"><div class="timer-bar green" id="timer-bar"></div></div>
   </div>
   <div class="result" id="result"></div>
@@ -174,7 +174,7 @@ function startTimer(){
 
   timerInterval = setInterval(()=>{
     timeLeft--;
-    let percent = (timeLeft/15)*100;
+    let percent = (timeLeft/30)*100;
     timerBar.style.width = percent + "%";
 
     if (timeLeft > 10) timerBar.className = "timer-bar green";
@@ -264,6 +264,7 @@ function showEnd(){
     <h2>Dein Endstand: <strong> ${finalScore}</strong></h2>
   `;
 }
+
 
 
 
