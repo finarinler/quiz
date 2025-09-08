@@ -24,6 +24,26 @@ window.allQuestions = [
   { question: "Wer oder was ist 'Michael 'Schmutz' Fink'?", answers: ["Angellehrer in Theramore","Kochlehrer in Sturmwind","Flugmeister in Gilneas","Gastwirt in Boralus"], correct:"Angellehrer in Theramore" },
   { question: "Wo befindet sich die 'Zeitlose Insel'?", answers: ["Östlich in Pandaria","Nördlich auf den Dracheninseln","Westlich im Mahlstrom","Südlich in Zandalar"], correct: "Östlich in Pandaria" },
   { question: "In welchem Gebiet befindet sich der 'Tempel der Erde'?", answers: ["Tiefenheim","Kun-Lai-Gipfel","Thaldraszus","Drachenöde"], correct: "Tiefenheim" },
+  { question: "Wie heißt der Endboss von Wrath of the Lich King?", answers: ["Arthas Menethil","Kel'Thuzad","Illidan Sturmgrimm","Deathwing"], correct: "Arthas Menethil" },
+  { question: "Welche Zone war das Startgebiet der Todesritter?", answers: ["Geisterlande","Tirisfal","Östliche Pestländer","Schwarze Festung"], correct: "Östliche Pestländer" },
+  { question: "Wer war der letzte Boss in der Schlacht um Orgrimmar?", answers: ["Garrosh Höllschrei","Varok Saurfang","Thrall","Anduin Wrynn"], correct: "Garrosh Höllschrei" },
+  { question: "Welche spielbare Rasse wurde in Legion eingeführt?", answers: ["Vulpera","Leerenelfen","Dämonenjäger","Keine Rasse, sondern eine Klasse"], correct: "Keine Rasse, sondern eine Klasse" },
+  { question: "Welche Klasse konnte man zu Classic nicht spielen?", answers: ["Paladin","Schurke","Mönch","Hexenmeister"], correct: "Mönch" },
+  { question: "Wie hieß die Hauptstadt der Orcs vor Orgrimmar?", answers: ["Sen’jin","Garadar","Durotar","Ogrimmar gab es schon"], correct: "Ogrimmar gab es schon" },
+  { question: "Welches legendäre Item bekam man in Classic durch eine Quest in Geschmolzener Kern?", answers: ["Sulfuras, Hand von Ragnaros","Schattenmourne","Donnerzorn, Gesegnete Klinge des Windsuchers","Aschenbringer"], correct: "Sulfuras, Hand von Ragnaros" },
+  { question: "Wie heißt die Hauptstadt der Nachtgeborenen?", answers: ["Shattrath","Suramar","Silbermond","Telogrus"], correct: "Suramar" },
+  { question: "Welche Zone liegt nicht in Nordend?", answers: ["Boreanische Tundra","Grizzlyhügel","Eiskrone","Schattenmondtal"], correct: "Schattenmondtal" },
+  { question: "Wie viele Spieler waren für Raids in Classic vorgesehen?", answers: ["10","20","25","40"], correct: "40" },
+  { question: "Welcher bekannte Charakter ist nicht Teil der Windläufer-Familie?", answers: ["Alleria","Sylvanas","Vereesa","Tyrande"], correct: "Tyrande" },
+  { question: "Welche Instanz in Classic war die erste mit 20 Spielern?", answers: ["Onyxias Hort","Zul'Gurub","Geschmolzener Kern","Pechschwingenhort"], correct: "Zul'Gurub" },
+  { question: "Welche Rolle übernimmt Anduin Wrynn hauptsächlich im Spiel?", answers: ["Tank","Heiler","DPS","Er ist kein Kämpfer"], correct: "Heiler" },
+  { question: "Wie heißt der erste Raid in Shadowlands?", answers: ["Sanktum der Herrschaft","Schloss Nathria","Mausoleum der Ersten","Tiegel der Stürme"], correct: "Schloss Nathria" },
+  { question: "Welche Region war in Cataclysm neu spielbar?", answers: ["Uldum","Nordend","Schlingendorntal","Das Brachland"], correct: "Uldum" },
+  { question: "Wie heißen die Reittiere, die man mit Ruhm bei den Kirin Tor in Wrath freischalten konnte?", answers: ["Phönixe","Greifen","Wasserstoffballons","Arkanwyrmlinge"], correct: "Arkanwyrmlinge" },
+  { question: "Welches dieser Addons hatte kein Levelcap von 120?", answers: ["Legion","Battle for Azeroth","Warlords of Draenor","Shadowlands"], correct: "Warlords of Draenor" },
+  { question: "Wer ist der Anführer der Draenei?", answers: ["Illidan","Kil'jaeden","Prophet Velen","Nobundo"], correct: "Prophet Velen" },
+  { question: "Wie heißt die Hauptstadt der Untoten?", answers: ["Unterstadt","Silbermond","Tirisfal","Lordaeron"], correct: "Unterstadt" },
+  { question: "Was war die erste neue spielbare Klasse nach Classic?", answers: ["Dämonenjäger","Todesritter","Mönch","Jäger"], correct: "Todesritter" },
 ];
 
 // Hintergrund-Bilder
@@ -369,6 +389,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 });
+
 
 
 
