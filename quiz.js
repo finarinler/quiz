@@ -19,7 +19,7 @@ window.allQuestions = [
   { question: "Wie hieß der Drache aus Cataclysm?", answers: ["Neltharion","Nefarian","Nozdormu","Nathanos"], correct: "Neltharion" },
   { question: "Welche Erweiterung erschien nicht im November?", answers: ["Wrath of the Lich King - 2008","Warlords of Draenor - 2014","Shadowlands - 2020","Burning Crusade - 2007"], correct: "Burning Crusade - 2007" },
   { question: "Welche Klasse können 'Kul Tiraner' 2025 nicht werden?", answers: ["Druiden","Schamane","Paladin","Mönch"], correct: "Paladin" },
-  { question: "Wie heißt der Allianzanführer aus 'Die Exodar'?", answers: ["Prophet Velen","Hochexarch Turalyon","Valeera Sanguinar","Vereesa Windrunner"], correct: "Prophet Velen" },
+  { question: "Wie heißt der Allianzanführer aus 'Die Exodar'?", answers: ["Prophet Velen","Hochexarch Turalyon","Valeera Sanguinar","Vereesa Windläufer"], correct: "Prophet Velen" },
   { question: "Welches Minievent findet immer im November statt?", answers: ["Tag der Toten","Piratentag","Wanderfest","Ruf des Skarabäus"], correct: "Tag der Toten" },
   { question: "Wer oder was ist 'Michael 'Schmutz' Fink'?", answers: ["Angellehrer in Theramore","Kochlehrer in Sturmwind","Flugmeister in Gilneas","Gastwirt in Boralus"], correct:"Angellehrer in Theramore" },
   { question: "Wo befindet sich die 'Zeitlose Insel'?", answers: ["Östlich in Pandaria","Nördlich auf den Dracheninseln","Westlich im Mahlstrom","Südlich in Zandalar"], correct: "Östlich in Pandaria" },
@@ -60,18 +60,18 @@ const backgrounds = [
   "url('pics/assets/bg10.jpg')",
   "url('pics/assets/bg11.jpg')",
   "url('pics/assets/bg12.jpg')",
-  "url('pics/assets/bg13.jpg')",
-  "url('pics/assets/bg14.jpg')",
-  "url('pics/assets/bg15.jpg')",
-  "url('pics/assets/bg17.jpg')",
-  "url('pics/assets/bg18.jpg')",
-  "url('pics/assets/bg19.jpg')",
-  "url('pics/assets/bg20.jpg')",
-  "url('pics/assets/bg21.jpg')",
-  "url('pics/assets/bg22.jpg')",
-  "url('pics/assets/bg23.jpg')",
-  "url('pics/assets/bg24.jpg')",
-  "url('pics/assets/bg25.jpg')"
+//  "url('pics/assets/bg13.jpg')",
+//  "url('pics/assets/bg14.jpg')",
+//  "url('pics/assets/bg15.jpg')",
+//  "url('pics/assets/bg17.jpg')",
+//  "url('pics/assets/bg18.jpg')",
+//  "url('pics/assets/bg19.jpg')",
+//  "url('pics/assets/bg20.jpg')",
+//  "url('pics/assets/bg21.jpg')",
+//  "url('pics/assets/bg22.jpg')",
+//  "url('pics/assets/bg23.jpg')",
+//  "url('pics/assets/bg24.jpg')",
+//  "url('pics/assets/bg25.jpg')"
 ];
 
 // Zustandsvariablen
@@ -389,6 +389,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 });
+
 
 
 
