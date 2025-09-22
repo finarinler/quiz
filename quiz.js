@@ -1,4 +1,6 @@
+
 // Fragen-Pool (global)
+
 window.allQuestions = [
   { question: "Wie heißt die Hauptstadt von Dragonflight?", answers: ["Dalaran","Orgrimmar","Dornogal","Valdrakken"], correct: "Valdrakken" },
   { question: "Wer war kein Anführer der Horde?", answers: ["Arthas","Vol'jin","Thrall","Garrosh"], correct: "Arthas" },
@@ -94,7 +96,7 @@ window.allQuestions = [
   { question: "Welche Erweiterung brachte die Artefaktwaffen?", answers: ["Legion","Warlords of Draenor","Battle for Azeroth","Shadowlands"], correct: "Legion" },																
   { question: "Wer tötete König Varian Wrynn?", answers: ["Sargeras","Gul’dan","Orcische Höllschmiede","Gul’dan & die Legion"], correct: "Gul’dan & die Legion" },																
   { question: "Welcher Raid war Teil von Battle for Azeroth?", answers: ["Schlacht von Dazar’alor","Tempel von Ahn’Qiraj","Onyxias Hort","Sanktum der Herrschaft"], correct: "Schlacht von Dazar’alor" },																
-  { question: "Welche Zone ist KEIN Startgebiet?", answers: ["Dun Morogh","Mulgore","Dämmerwald","Teldrassil"], correct: "Dämmerwald" },																
+  { question: "Welche Zone ist kein Startgebiet?", answers: ["Dun Morogh","Mulgore","Dämmerwald","Teldrassil"], correct: "Dämmerwald" },																
   { question: "Welches Volk lebt in Silbermond?", answers: ["Blutelfen","Hochelfen","Nachtelfen","Leerenelfen"], correct: "Blutelfen" },																
   { question: "Welche Waffe führte Illidan im Schwarzen Tempel?", answers: ["Schattengram","Aschenbringer","Kriegsgleven von Azzinoth","Frostgram"], correct: "Kriegsgleven von Azzinoth" },																
   { question: "Welche Zone ist Heimat der Tauren?", answers: ["Durotar","Mulgore","Brachland","Feralas"], correct: "Mulgore" },																
@@ -452,6 +454,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 });
+
 
 
 
