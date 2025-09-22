@@ -85,7 +85,7 @@ window.allQuestions = [
   { question: "Welche Stadt wurde in Cataclysm zerstört?", answers: ["Darnassus","Theramore","Unterstadt","Gilneas"], correct: "Theramore" },																
   { question: "Welche Hauptstadt der Horde liegt in Kalimdor?", answers: ["Unterstadt","Orgrimmar","Silbermond","Shattrath"], correct: "Orgrimmar" },																
   { question: "Welcher Boss war Endgegner in 'Der Pechschwingenhort'?", answers: ["Ragnaros","Nefarian","Onyxia","Chromaggus"], correct: "Nefarian" },																
-  { question: "Wie heißt der Begleiter von Thrall?", answers: ["Geistwolf","Aggra","Go’el","Draka"], correct: "Geistwolf" },																
+  { question: "Wie heißt der Begleiter von Thrall?", answers: ["Schneesang","Aggra","Go’el","Draka"], correct: "Schneesang" },																
   { question: "Wie viele Inseln bilden die Verheerten Inseln?", answers: ["3","4","5","6"], correct: "5" },																
   { question: "Wer war der letzte Boss in 'Drachenseele'?", answers: ["Malygos","Todesschwinge","Neltharion","Sinestra"], correct: "Todesschwinge" },																
   { question: "Wie viele Reittiere braucht man für den Erfolg 'Reittiermeister'?", answers: ["50","100","150","250"], correct: "100" },																
@@ -454,6 +454,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 });
+
 
 
 
