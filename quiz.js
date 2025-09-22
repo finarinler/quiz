@@ -108,7 +108,9 @@ window.allQuestions = [
   { question: "Welches Pet bekam man in der Collector’s Edition von Burning Crusade?", answers: ["Turtle","Wyrmling","Netherwelpe","Zergling"], correct: "Netherwelpe" },																
   { question: "Seit welchem Addon gibt es das Transmog-System?", answers: ["Cataclysm","Mists of Pandaria","Warlords of Draenor","Legion"], correct: "Cataclysm" },																
   { question: "Welche Farbe hat das Transmogrifikations-Set vom Scharlachroten Kloster?", answers: ["Blau","Grün","Rot","Violett"], correct: "Rot" },																
-  { question: "Welcher Erfolg schaltet den Titel 'der Verrückte' frei?", answers: ["Der Wahnsinnige","Der Unermüdliche","Der Unerschrockene","Der Verwegene"], correct: "Der Wahnsinnige" },																
+  { question: "Welcher Erfolg schaltet den Titel 'der Verrückte' frei?", answers: ["Der Wahnsinnige","Der Unermüdliche","Der Unerschrockene","Der Verwegene"], correct: "Der Wahnsinnige" },				
+  {question: "Wie lautet Thralls richtiger Name?" , answers: ["Thrall","Go'el","Helot","Thralldom"], correct: "Go'el" },	
+  {question: "Was bedeutet 'Thrall' wirklich?" , answers: ["Sklave","Erlöser","Bewahrer","Unhold"] , correct: "Sklave" },																
 ];
 
 // Hintergrund-Bilder
@@ -454,6 +456,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 });
+
 
 
 
