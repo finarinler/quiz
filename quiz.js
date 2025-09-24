@@ -137,6 +137,7 @@ let timeOverCount = 0;
 let score = 0;
 let timeLeft = 30;
 let timerInterval = null;
+let jokerUsedThisQuestion = false;
 
 let totalTime = 600; // 20 Fragen x 30 Sekunden
 let remainingTime = totalTime;
@@ -253,6 +254,8 @@ function loadQuestion(){
       showEnd();
       return;
     }
+    
+    jokerUsedThisQuestion = false;
 
     const q = questions[currentQuestion];
     
@@ -282,6 +285,13 @@ function loadQuestion(){
     // Hinweis anzeigen, dass Antworten generiert werden
     const answersDiv = document.getElementById("answers");
     answersDiv.innerHTML = `<p class="blink-text" style="color: #bfa259; font-weight: bold;">Antworten werden generiert...</p>`;
+    
+    // Joker-Bar zu Beginn leeren und ausblenden
+    const jokerBar = document.getElementById("joker-bar");
+    if(jokerBar) {
+      jokerBar.innerHTML = "";
+      jokerBar.classList.add("hidden");
+    }
 
     // Antworten nach 5 Sekunden anzeigen und smooth einblenden
     setTimeout(() => {
@@ -303,9 +313,11 @@ function loadQuestion(){
           div.classList.add('visible');
         }, index * 150);
       });
+      
+      // Joker-Buttons erst nach der Verzögerung laden
+      loadJokerButtons();
+      
     }, 5000);
-
-    loadJokerButtons();
 }
 
 // Joker-Logik in einer separaten Funktion
@@ -313,6 +325,7 @@ function loadJokerButtons() {
     const jokerBar = document.getElementById("joker-bar");
     jokerBar.innerHTML = "";
     
+    // Nur laden, wenn noch Joker verfügbar sind oder bereits genutzt wurden
     if (jokersLeft > 0 || usedJokers > 0) {
         jokerBar.classList.remove('hidden');
         for (let i = 0; i < 5; i++) {
@@ -320,7 +333,8 @@ function loadJokerButtons() {
             jokerBtn.textContent = '50:50';
             jokerBtn.className = 'joker-btn';
             
-            if (jokerStates[i] === 'used') {
+            // Deaktiviert den Button, wenn er bereits genutzt wurde ODER wenn bereits ein Joker für diese Frage genutzt wurde
+            if (jokerStates[i] === 'used' || jokerUsedThisQuestion) {
                 jokerBtn.classList.add('used');
                 jokerBtn.disabled = true;
             } else {
@@ -350,6 +364,7 @@ function useJoker(clickedButton, jokerIndex) {
   jokersLeft--;
   usedJokers++;
   jokerStates[jokerIndex] = 'used';
+  jokerUsedThisQuestion = true;
 
   // Joker-Buttons erneut laden, um den Zustand zu aktualisieren
   loadJokerButtons();

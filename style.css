@@ -225,18 +225,18 @@ summary h2 {
   background: #bfa259;
   color: #1a1a1a;
   border: 2px solid #9c8449;
-  border-radius: 50%; /* Macht den Button kreisrund */
-  width: 60px; /* Feste Breite */
-  height: 60px; /* Feste Höhe, muss gleich der Breite sein */
-  font-family: 'Cinzel', serif; /* Gleiche Schrift wie die anderen Buttons */
+  border-radius: 50%;
+  width: 60px;
+  height: 60px; 
+  font-family: 'Cinzel', serif;
   font-weight: bold;
   cursor: pointer;
   box-shadow: 0 0 10px rgba(191, 162, 89, 0.5);
   transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
-  display: flex; /* Flexbox für zentrierten Inhalt */
+  display: flex;
   justify-content: center;
   align-items: center;
-  padding: 0; /* Entfernt das Standard-Padding */
+  padding: 0;
 }
 
 .joker-btn:hover:not(:disabled) {
