@@ -147,6 +147,7 @@ let totalTimerInterval = null;
 let jokersLeft = 5;
 let usedJokers = 0;
 let jokerStates = ['unused', 'unused', 'unused', 'unused', 'unused'];
+let jokerCountdownInterval = null;
 
 
 // Screen Management
@@ -256,6 +257,10 @@ function loadQuestion(){
     }
     
     jokerUsedThisQuestion = false;
+    if (jokerCountdownInterval) {
+      clearInterval(jokerCountdownInterval);
+      jokerCountdownInterval = null;
+    }
 
     const q = questions[currentQuestion];
     
@@ -320,11 +325,11 @@ function loadQuestion(){
         jokerBar.classList.remove('hidden');
         jokerBar.innerHTML = `<p class="blink-text" style="color: #bfa259; font-weight: bold;">${jokersLeft} verbleibende Joker in ${jokerCountdown}s</p>`;
         
-        const countdownInterval = setInterval(() => {
+        jokerCountdownInterval = setInterval(() => {
           jokerCountdown--;
           jokerBar.innerHTML = `<p class="blink-text" style="color: #bfa259; font-weight: bold;">${jokersLeft} verbleibende Joker in ${jokerCountdown}s</p>`;
           if (jokerCountdown <= 0) {
-            clearInterval(countdownInterval);
+            clearInterval(jokerCountdownInterval);
             loadJokerButtons();
           }
         }, 1000);
@@ -339,20 +344,20 @@ function loadQuestion(){
 }
 
 // Joker-Logik in einer separaten Funktion
-function loadJokerButtons() {
+function loadJokerButtons(disableAll = false) {
     const jokerBar = document.getElementById("joker-bar");
-    jokerBar.innerHTML = "";
+    if (!jokerBar) return;
     
-    // Nur laden, wenn noch Joker verfügbar sind oder bereits genutzt wurden
+    jokerBar.innerHTML = "";
+    jokerBar.classList.remove('hidden');
+    
     if (jokersLeft > 0 || usedJokers > 0) {
-        jokerBar.classList.remove('hidden');
         for (let i = 0; i < 5; i++) {
             const jokerBtn = document.createElement('button');
             jokerBtn.textContent = '50:50';
             jokerBtn.className = 'joker-btn';
             
-            // Deaktiviert den Button, wenn er bereits genutzt wurde ODER wenn bereits ein Joker für diese Frage genutzt wurde
-            if (jokerStates[i] === 'used' || jokerUsedThisQuestion) {
+            if (jokerStates[i] === 'used' || jokerUsedThisQuestion || disableAll) {
                 jokerBtn.classList.add('used');
                 jokerBtn.disabled = true;
             } else {
@@ -362,7 +367,8 @@ function loadJokerButtons() {
             jokerBar.appendChild(jokerBtn);
         }
     } else {
-        jokerBar.classList.add('hidden');
+      jokerBar.classList.remove('hidden');
+      jokerBar.innerHTML = `<p class="blink-text" style="color: #bfa259; font-weight: bold;">Keine Joker mehr verbleibend</p>`;
     }
 }
 
@@ -430,10 +436,13 @@ function startTimer(){
 // Antwort prüfen
 function checkAnswer(selected, auto=false){
   clearInterval(timerInterval);
+  if (jokerCountdownInterval) {
+    clearInterval(jokerCountdownInterval);
+    jokerCountdownInterval = null;
+  }
   
-  // Joker-Bar ausblenden
-  const jokerBar = document.getElementById("joker-bar");
-  if(jokerBar) jokerBar.classList.add("hidden");
+  // Statt die Bar auszublenden, deaktivieren wir die Buttons
+  loadJokerButtons(true);
 
   const q = questions[currentQuestion];
   const result = document.getElementById("result");
