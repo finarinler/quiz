@@ -82,256 +82,194 @@ window.allQuestions = [
   { question: "Welche spielbare Klasse benutzt Runenmacht?", answers: ["Hexenmeister","Todesritter","Dämonenjäger","Mönch"], correct: "Todesritter" },																
   { question: "Welcher Drache wurde zum Aspekt der Zeit?", answers: ["Nozdormu","Malygos","Ysera","Kalecgos"], correct: "Nozdormu" },																
   { question: "Wer war der erste Boss in der Eiskronenzitadelle?", answers: ["Lord Mark’gar","Lady Todeswisper","Professor Seuchenmord","Sindragosa"], correct: "Lord Mark’gar" },																
-  { question: "Welche Stadt wurde in Cataclysm zerstört?", answers: ["Darnassus","Theramore","Unterstadt","Gilneas"], correct: "Theramore" },																
-  { question: "Welche Hauptstadt der Horde liegt in Kalimdor?", answers: ["Unterstadt","Orgrimmar","Silbermond","Shattrath"], correct: "Orgrimmar" },																
-  { question: "Welcher Boss war Endgegner in 'Der Pechschwingenhort'?", answers: ["Ragnaros","Nefarian","Onyxia","Chromaggus"], correct: "Nefarian" },																
-  { question: "Wie heißt der Begleiter von Thrall?", answers: ["Schneesang","Schneewehe","Schneegipfel","Schneesturm"], correct: "Schneesang" },																
-  { question: "Wie viele Inseln bilden die Verheerten Inseln?", answers: ["3","4","5","6"], correct: "5" },																
-  { question: "Wer war der letzte Boss in 'Drachenseele'?", answers: ["Malygos","Todesschwinge","Neltharion","Sinestra"], correct: "Todesschwinge" },																
-  { question: "Wie viele Reittiere braucht man für den Erfolg 'Reittiermeister'?", answers: ["50","100","150","250"], correct: "100" },																
-  { question: "Welche Zone wurde mit Cataclysm in zwei Level-Bereiche geteilt?", answers: ["Schlingendorntal","Das Brachland","Schattenhochland","Arathihochland"], correct: "Das Brachland" },																
-  { question: "Welche Erweiterung brachte die 'Verbündeten Völker'?", answers: ["Warlords of Draenor","Legion","Battle for Azeroth","Shadowlands"], correct: "Battle for Azeroth" },																
-  { question: "Wer wurde nach Vol’jins Tod Kriegshäuptling der Horde?", answers: ["Sylvanas Windläufer","Thrall","Garrosh Höllschrei","Cairne Bluthuf"], correct: "Sylvanas Windläufer" },																
-  { question: "Welcher Raidboss war Endgegner in 'Der Geschmolzene Kern'?", answers: ["Onyxia","Ragnaros","Majordomus Exekutus","Geddon"], correct: "Ragnaros" },																
-  { question: "Welche Erweiterung brachte die Artefaktwaffen?", answers: ["Legion","Warlords of Draenor","Battle for Azeroth","Shadowlands"], correct: "Legion" },																
-  { question: "Wer tötete König Varian Wrynn?", answers: ["Sargeras","Gul’dan","Orcische Höllschmiede","Gul’dan & die Legion"], correct: "Gul’dan & die Legion" },																
-  { question: "Welcher Raid war Teil von Battle for Azeroth?", answers: ["Schlacht von Dazar’alor","Tempel von Ahn’Qiraj","Onyxias Hort","Sanktum der Herrschaft"], correct: "Schlacht von Dazar’alor" },																
-  { question: "Welche Zone ist kein Startgebiet?", answers: ["Dun Morogh","Mulgore","Dämmerwald","Teldrassil"], correct: "Dämmerwald" },																
-  { question: "Welches Volk lebt in Silbermond?", answers: ["Blutelfen","Hochelfen","Nachtelfen","Leerenelfen"], correct: "Blutelfen" },																
-  { question: "Welche Waffe führte Illidan im Schwarzen Tempel?", answers: ["Schattengram","Aschenbringer","Kriegsgleven von Azzinoth","Frostgram"], correct: "Kriegsgleven von Azzinoth" },																
-  { question: "Welche Zone ist Heimat der Tauren?", answers: ["Durotar","Mulgore","Brachland","Feralas"], correct: "Mulgore" },																
-  { question: "Welche Fraktion lebt in Eiskrone und liebt die Jagd?", answers: ["Die Taunka","Die Kalu’ak","Die Orakel","Die Tuskarr"], correct: "Die Taunka" },																
-  { question: "Welches Mount droppt mit extrem niedriger Chance in Stratholme?", answers: ["Totenschwurs Todesstreitross","Al'ars Asche","Anzu","Unbesiegbar"], correct: "Totenschwurs Todesstreitross" },																
-  { question: "Wie Viele Haustiere muss man für den Erfolg 'Haustierkämpfer von Azeroth' sammeln?", answers: ["150","200","300","400"], correct: "200" },																
-  { question: "Welches Haustier bekam man für den 10. Geburtstag von WoW?", answers: ["Klein-Ragnaros","Klein-Illidan","Murloc mit Geburtstagskappe","Geschmolzenes Kernhündchen"], correct: "Geschmolzenes Kernhündchen" },																
-  { question: "Wie heißt das kleine Mini-Murloc-Maskottchen, das auf vielen BlizzCons verteilt wurde?", answers: ["Murky","Grunty","Murkablo","Mini-Diablo"], correct: "Murky" },																
-  { question: "Welches Pet bekam man in der Collector’s Edition von Burning Crusade?", answers: ["Turtle","Wyrmling","Netherwelpe","Zergling"], correct: "Netherwelpe" },																
-  { question: "Seit welchem Addon gibt es das Transmog-System?", answers: ["Cataclysm","Mists of Pandaria","Warlords of Draenor","Legion"], correct: "Cataclysm" },																
-  { question: "Welche Farbe hat das Transmogrifikations-Set vom Scharlachroten Kloster?", answers: ["Blau","Grün","Rot","Violett"], correct: "Rot" },																
-  { question: "Welcher Erfolg schaltet den Titel 'der Verrückte' frei?", answers: ["Der Wahnsinnige","Der Unermüdliche","Der Unerschrockene","Der Verwegene"], correct: "Der Wahnsinnige" },				
-  {question: "Wie lautet Thralls richtiger Name?" , answers: ["Thrall","Go'el","Helot","Thralldom"], correct: "Go'el" },	
-  {question: "Was bedeutet 'Thrall' wirklich?" , answers: ["Sklave","Erlöser","Bewahrer","Unhold"] , correct: "Sklave" },																
 ];
-
-// Hintergrund-Bilder
-const backgrounds = [
-  "url('pics/assets/bg1.jpg')",
-  "url('pics/assets/bg2.jpg')",
-  "url('pics/assets/bg3.jpg')",
-  "url('pics/assets/bg4.jpg')",
-  "url('pics/assets/bg5.jpg')",
-  "url('pics/assets/bg6.jpg')",
-  "url('pics/assets/bg7.jpg')",
-  "url('pics/assets/bg8.jpg')",
-  "url('pics/assets/bg9.jpg')",
-  "url('pics/assets/bg10.jpg')",
-  "url('pics/assets/bg11.jpg')",
-  "url('pics/assets/bg12.jpg')",
-];
-
-// Zustandsvariablen
-let questions = [];
-let currentQuestion = 0;
+  
+// Globale Variablen
+let shuffledQuestions = [];
+let currentQuestionIndex = 0;
+let score = 0;
 let correctCount = 0;
 let falseCount = 0;
 let timeOverCount = 0;
-let score = 0;
-let timeLeft = 30;
-let timerInterval = null;
-
-let totalTime = 600; // 20 Fragen x 30 Sekunden
-let remainingTime = totalTime;
-let totalTimerInterval = null;
-
-let jokersLeft = 5;
+let remainingTime = 0;
 let usedJokers = 0;
+let jokersLeft = 5;
+let timer;
+let questionTimer;
+// Ein Array, um den Status der 5 Joker zu verfolgen
+let jokerStates = ['unused', 'unused', 'unused', 'unused', 'unused'];
 
-// Screen Management
+
+const startBtn = document.getElementById("start-btn");
+const nextBtn = document.getElementById("next-btn");
+const jokerBar = document.getElementById("joker-bar");
+
+
+startBtn.addEventListener("click", startQuiz);
+nextBtn.addEventListener("click", () => {
+  if (currentQuestionIndex < shuffledQuestions.length - 1) {
+    currentQuestionIndex++;
+    loadQuestion();
+  } else {
+    showEndScreen();
+  }
+});
+
+
 function showScreen(screenId) {
-  // Alle Screens verstecken
   document.querySelectorAll('.quiz-container').forEach(screen => {
     screen.classList.remove('active');
   });
-  
-  // Gewünschten Screen anzeigen
-  const targetScreen = document.getElementById(screenId);
-  if (targetScreen) {
-    targetScreen.classList.add('active');
-  }
+  document.getElementById(screenId).classList.add('active');
 }
 
-// Shuffle
-function shuffleArray(array) {
-  for (let i = array.length -1; i>0; i--){
-    const j = Math.floor(Math.random() * (i+1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-  return array;
-}
 
-function pickRandomQuestions(all, n){
-  return shuffleArray([...all]).slice(0,n);
-}
-
-// Smooth Color Helper
-function getSmoothColor(percent) {
-  let hue;
-  if (percent <= 50) {
-    hue = (percent / 50) * 60; // 0 bis 60 (Rot zu Gelb)
-  } else {
-    hue = 60 + ((percent - 50) / 50) * 60; // 60 bis 120 (Gelb zu Grün)
-  }
-  return `linear-gradient(to right, hsl(${hue}, 100%, 50%), hsl(${hue}, 80%, 40%))`;
-}
-
-// Start
-window.startCountdown = function() {
-  currentQuestion = 0;
+function startQuiz() {
+  shuffleArray(window.allQuestions);
+  shuffledQuestions = window.allQuestions.slice(0, 20);
+  currentQuestionIndex = 0;
   score = 0;
   correctCount = 0;
   falseCount = 0;
   timeOverCount = 0;
-  remainingTime = totalTime;
-
-  questions = pickRandomQuestions(window.allQuestions, Math.min(20, window.allQuestions.length));
-
-  // Countdown Screen zeigen
-  showScreen('countdown-screen');
+  usedJokers = 0;
+  jokersLeft = 5;
+  remainingTime = 600;
   
-  let countdown = 5;
+  updateTotalTimeBar();
+  showScreen('countdown-screen');
+  startCountdown(5);
+}
+
+
+function startCountdown(duration) {
   const countdownElement = document.getElementById("countdown");
-  const interval = setInterval(()=>{
-    countdown--;
-    if(countdown>0) countdownElement.textContent = countdown;
-    else {
-      clearInterval(interval);
-      countdownElement.textContent = "Los!";
-      setTimeout(()=>{
-        showScreen('game-screen');
-        startTotalTimer(); // Gesamttimer starten
-        loadQuestion();
-      }, 1000);
-    }
-  },1000);
-};
+  let timeLeft = duration;
+  countdownElement.textContent = timeLeft;
 
-// Gesamt-Timer - läuft kontinuierlich
-function startTotalTimer(){
-  if(totalTimerInterval) return;
 
-  totalTimerInterval = setInterval(()=>{
-    remainingTime--;
-    let percent = Math.max(0, (remainingTime / totalTime) * 100);
-    
-    // Timer-Elemente sind fest im DOM, nicht dynamisch
-    const totalBar = document.getElementById("total-bar");
-    const totalText = document.getElementById("total-text");
-    
-    if (totalBar && totalText) {
-      totalBar.style.width = percent + "%";
-      totalBar.style.background = getSmoothColor(percent);
-      totalText.textContent = `${remainingTime}s`;
-    }
+  const countdownInterval = setInterval(() => {
+    timeLeft--;
+    countdownElement.textContent = timeLeft;
 
-    if(remainingTime <=0){
-      clearInterval(totalTimerInterval);
-      totalTimerInterval = null;
-      remainingTime = 0;
-      showEnd();
+
+    if (timeLeft <= 0) {
+      clearInterval(countdownInterval);
+      showScreen('game-screen');
+      startTotalTimer();
+      loadQuestion();
     }
-  },1000);
+  }, 1000);
 }
 
-// Frage laden - nur dynamischen Content ändern
-function loadQuestion(){
-    if(currentQuestion >= questions.length){
-      showEnd();
-      return;
+
+function startTotalTimer() {
+  timer = setInterval(() => {
+    if (remainingTime > 0) {
+      remainingTime--;
+      updateTotalTimeBar();
+    } else {
+      clearInterval(timer);
+      showEndScreen();
     }
+  }, 1000);
+}
 
-    const q = questions[currentQuestion];
-    const jokerBar = document.getElementById("joker-bar");
+
+function updateTotalTimeBar() {
+  const totalBar = document.getElementById("total-bar");
+  const totalText = document.getElementById("total-text");
+  const percentage = (remainingTime / 600) * 100;
+  totalBar.style.width = percentage + "%";
+  totalText.textContent = remainingTime + "s";
+}
+
+
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+}
+
+
+function loadQuestion() {
+  clearInterval(questionTimer);
+  const q = shuffledQuestions[currentQuestionIndex];
+  document.getElementById("question").textContent = q.question;
+
+
+  const answersContainer = document.getElementById("answers");
+  answersContainer.innerHTML = "";
+  
+  const questionNumber = currentQuestionIndex + 1;
+  const totalQuestions = shuffledQuestions.length;
+  document.getElementById("progress-text").textContent = `Frage ${questionNumber} von ${totalQuestions}`;
+
+
+  const progressBar = document.getElementById("progress-bar");
+  const progressPercentage = (questionNumber / totalQuestions) * 100;
+  progressBar.style.width = progressPercentage + "%";
+  
+  const shuffledAnswers = [...q.answers];
+  shuffleArray(shuffledAnswers);
+
+
+  shuffledAnswers.forEach(answer => {
+    const answerLabel = document.createElement("div");
+    answerLabel.className = "answer-label";
+    answerLabel.textContent = answer;
+    answerLabel.addEventListener("click", () => checkAnswer(answer, q.correct));
+    answersContainer.appendChild(answerLabel);
+  });
+  
+  loadJokerButtons();
+  
+  startQuestionTimer();
+  document.getElementById("result").textContent = "";
+  nextBtn.style.display = "none";
+}
+
+
+function loadJokerButtons() {
+  const jokerBar = document.getElementById("joker-bar");
+  jokerBar.innerHTML = ""; // Vorhandene Buttons entfernen
+  
+  // Zeige die Joker-Bar nur an, wenn noch Joker verfügbar sind
+  if (jokersLeft > 0 || usedJokers > 0) {
+    jokerBar.classList.remove('hidden');
     
-    // Zufälliger Hintergrund
-    const randomBg = backgrounds[Math.floor(Math.random() * backgrounds.length)];
-    document.body.style.backgroundImage = randomBg;
-    document.body.style.backgroundSize = "cover";
-    document.body.style.backgroundPosition = "center";
-
-    // Nur den Text und die Inhalte ändern, die sich wirklich ändern
-    document.getElementById("progress-text").textContent = `Frage ${currentQuestion+1} von ${questions.length}`;
-    document.getElementById("question").textContent = q.question;
-    document.getElementById("score").innerHTML = `Punkte: <span style="color:#ffe88c">${score}</span>`;
-    document.getElementById("result").textContent = ""; // Ergebnis zurücksetzen
-    document.getElementById("answers").innerHTML = ""; // Antworten-Container leeren
-    jokerBar.innerHTML = ""; // Joker-Buttons leeren
-    
-    // Progress-Balken
-    const progressPercent = ((currentQuestion + 1) / questions.length) * 100;
-    const progressBar = document.getElementById("progress-bar");
-    if (progressBar) {
-      progressBar.style.width = progressPercent + "%";
-    }
-
-    // Timer sofort starten
-    startTimer();
-
-    // Hinweis anzeigen, dass Antworten generiert werden
-    const answersDiv = document.getElementById("answers");
-    answersDiv.innerHTML = `<p class="blink-text" style="color: #bfa259; font-weight: bold;">Antworten werden generiert...</p>`;
-
-    // Antworten nach 5 Sekunden anzeigen und smooth einblenden
-    setTimeout(() => {
-      answersDiv.innerHTML = ""; // Hinweis entfernen
+    // Schleife für alle 5 Joker-Buttons
+    for (let i = 0; i < 5; i++) {
+      const jokerBtn = document.createElement('button');
+      jokerBtn.textContent = '50:50';
+      jokerBtn.className = 'joker-btn';
+      jokerBtn.disabled = true; // Zuerst alle deaktivieren
       
-      const answerElements = [];
-
-      shuffleArray([...q.answers]).forEach(ans=>{
-        const div = document.createElement("div");
-        div.classList.add("answer-label");
-        div.textContent = ans;
-        div.addEventListener("click", ()=>checkAnswer(ans));
-        answersDiv.appendChild(div);
-        answerElements.push(div);
-      });
-      
-      answerElements.forEach((div, index) => {
-        setTimeout(() => {
-          div.classList.add('visible');
-        }, index * 150);
-      });
-
-      // Joker-Buttons erstellen und anzeigen
-      if (jokersLeft > 0) {
-        jokerBar.classList.remove('hidden');
-        for (let i = 0; i < jokersLeft; i++) {
-          const jokerBtn = document.createElement("button");
-          jokerBtn.textContent = "50:50";
-          jokerBtn.classList.add("joker-btn"); // Klasse für Styling
-          jokerBtn.disabled = true; // Zuerst deaktiviert
-          jokerBtn.addEventListener("click", (e) => useJoker(e.target));
-          jokerBar.appendChild(jokerBtn);
-        }
-      } else {
-        jokerBar.classList.add('hidden');
+      if (jokerStates[i] === 'used') {
+        jokerBtn.classList.add('used');
+      } else if (jokerStates[i] === 'unused') {
+        // Nur unbenutzte Joker aktivieren
+        jokerBtn.disabled = false;
+        jokerBtn.addEventListener('click', (e) => {
+          e.stopPropagation(); // Verhindert, dass das Elternelement klickt
+          useJoker(jokerBtn, i);
+        });
       }
-
-    }, 5000);
-
-    // Joker-Buttons nach weiteren 10 Sekunden (insgesamt 15s) aktivieren
-    setTimeout(()=>{
-      document.querySelectorAll(".joker-btn").forEach(btn => {
-        btn.disabled = false;
-      });
-    }, 15000);
+      jokerBar.appendChild(jokerBtn);
+    }
+  } else {
+    jokerBar.classList.add('hidden');
+  }
 }
 
-// Joker-Logik in einer separaten Funktion
-function useJoker(clickedButton) {
-  const q = questions[currentQuestion];
+
+function useJoker(clickedButton, jokerIndex) {
+  const q = shuffledQuestions[currentQuestionIndex];
   const wrongAnswers = q.answers.filter(a => a !== q.correct);
   shuffleArray(wrongAnswers);
   const toRemove = wrongAnswers.slice(0, 2);
+
 
   document.querySelectorAll(".answer-label").forEach(div => {
     if (toRemove.includes(div.textContent)) {
@@ -340,142 +278,126 @@ function useJoker(clickedButton) {
     }
   });
 
+
   jokersLeft--;
   usedJokers++;
+  jokerStates[jokerIndex] = 'used'; // Joker als 'benutzt' markieren
 
-  // Geklickten Button visuell entfernen
-  clickedButton.classList.add('used');
-  clickedButton.disabled = true;
 
-  // Alle anderen Joker-Buttons für diese Frage deaktivieren und ausblenden
-  document.querySelectorAll(".joker-btn").forEach(btn => {
-    if (btn !== clickedButton) {
-      btn.classList.add('hidden');
-      btn.disabled = true;
-    }
+  // Deaktiviert alle verbleibenden Joker-Buttons für diese Frage
+  document.querySelectorAll('.joker-btn').forEach(btn => {
+    btn.disabled = true;
   });
+  
+  // Markieren Sie den benutzten Joker visuell, indem Sie ihn erneut laden
+  loadJokerButtons();
 }
 
 
-// Frage-Timer
-function startTimer(){
-  clearInterval(timerInterval);
-  timeLeft = 30;
+function startQuestionTimer() {
+  const timerBar = document.getElementById("timer-bar");
+  const timeText = document.getElementById("time-text");
+  let timeLeft = 30;
 
-  timerInterval = setInterval(()=>{
+
+  timerBar.style.width = "100%";
+  timeText.textContent = timeLeft + "s";
+  timerBar.style.background = "linear-gradient(90deg, #6fba3c, #6fba3c)";
+
+
+  questionTimer = setInterval(() => {
     timeLeft--;
-    let percent = Math.max(0, (timeLeft/30)*100);
-    
-    const timerBar = document.getElementById("timer-bar");
-    const timeText = document.getElementById("time-text");
-    
-    // Sicherstellen, dass die Elemente existieren
-    if (timerBar && timeText) {
-      timerBar.style.width = percent + "%";
-      timerBar.style.background = getSmoothColor(percent);
-      timeText.textContent = `${timeLeft}s`;
+    timeText.textContent = timeLeft + "s";
+    const percentage = (timeLeft / 30) * 100;
+    timerBar.style.width = percentage + "%";
+
+
+    if (percentage < 60) {
+      timerBar.style.background = "linear-gradient(90deg, #bfa259, #bfa259)";
+    }
+    if (percentage < 30) {
+      timerBar.style.background = "linear-gradient(90deg, #d42e2e, #d42e2e)";
     }
 
-    if(timeLeft <=0){
-      clearInterval(timerInterval);
-      if (timeText) timeText.textContent="0s";
-      checkAnswer(null,true);
+
+    if (timeLeft <= 0) {
+      clearInterval(questionTimer);
+      timeOverCount++;
+      document.getElementById("result").textContent = "Zeit abgelaufen!";
+      document.getElementById("result").style.color = "#d42e2e";
+      disableAllAnswers();
+      nextBtn.style.display = "block";
     }
-  },1000);
-  
-  // Initiale Werte setzen
-  setTimeout(() => {
-    const timerBar = document.getElementById("timer-bar");
-    const timeText = document.getElementById("time-text");
-    if (timerBar && timeText) {
-      timerBar.style.width = "100%";
-      timerBar.style.background = getSmoothColor(100);
-      timeText.textContent = `${timeLeft}s`;
-    }
-  }, 100);
+  }, 1000);
 }
 
-// Antwort prüfen
-function checkAnswer(selected, auto=false){
-  clearInterval(timerInterval);
+
+function checkAnswer(selectedAnswer, correctAnswer) {
+  clearInterval(questionTimer);
+  const allAnswerLabels = document.querySelectorAll(".answer-label");
+  const resultElement = document.getElementById("result");
+  const questionTimeLeft = parseInt(document.getElementById("time-text").textContent);
   
-  // Joker-Bar ausblenden
-  const jokerBar = document.getElementById("joker-bar");
-  if(jokerBar) jokerBar.classList.add("hidden");
+  disableAllAnswers();
 
-  const q = questions[currentQuestion];
-  const result = document.getElementById("result");
-  const answers = document.querySelectorAll(".answer-label");
 
-  answers.forEach(div=>{
-    div.style.pointerEvents = "none";
-    if(div.textContent === q.correct) div.classList.add("correct");
-    if(selected && div.textContent === selected && div.textContent !== q.correct) div.classList.add("wrong");
-  });
-
-  let points = 0;
-  if(selected === q.correct){
+  if (selectedAnswer === correctAnswer) {
+    score += 10 + questionTimeLeft;
+    resultElement.textContent = "Richtig!";
+    resultElement.style.color = "#6fba3c";
     correctCount++;
-    points = 10 + timeLeft;
-    score += points;
-    if (result) { 
-      result.textContent = `Richtig! (+${points} Punkte)`; 
-      result.style.color = "green"; 
-    }
-  } else if(auto){
-    timeOverCount++;
-    points = Math.max(5, 5 * currentQuestion + 5);
-    score -= points;
-    if (result) { 
-      result.textContent = `Zeit abgelaufen! (-${points} Punkte) Richtig: ${q.correct}`; 
-      result.style.color = "red"; 
-    }
+    // Fügen Sie die Klasse für die richtige Antwort hinzu
+    allAnswerLabels.forEach(label => {
+      if (label.textContent === selectedAnswer) {
+        label.classList.add('correct');
+      }
+    });
   } else {
+    score += 5; // Bonuspunkte für einen Versuch
+    resultElement.textContent = "Falsch!";
+    resultElement.style.color = "#d42e2e";
     falseCount++;
-    points = Math.floor(2 + timeLeft / 5);
-    score += points;
-    if (result) { 
-      result.textContent = `Falsch! (+${points} Bonuspunkte) Richtig: ${q.correct}`; 
-      result.style.color = "orange"; 
-    }
+    // Fügen Sie die Klassen für die falsche und die richtige Antwort hinzu
+    allAnswerLabels.forEach(label => {
+      if (label.textContent === selectedAnswer) {
+        label.classList.add('wrong');
+      } else if (label.textContent === correctAnswer) {
+        label.classList.add('correct');
+      }
+    });
   }
 
-  const scoreElement = document.getElementById("score");
-  if (scoreElement) {
-    scoreElement.innerHTML = `Punkte: <span style="color:#ffe88c">${score}</span>`;
-  }
 
-  const nextBtnContainer = document.getElementById("next-btn-container");
-  if (nextBtnContainer) {
-    if(currentQuestion < questions.length-1)
-      nextBtnContainer.innerHTML = `<button id="next-btn">Nächste Frage</button>`;
-    else
-      nextBtnContainer.innerHTML = `<button id="end-btn">Quiz beenden</button>`;
-
-    const nb = document.getElementById("next-btn");
-    if(nb) nb.onclick = ()=>{ nextQuestion(); };
-    const eb = document.getElementById("end-btn");
-    if(eb) eb.onclick = ()=>{ showEnd(); };
-  }
+  updateScoreDisplay();
+  nextBtn.style.display = "block";
 }
 
-function nextQuestion(){
-  currentQuestion++;
-  loadQuestion();
+
+function disableAllAnswers() {
+  document.querySelectorAll(".answer-label").forEach(label => {
+    label.style.pointerEvents = "none";
+  });
+  // Deaktivieren aller Joker-Buttons sobald eine Antwort ausgewählt wurde
+  document.querySelectorAll('.joker-btn').forEach(btn => {
+    btn.disabled = true;
+  });
 }
 
-function showEnd(){
-  if (totalTimerInterval) {
-    clearInterval(totalTimerInterval);
-    totalTimerInterval = null;
-  }
 
-  let bonus = correctCount * 10;
-  let bonus2 = falseCount * 5;
-  let bonus3 = timeOverCount * 15;
-  let bonus4 = usedJokers * 10;
-  let bonus5 = jokersLeft * 50;
-  let finalScore = score + bonus + bonus2 + remainingTime - bonus3 - bonus4 + bonus5;
+function updateScoreDisplay() {
+  document.getElementById("score-value").textContent = score;
+}
+
+
+function showEndScreen() {
+  clearInterval(timer);
+  const totalQuestions = shuffledQuestions.length;
+  const bonus = correctCount * 5;
+  const bonus2 = falseCount * 1;
+  const bonus3 = timeOverCount * 10;
+  const bonus4 = usedJokers * 5;
+  const bonus5 = jokersLeft * 10;
+  const finalScore = score + bonus + bonus2 + remainingTime - bonus3 - bonus4 + bonus5;
   
   showScreen('end-screen');
   
@@ -492,14 +414,3 @@ function showEnd(){
     <h2>Dein Endstand: <strong style="color:#ffe88c">${finalScore}</strong></h2>
   `;
 }
-
-// Start-Button Event
-document.addEventListener('DOMContentLoaded', function() {
-  const startBtn = document.getElementById("start-btn");
-  if (startBtn) {
-    startBtn.addEventListener("click", () => {
-      showScreen('countdown-screen');
-      startCountdown();
-    });
-  }
-});

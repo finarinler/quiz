@@ -239,24 +239,30 @@ summary h2 {
 .joker-btn:disabled {
   background-color: #555;
   color: #999;
-  cursor: none;
+  cursor: not-allowed;
 }
 
+/* Joker-Buttons ausgrauen und mit einem roten X versehen */
 .joker-btn.used {
-  background-color: #555;
-  color: #999;
+  background: #2b2b2b;
+  color: #6a6a6a;
+  border-color: #4a4a4a;
   cursor: not-allowed;
   position: relative;
 }
 
 .joker-btn.used::after {
-  content: "✖";
+  content: 'x';
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  color: #ff0000;
-  font-size: 2em;
+  color: red;
+  font-size: 2.5em;
   font-weight: bold;
-  pointer-events: none;
+}
+
+.joker-btn.used:hover {
+  transform: scale(1);
+  box-shadow: none;
 }
