@@ -297,7 +297,7 @@ summary h2 {
 
 /* Neuer Stil für die Meldung "Antworten werden generiert..." */
 #answer-generation-message {
-  font-size: 24px;
+  font-size: 12px;
   font-weight: bold;
   color: #f0d07b;
   text-shadow: 2px 2px 5px #000;
@@ -307,4 +307,5 @@ summary h2 {
 .joker-button-hidden {
   visibility: hidden;
   opacity: 0;
+
 }
