@@ -279,6 +279,29 @@ function loadQuestion(){
     progressBar.style.width = progressPercent + "%";
   }
 
+  // Joker-Logik
+  const jokerBtn = document.getElementById("joker-btn");
+  jokerBtn.addEventListener("click", () => {
+    if (jokersLeft <= 0) return;
+
+    const wrongAnswers = q.answers.filter(a => a !== q.correct);
+    shuffleArray(wrongAnswers);
+    const toRemove = wrongAnswers.slice(0,2);
+
+    document.querySelectorAll(".answer-label").forEach(div => {
+      if (toRemove.includes(div.textContent)) {
+        div.style.opacity = "0.3";
+        div.style.pointerEvents = "none";
+      }
+    });
+
+    jokersLeft--;
+    usedJokers++;
+    document.getElementById("joker-count").textContent = `Übrig: ${jokersLeft}`;
+    jokerBtn.disabled = true;
+   }, { once: true });
+
+
   // Timer sofort starten
   startTimer();
 
@@ -309,29 +332,6 @@ function loadQuestion(){
     });
   }, 5000); // 5000 Millisekunden = 5 Sekunden
 }
-
-  // Joker-Logik
-  const jokerBtn = document.getElementById("joker-btn");
-  jokerBtn.addEventListener("click", () => {
-    if (jokersLeft <= 0) return;
-
-    const wrongAnswers = q.answers.filter(a => a !== q.correct);
-    shuffleArray(wrongAnswers);
-    const toRemove = wrongAnswers.slice(0,2);
-
-    document.querySelectorAll(".answer-label").forEach(div => {
-      if (toRemove.includes(div.textContent)) {
-        div.style.opacity = "0.3";
-        div.style.pointerEvents = "none";
-      }
-    });
-
-    jokersLeft--;
-    usedJokers++;
-    document.getElementById("joker-count").textContent = `Übrig: ${jokersLeft}`;
-    jokerBtn.disabled = true;
-  });
-
 
 // Frage-Timer
 function startTimer(){
