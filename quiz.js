@@ -293,7 +293,7 @@ function loadQuestion(){
       jokerBar.classList.add("hidden");
     }
 
-    // Antworten nach 5 Sekunden anzeigen und smooth einblenden
+    // Antworten nach 5 Sekunden anzeigen
     setTimeout(() => {
       answersDiv.innerHTML = ""; // Hinweis entfernen
       
@@ -314,8 +314,17 @@ function loadQuestion(){
         }, index * 150);
       });
       
-      // Joker-Buttons erst nach der Verzögerung laden
-      loadJokerButtons();
+      // Hinweis anzeigen, dass Joker geladen werden
+      const jokerBar = document.getElementById("joker-bar");
+      if(jokerBar) {
+        jokerBar.classList.remove("hidden");
+        jokerBar.innerHTML = `<p class="blink-text" style="color: #bfa259; font-weight: bold;">Joker werden geladen...</p>`;
+      }
+      
+      // Joker-Buttons erst nach der zusätzlichen Verzögerung von 15 Sekunden laden
+      setTimeout(() => {
+          loadJokerButtons();
+      }, 15000);
       
     }, 5000);
 }
