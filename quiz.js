@@ -1,6 +1,4 @@
 // Fragen-Pool (global)
-
-
 window.allQuestions = [
   { question: "Wie heißt die Hauptstadt von Dragonflight?", answers: ["Dalaran","Orgrimmar","Dornogal","Valdrakken"], correct: "Valdrakken" },
   { question: "Wer war kein Anführer der Horde?", answers: ["Arthas","Vol'jin","Thrall","Garrosh"], correct: "Arthas" },
@@ -260,12 +258,18 @@ function loadQuestion(){
     document.body.style.backgroundImage = randomBg;
     document.body.style.backgroundSize = "cover";
     document.body.style.backgroundPosition = "center";
+    
+    // Fortschrittsbalken aktualisieren
+    const progressBar = document.getElementById("progress-bar");
+    const progressText = document.getElementById("progress-text");
+    const progress = (currentQuestion / questions.length) * 100;
+    progressBar.style.width = progress + "%";
+    progressText.textContent = `Frage ${currentQuestion+1} von ${questions.length}`;
 
-    document.getElementById("progress-text").textContent = `Frage ${currentQuestion+1} von ${questions.length}`;
     document.getElementById("question").textContent = q.question;
     document.getElementById("score").innerHTML = `Punkte: <span style="color:#ffe88c">${score}</span>`;
     document.getElementById("result").textContent = "";
-    document.getElementById("next-btn-container").innerHTML = ""; // WICHTIG: Button ausblenden
+    document.getElementById("next-btn-container").innerHTML = "";
     document.getElementById("answers").innerHTML = "";
     
     startTimer();
@@ -275,8 +279,24 @@ function loadQuestion(){
     
     const jokerBar = document.getElementById("joker-bar");
     if(jokerBar) {
-      jokerBar.innerHTML = "";
-      jokerBar.classList.add("hidden");
+      // Neuer Text für das Joker-Laden
+      let jokerCountdown = 15;
+      const updateJokerText = () => {
+        jokerBar.innerHTML = `<p class="blink-text" style="color: #bfa259; font-weight: bold;">${jokersLeft} verbleibende Joker in ${jokerCountdown}s</p>`;
+      };
+      
+      updateJokerText();
+      jokerBar.classList.remove("hidden");
+      
+      const jokerCountdownInterval = setInterval(() => {
+        jokerCountdown--;
+        if (jokerCountdown > 0) {
+          updateJokerText();
+        } else {
+          clearInterval(jokerCountdownInterval);
+          loadJokerButtons();
+        }
+      }, 1000);
     }
 
     setTimeout(() => {
@@ -299,16 +319,7 @@ function loadQuestion(){
         }, index * 150);
       });
       
-      if(jokerBar) {
-        jokerBar.classList.remove("hidden");
-        jokerBar.innerHTML = `<p class="blink-text" style="color: #bfa259; font-weight: bold;">Joker werden geladen...</p>`;
-      }
-      
-      setTimeout(() => {
-          loadJokerButtons();
-      }, 15000);
-      
-    }, 5000);
+    }, 2000); // 2 Sekunden Verzögerung für die Antworten
 }
 
 // Joker-Logik in einer separaten Funktion
@@ -351,9 +362,9 @@ function useJoker(clickedButton, jokerIndex) {
   });
 
   jokersLeft--;
-  usedJokers++;
   jokerStates[jokerIndex] = 'used';
   jokerUsedThisQuestion = true;
+  usedJokers++;
 
   loadJokerButtons();
 }
@@ -384,15 +395,13 @@ function startTimer(){
     }
   },1000);
   
-  setTimeout(() => {
-    const timerBar = document.getElementById("timer-bar");
-    const timeText = document.getElementById("time-text");
-    if (timerBar && timeText) {
-      timerBar.style.width = "100%";
-      timerBar.style.background = getSmoothColor(100);
-      timeText.textContent = `${timeLeft}s`;
-    }
-  }, 100);
+  const timerBar = document.getElementById("timer-bar");
+  const timeText = document.getElementById("time-text");
+  if (timerBar && timeText) {
+    timerBar.style.width = "100%";
+    timerBar.style.background = getSmoothColor(100);
+    timeText.textContent = `${timeLeft}s`;
+  }
 }
 
 // Antwort prüfen

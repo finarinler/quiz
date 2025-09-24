@@ -139,11 +139,17 @@ button:hover {
   background: linear-gradient(90deg, #6fba3c, #6fba3c);
   transition: width 1s linear, background 0.25s linear;
   box-shadow: 0 0 10px rgba(255, 200, 50, 0.7), 0 0 20px rgba(255, 200, 50, 0.5);
+  animation: pulse-timer 1.5s infinite; /* Animation wieder aktiviert */
 }
 
 .time-text {
+  position: absolute; /* Positionierung über dem Balken */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2; /* Über den Balken gelegt */
   font-weight: bold;
-  color: #ffe88c;
+  color: #f0e6d2; /* Helle Textfarbe */
   text-shadow: 1px 1px 2px #000;
 }
 
@@ -158,6 +164,7 @@ button:hover {
   background: linear-gradient(90deg, #6fba3c, #6fba3c);
   transition: width 1s linear, background 0.25s linear;
   box-shadow: 0 0 10px rgba(255, 200, 50, 0.7), 0 0 20px rgba(255, 200, 50, 0.5);
+  animation: pulse-timer 1.5s infinite; /* Animation wieder aktiviert */
 }
 
 .result, .score, .countdown {
