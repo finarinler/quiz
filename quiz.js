@@ -275,15 +275,36 @@ function loadQuestion(){
     startTimer();
 
     const answersDiv = document.getElementById("answers");
-    answersDiv.innerHTML = `<p class="blink-text" style="color: #bfa259; font-weight: bold;">Antworten werden generiert...</p>`;
-    
     const jokerBar = document.getElementById("joker-bar");
-    if(jokerBar) {
-      jokerBar.classList.add("hidden");
-    }
+    
+    // Initialer Zustand: Lade-Nachricht anzeigen, Joker-Leiste verstecken
+    answersDiv.innerHTML = `<p class="blink-text" style="color: #bfa259; font-weight: bold;">Antworten werden generiert...</p>`;
+    jokerBar.classList.add("hidden");
 
-    // Verzögerung für Antworten ist nun 5 Sekunden
+    let jokerCountdownSeconds = 5;
+    let jokerCountdownInterval = null;
+
+    if (jokersLeft > 0) {
+      // Joker-Countdown-Nachricht anzeigen
+      jokerBar.innerHTML = `<p class="blink-text" style="color: #bfa259; font-weight: bold;">${jokersLeft} verbleibende Joker in ${jokerCountdownSeconds} Sekunden</p>`;
+      jokerBar.classList.remove("hidden");
+      
+      // Countdown starten
+      jokerCountdownInterval = setInterval(() => {
+        jokerCountdownSeconds--;
+        if (jokerCountdownSeconds > 0) {
+          jokerBar.innerHTML = `<p class="blink-text" style="color: #bfa259; font-weight: bold;">${jokersLeft} verbleibende Joker in ${jokerCountdownSeconds} Sekunden</p>`;
+        } else {
+          clearInterval(jokerCountdownInterval);
+        }
+      }, 1000);
+    }
+    
     setTimeout(() => {
+      // Countdown-Nachricht entfernen
+      if(jokerCountdownInterval) {
+        clearInterval(jokerCountdownInterval);
+      }
       answersDiv.innerHTML = "";
       
       const answerElements = [];
@@ -303,16 +324,9 @@ function loadQuestion(){
         }, index * 150);
       });
       
-      // Joker-Logik jetzt mit Bedingung
-      if(jokersLeft > 0) {
-        setTimeout(() => {
-          loadJokerButtons();
-        }, 5000); // Verzögerte Anzeige der Joker
-      } else {
-        loadJokerButtons(); // Sofortige Anzeige, wenn keine Joker mehr übrig sind
-      }
+      loadJokerButtons();
       
-    }, 5000); // 5 Sekunden Verzögerung für die Antworten
+    }, 5000);
 }
 
 // Joker-Logik in einer separaten Funktion
@@ -493,7 +507,7 @@ function showEnd(){
     <p>Deine falschen Antworten: <strong style="color:#ffe88c">${falseCount}</strong> <span style="color:orange">(+${bonus2} Bonuspunkte)</span></p>
     <p>Abgelaufene Zeit: <strong style="color:#ffe88c">${timeOverCount}</strong> <span style="color:red">(-${bonus3} Punkte)</span></p>
     <p>Genutzte Joker: <strong style="color:#ffe88c">${usedJokers}</strong> <span style="color:red">(-${bonus4} Punkte)</span></p>
-    <p>Nicht genutzte Joker: <strong style="color:#ffe88c">${jokersLeft}</strong> <span style="color:green">(+${bonus5} Bonuspunkte)</span></p>
+    <p>Nicht genutzte Joker: <strong style="color:#ffe88c">${jokersLeft}</strong> <span style="color:green">(+${bonus5})</span></p>
     <hr style="border-color: #bfa259; margin: 20px 0;">
     <h2>Dein Endstand: <strong style="color:#ffe88c">${finalScore}</strong></h2>
   `;
