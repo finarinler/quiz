@@ -27,36 +27,28 @@ body {
   text-align: left;
 }
 
-h1 {  
-  margin-bottom: 10px;
-  color: #f0d07b;
-  text-shadow: 2px 2px 5px #000;
-}
-
-h2 {
+h1, h2 {  
+  font-family: 'Cinzel', serif;
   margin-bottom: 10px;
   color: #f0d07b;
   text-shadow: 2px 2px 5px #000;
 }
 
 button {
-  margin-top: 10px;
-  padding: 12px;
-  width: 100%;
-  border: 2px solid #bfa259;
-  border-radius: 12px;
-  background: linear-gradient(#806030, #bfa259);
+  background: linear-gradient(#5a3, #382);
+  border: 2px solid #000;
+  border-radius: 8px;
   color: #fff;
-  font-size: 16px;
   font-weight: bold;
+  padding: 8px 16px;
   cursor: pointer;
-  text-shadow: 1px 1px 2px #000;
-  transition: all 0.3s ease;
+  box-shadow: 0 0 10px rgba(255,255,100,0.5);
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
 button:hover {
-  background: linear-gradient(#bfa259, #806030);
-  box-shadow: 0 0 15px #ffe88c;
+  transform: scale(1.05);
+  box-shadow: 0 0 15px rgba(255,255,150,0.8);
 }
 
 .answer-label {
@@ -132,6 +124,8 @@ button:hover {
   width:100%;
   background: linear-gradient(90deg, #6fba3c, #6fba3c);
   transition: width 1s linear, background 0.25s linear;
+  box-shadow: 0 0 10px rgba(255, 200, 50, 0.7),
+              0 0 20px rgba(255, 200, 50, 0.5);
 }
 
 .time-text {
@@ -207,3 +201,8 @@ summary h2 {
   animation: blink 1.5s infinite;
 }
 
+.score {
+  color: #ffe88c;
+  text-shadow: 0 0 10px #ffcc00, 0 0 20px #ff9900;
+  font-weight: bold;
+}
