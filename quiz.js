@@ -1,5 +1,6 @@
 // Fragen-Pool (global)
 
+
 window.allQuestions = [
   { question: "Wie heißt die Hauptstadt von Dragonflight?", answers: ["Dalaran","Orgrimmar","Dornogal","Valdrakken"], correct: "Valdrakken" },
   { question: "Wer war kein Anführer der Horde?", answers: ["Arthas","Vol'jin","Thrall","Garrosh"], correct: "Arthas" },
@@ -147,17 +148,14 @@ let totalTimerInterval = null;
 let jokersLeft = 5;
 let usedJokers = 0;
 let jokerStates = ['unused', 'unused', 'unused', 'unused', 'unused'];
-let jokerCountdownInterval = null;
 
 
 // Screen Management
 function showScreen(screenId) {
-  // Alle Screens verstecken
   document.querySelectorAll('.quiz-container').forEach(screen => {
     screen.classList.remove('active');
   });
   
-  // Gewünschten Screen anzeigen
   const targetScreen = document.getElementById(screenId);
   if (targetScreen) {
     targetScreen.classList.add('active');
@@ -202,7 +200,6 @@ window.startCountdown = function() {
 
   questions = pickRandomQuestions(window.allQuestions, Math.min(20, window.allQuestions.length));
 
-  // Countdown Screen zeigen
   showScreen('countdown-screen');
   
   let countdown = 5;
@@ -215,14 +212,14 @@ window.startCountdown = function() {
       countdownElement.textContent = "Los!";
       setTimeout(()=>{
         showScreen('game-screen');
-        startTotalTimer(); // Gesamttimer starten
+        startTotalTimer();
         loadQuestion();
       }, 1000);
     }
   },1000);
 };
 
-// Gesamt-Timer - läuft kontinuierlich
+// Gesamt-Timer
 function startTotalTimer(){
   if(totalTimerInterval) return;
 
@@ -230,7 +227,6 @@ function startTotalTimer(){
     remainingTime--;
     let percent = Math.max(0, (remainingTime / totalTime) * 100);
     
-    // Timer-Elemente sind fest im DOM, nicht dynamisch
     const totalBar = document.getElementById("total-bar");
     const totalText = document.getElementById("total-text");
     
@@ -249,7 +245,7 @@ function startTotalTimer(){
   },1000);
 }
 
-// Frage laden - nur dynamischen Content ändern
+// Frage laden
 function loadQuestion(){
     if(currentQuestion >= questions.length){
       showEnd();
@@ -257,50 +253,34 @@ function loadQuestion(){
     }
     
     jokerUsedThisQuestion = false;
-    if (jokerCountdownInterval) {
-      clearInterval(jokerCountdownInterval);
-      jokerCountdownInterval = null;
-    }
 
     const q = questions[currentQuestion];
     
-    // Zufälliger Hintergrund
     const randomBg = backgrounds[Math.floor(Math.random() * backgrounds.length)];
     document.body.style.backgroundImage = randomBg;
     document.body.style.backgroundSize = "cover";
     document.body.style.backgroundPosition = "center";
 
-    // Nur den Text und die Inhalte ändern, die sich wirklich ändern
     document.getElementById("progress-text").textContent = `Frage ${currentQuestion+1} von ${questions.length}`;
     document.getElementById("question").textContent = q.question;
     document.getElementById("score").innerHTML = `Punkte: <span style="color:#ffe88c">${score}</span>`;
-    document.getElementById("result").textContent = ""; // Ergebnis zurücksetzen
-    document.getElementById("answers").innerHTML = ""; // Antworten-Container leeren
+    document.getElementById("result").textContent = "";
+    document.getElementById("next-btn-container").innerHTML = ""; // WICHTIG: Button ausblenden
+    document.getElementById("answers").innerHTML = "";
     
-    // Progress-Balken
-    const progressPercent = ((currentQuestion + 1) / questions.length) * 100;
-    const progressBar = document.getElementById("progress-bar");
-    if (progressBar) {
-      progressBar.style.width = progressPercent + "%";
-    }
-
-    // Timer sofort starten
     startTimer();
 
-    // Hinweis anzeigen, dass Antworten generiert werden
     const answersDiv = document.getElementById("answers");
     answersDiv.innerHTML = `<p class="blink-text" style="color: #bfa259; font-weight: bold;">Antworten werden generiert...</p>`;
     
-    // Joker-Bar zu Beginn leeren und ausblenden
     const jokerBar = document.getElementById("joker-bar");
     if(jokerBar) {
       jokerBar.innerHTML = "";
       jokerBar.classList.add("hidden");
     }
 
-    // Antworten nach 5 Sekunden anzeigen
     setTimeout(() => {
-      answersDiv.innerHTML = ""; // Hinweis entfernen
+      answersDiv.innerHTML = "";
       
       const answerElements = [];
 
@@ -319,45 +299,31 @@ function loadQuestion(){
         }, index * 150);
       });
       
-      // NEUE JOKER LOGIK START
-      if (jokersLeft > 0) {
-        let jokerCountdown = 15;
-        jokerBar.classList.remove('hidden');
-        jokerBar.innerHTML = `<p class="blink-text" style="color: #bfa259; font-weight: bold;">${jokersLeft} verbleibende Joker in ${jokerCountdown}s</p>`;
-        
-        jokerCountdownInterval = setInterval(() => {
-          jokerCountdown--;
-          jokerBar.innerHTML = `<p class="blink-text" style="color: #bfa259; font-weight: bold;">${jokersLeft} verbleibende Joker in ${jokerCountdown}s</p>`;
-          if (jokerCountdown <= 0) {
-            clearInterval(jokerCountdownInterval);
-            loadJokerButtons();
-          }
-        }, 1000);
-      } else {
-        jokerBar.classList.remove('hidden');
-        jokerBar.innerHTML = `<p class="blink-text" style="color: #bfa259; font-weight: bold;">Keine Joker mehr verbleibend</p>`;
-        loadJokerButtons();
+      if(jokerBar) {
+        jokerBar.classList.remove("hidden");
+        jokerBar.innerHTML = `<p class="blink-text" style="color: #bfa259; font-weight: bold;">Joker werden geladen...</p>`;
       }
-      // NEUE JOKER LOGIK ENDE
+      
+      setTimeout(() => {
+          loadJokerButtons();
+      }, 15000);
       
     }, 5000);
 }
 
 // Joker-Logik in einer separaten Funktion
-function loadJokerButtons(disableAll = false) {
+function loadJokerButtons() {
     const jokerBar = document.getElementById("joker-bar");
-    if (!jokerBar) return;
-    
     jokerBar.innerHTML = "";
-    jokerBar.classList.remove('hidden');
     
     if (jokersLeft > 0 || usedJokers > 0) {
+        jokerBar.classList.remove('hidden');
         for (let i = 0; i < 5; i++) {
             const jokerBtn = document.createElement('button');
             jokerBtn.textContent = '50:50';
             jokerBtn.className = 'joker-btn';
             
-            if (jokerStates[i] === 'used' || jokerUsedThisQuestion || disableAll) {
+            if (jokerStates[i] === 'used' || jokerUsedThisQuestion) {
                 jokerBtn.classList.add('used');
                 jokerBtn.disabled = true;
             } else {
@@ -367,8 +333,7 @@ function loadJokerButtons(disableAll = false) {
             jokerBar.appendChild(jokerBtn);
         }
     } else {
-      jokerBar.classList.remove('hidden');
-      jokerBar.innerHTML = `<p class="blink-text" style="color: #bfa259; font-weight: bold;">Keine Joker mehr verbleibend</p>`;
+        jokerBar.classList.add('hidden');
     }
 }
 
@@ -390,7 +355,6 @@ function useJoker(clickedButton, jokerIndex) {
   jokerStates[jokerIndex] = 'used';
   jokerUsedThisQuestion = true;
 
-  // Joker-Buttons erneut laden, um den Zustand zu aktualisieren
   loadJokerButtons();
 }
 
@@ -407,7 +371,6 @@ function startTimer(){
     const timerBar = document.getElementById("timer-bar");
     const timeText = document.getElementById("time-text");
     
-    // Sicherstellen, dass die Elemente existieren
     if (timerBar && timeText) {
       timerBar.style.width = percent + "%";
       timerBar.style.background = getSmoothColor(percent);
@@ -421,7 +384,6 @@ function startTimer(){
     }
   },1000);
   
-  // Initiale Werte setzen
   setTimeout(() => {
     const timerBar = document.getElementById("timer-bar");
     const timeText = document.getElementById("time-text");
@@ -436,13 +398,9 @@ function startTimer(){
 // Antwort prüfen
 function checkAnswer(selected, auto=false){
   clearInterval(timerInterval);
-  if (jokerCountdownInterval) {
-    clearInterval(jokerCountdownInterval);
-    jokerCountdownInterval = null;
-  }
   
-  // Statt die Bar auszublenden, deaktivieren wir die Buttons
-  loadJokerButtons(true);
+  const jokerBar = document.getElementById("joker-bar");
+  if(jokerBar) jokerBar.classList.add("hidden");
 
   const q = questions[currentQuestion];
   const result = document.getElementById("result");
