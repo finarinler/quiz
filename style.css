@@ -239,7 +239,7 @@ summary h2 {
 .joker-btn:disabled {
   background-color: #555;
   color: #999;
-  cursor: not-allowed;
+  cursor: none;
 }
 
 .joker-btn.used {
@@ -250,7 +250,7 @@ summary h2 {
 }
 
 .joker-btn.used::after {
-  content: "✖"; /* Unicode-Zeichen für ein großes, fettes X */
+  content: "✖";
   position: absolute;
   top: 50%;
   left: 50%;
@@ -258,5 +258,5 @@ summary h2 {
   color: #ff0000;
   font-size: 2em;
   font-weight: bold;
-  pointer-events: none; /* Stellt sicher, dass das Kreuz nicht geklickt werden kann */
+  pointer-events: none;
 }
