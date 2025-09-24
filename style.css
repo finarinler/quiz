@@ -224,12 +224,14 @@ summary h2 {
 .joker-btn {
   background: #bfa259;
   color: #1a1a1a;
-  border: 1px solid #735e3c;
-  padding: 8px 15px;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: all 0.2s ease;
+  border: 2px solid #9c8449;
+  border-radius: 50%;
+  padding: 10px 15px;
+  font-family: 'Cinzel', serif;
   font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(191, 162, 89, 0.5);
+  transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
 }
 
 .joker-btn:hover:not(:disabled) {
@@ -249,6 +251,7 @@ summary h2 {
   border-color: #4a4a4a;
   cursor: not-allowed;
   position: relative;
+  box-shadow: none;
 }
 
 .joker-btn.used::after {
