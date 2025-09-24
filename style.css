@@ -213,3 +213,36 @@ summary h2 {
 .hidden {
   display: none;
 }
+
+.joker-bar {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.joker-btn {
+  background: #bfa259;
+  color: #1a1a1a;
+  border: 1px solid #735e3c;
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: bold;
+}
+
+.joker-btn:hover:not(:disabled) {
+  background: #cfae64;
+}
+
+.joker-btn:disabled {
+  background-color: #555;
+  color: #999;
+  cursor: not-allowed;
+}
+
+.joker-btn.used {
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}

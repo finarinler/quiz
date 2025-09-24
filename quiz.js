@@ -1,5 +1,5 @@
-
 // Fragen-Pool (global)
+
 
 window.allQuestions = [
   { question: "Wie heißt die Hauptstadt von Dragonflight?", answers: ["Dalaran","Orgrimmar","Dornogal","Valdrakken"], correct: "Valdrakken" },
@@ -250,7 +250,8 @@ function loadQuestion(){
     }
 
     const q = questions[currentQuestion];
-
+    const jokerBar = document.getElementById("joker-bar");
+    
     // Zufälliger Hintergrund
     const randomBg = backgrounds[Math.floor(Math.random() * backgrounds.length)];
     document.body.style.backgroundImage = randomBg;
@@ -263,46 +264,13 @@ function loadQuestion(){
     document.getElementById("score").innerHTML = `Punkte: <span style="color:#ffe88c">${score}</span>`;
     document.getElementById("result").textContent = ""; // Ergebnis zurücksetzen
     document.getElementById("answers").innerHTML = ""; // Antworten-Container leeren
-
+    jokerBar.innerHTML = ""; // Joker-Buttons leeren
+    
     // Progress-Balken
     const progressPercent = ((currentQuestion + 1) / questions.length) * 100;
     const progressBar = document.getElementById("progress-bar");
     if (progressBar) {
       progressBar.style.width = progressPercent + "%";
-    }
-
-    // Joker-Logik
-    const jokerBar = document.querySelector(".joker-bar");
-    const jokerBtn = document.getElementById("joker-btn");
-
-    if (jokerBar && jokerBtn) {
-        jokerBar.classList.add('hidden');
-        jokerBtn.disabled = true;
-
-        const newBtn = jokerBtn.cloneNode(true);
-        jokerBtn.parentNode.replaceChild(newBtn, jokerBtn);
-        const clonedJokerBtn = document.getElementById("joker-btn");
-
-        clonedJokerBtn.addEventListener("click", () => {
-            if (jokersLeft <= 0) return;
-
-            const wrongAnswers = q.answers.filter(a => a !== q.correct);
-            shuffleArray(wrongAnswers);
-            const toRemove = wrongAnswers.slice(0, 2);
-
-            document.querySelectorAll(".answer-label").forEach(div => {
-                if (toRemove.includes(div.textContent)) {
-                    div.style.opacity = "0.3";
-                    div.style.pointerEvents = "none";
-                }
-            });
-
-            jokersLeft--;
-            usedJokers++;
-            document.getElementById("joker-count").textContent = `Übrig: ${jokersLeft}`;
-            clonedJokerBtn.disabled = true;
-            jokerBar.classList.add('hidden');
-        });
     }
 
     // Timer sofort starten
@@ -312,7 +280,7 @@ function loadQuestion(){
     const answersDiv = document.getElementById("answers");
     answersDiv.innerHTML = `<p class="blink-text" style="color: #bfa259; font-weight: bold;">Antworten werden generiert...</p>`;
 
-    // Antworten und Joker-Button nach 5 Sekunden anzeigen und smooth einblenden
+    // Antworten nach 5 Sekunden anzeigen und smooth einblenden
     setTimeout(() => {
       answersDiv.innerHTML = ""; // Hinweis entfernen
       
@@ -333,22 +301,61 @@ function loadQuestion(){
         }, index * 150);
       });
 
-      // Joker-Button einblenden, aber noch deaktiviert lassen
+      // Joker-Buttons erstellen und anzeigen
       if (jokersLeft > 0) {
-        const jokerBar = document.querySelector(".joker-bar");
-        if (jokerBar) {
-          jokerBar.classList.remove('hidden');
+        jokerBar.classList.remove('hidden');
+        for (let i = 0; i < jokersLeft; i++) {
+          const jokerBtn = document.createElement("button");
+          jokerBtn.textContent = "50:50";
+          jokerBtn.classList.add("joker-btn"); // Klasse für Styling
+          jokerBtn.disabled = true; // Zuerst deaktiviert
+          jokerBtn.addEventListener("click", (e) => useJoker(e.target));
+          jokerBar.appendChild(jokerBtn);
         }
+      } else {
+        jokerBar.classList.add('hidden');
       }
 
     }, 5000);
 
-    // Joker-Button nach weiteren 10 Sekunden (insgesamt 15s) aktivieren
+    // Joker-Buttons nach weiteren 10 Sekunden (insgesamt 15s) aktivieren
     setTimeout(()=>{
-      const jokerBtn = document.getElementById("joker-btn");
-      if(jokerBtn) jokerBtn.disabled = false;
+      document.querySelectorAll(".joker-btn").forEach(btn => {
+        btn.disabled = false;
+      });
     }, 15000);
 }
+
+// Joker-Logik in einer separaten Funktion
+function useJoker(clickedButton) {
+  const q = questions[currentQuestion];
+  const wrongAnswers = q.answers.filter(a => a !== q.correct);
+  shuffleArray(wrongAnswers);
+  const toRemove = wrongAnswers.slice(0, 2);
+
+  document.querySelectorAll(".answer-label").forEach(div => {
+    if (toRemove.includes(div.textContent)) {
+      div.style.opacity = "0.3";
+      div.style.pointerEvents = "none";
+    }
+  });
+
+  jokersLeft--;
+  usedJokers++;
+
+  // Geklickten Button visuell entfernen
+  clickedButton.classList.add('used');
+  clickedButton.disabled = true;
+
+  // Alle anderen Joker-Buttons für diese Frage deaktivieren und ausblenden
+  document.querySelectorAll(".joker-btn").forEach(btn => {
+    if (btn !== clickedButton) {
+      btn.classList.add('hidden');
+      btn.disabled = true;
+    }
+  });
+}
+
 
 // Frage-Timer
 function startTimer(){
@@ -391,10 +398,10 @@ function startTimer(){
 // Antwort prüfen
 function checkAnswer(selected, auto=false){
   clearInterval(timerInterval);
-  const jokerBar = document.querySelector(".joker-bar");
-  if (jokerBar) {
-      jokerBar.classList.add('hidden');
-  }
+  
+  // Joker-Bar ausblenden
+  const jokerBar = document.getElementById("joker-bar");
+  if(jokerBar) jokerBar.classList.add("hidden");
 
   const q = questions[currentQuestion];
   const result = document.getElementById("result");
