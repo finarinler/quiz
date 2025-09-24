@@ -279,26 +279,10 @@ function loadQuestion(){
     
     const jokerBar = document.getElementById("joker-bar");
     if(jokerBar) {
-      // Neuer Text für das Joker-Laden
-      let jokerCountdown = 15;
-      const updateJokerText = () => {
-        jokerBar.innerHTML = `<p class="blink-text" style="color: #bfa259; font-weight: bold;">${jokersLeft} verbleibende Joker in ${jokerCountdown}s</p>`;
-      };
-      
-      updateJokerText();
-      jokerBar.classList.remove("hidden");
-      
-      const jokerCountdownInterval = setInterval(() => {
-        jokerCountdown--;
-        if (jokerCountdown > 0) {
-          updateJokerText();
-        } else {
-          clearInterval(jokerCountdownInterval);
-          loadJokerButtons();
-        }
-      }, 1000);
+      jokerBar.classList.add("hidden");
     }
 
+    // Verzögerung für Antworten ist nun 5 Sekunden
     setTimeout(() => {
       answersDiv.innerHTML = "";
       
@@ -319,7 +303,28 @@ function loadQuestion(){
         }, index * 150);
       });
       
-    }, 2000); // 2 Sekunden Verzögerung für die Antworten
+      // Countdown für Joker startet jetzt erst NACHDEM die Antworten sichtbar sind
+      if(jokerBar) {
+        let jokerCountdown = 15;
+        const updateJokerText = () => {
+          jokerBar.innerHTML = `<p class="blink-text" style="color: #bfa259; font-weight: bold;">${jokersLeft} verbleibende Joker in ${jokerCountdown}s</p>`;
+        };
+        
+        updateJokerText();
+        jokerBar.classList.remove("hidden");
+        
+        const jokerCountdownInterval = setInterval(() => {
+          jokerCountdown--;
+          if (jokerCountdown > 0) {
+            updateJokerText();
+          } else {
+            clearInterval(jokerCountdownInterval);
+            loadJokerButtons();
+          }
+        }, 1000);
+      }
+      
+    }, 5000); // 5 Sekunden Verzögerung für die Antworten
 }
 
 // Joker-Logik in einer separaten Funktion
