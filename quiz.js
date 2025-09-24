@@ -92,7 +92,7 @@ window.allQuestions = [
 { question: "Wer wurde nach Vol’jins Tod Kriegshäuptling der Horde?", answers: ["Sylvanas Windläufer","Thrall","Garrosh Höllschrei","Cairne Bluthuf"], correct: "Sylvanas Windläufer" },																
 { question: "Welcher Raidboss war Endgegner in 'Der Geschmolzene Kern'?", answers: ["Onyxia","Ragnaros","Majordomus Exekutus","Geddon"], correct: "Ragnaros" },																
 { question: "Welche Erweiterung brachte die Artefaktwaffen?", answers: ["Legion","Warlords of Draenor","Battle for Azeroth","Shadowlands"], correct: "Legion" },																
-{ question: "Wer tötete König Varian Wrynn?", answers: ["Sargeras","Gul’dan","Orcische Höllschmiede","Gul’dan & die Legion"], correct: "Gul’dan & die Legion" },																
+{ question: "Wer tötete König Varian Wrynn?", answers: ["Sargeras","Gul’dan","Orcische Höllenschmiede","Gul’dan & die Legion"], correct: "Gul’dan & die Legion" },																
 { question: "Welcher Raid war Teil von Battle for Azeroth?", answers: ["Schlacht von Dazar’alor","Tempel von Ahn’Qiraj","Onyxias Hort","Sanktum der Herrschaft"], correct: "Schlacht von Dazar’alor" },																
 { question: "Welche Zone ist kein Startgebiet?", answers: ["Dun Morogh","Mulgore","Dämmerwald","Teldrassil"], correct: "Dämmerwald" },																
 { question: "Welches Volk lebt in Silbermond?", answers: ["Blutelfen","Hochelfen","Nachtelfen","Leerenelfen"], correct: "Blutelfen" },																
@@ -180,44 +180,49 @@ function startGame() {
 function displayQuestionAndAnswers() {
   isAnswerBlocked = false;
   const questionData = questions[currentQuestionIndex];
+  const answersDiv = document.getElementById("answers");
+  const answerGenMessage = document.getElementById("answer-generation-message");
+
   document.getElementById("progress-text").textContent = `Frage ${currentQuestionIndex + 1} von ${questions.length}`;
   document.getElementById("progress-bar").style.width = `${((currentQuestionIndex + 1) / questions.length) * 100}%`;
   document.getElementById("question").textContent = questionData.question;
-
-  const answersDiv = document.getElementById("answers");
   answersDiv.innerHTML = '';
+  document.getElementById("joker-bar").classList.add('hidden');
+  
+  // Anzeigen der "Generiere Antworten..." Nachricht
+  answerGenMessage.classList.remove('hidden');
+  answerGenMessage.classList.add('blink-text');
 
-  const shuffledAnswers = [...questionData.answers];
-  shuffleArray(shuffledAnswers);
-
-  shuffledAnswers.forEach((answer, index) => {
-    const label = document.createElement("div");
-    label.className = "answer-label";
-    label.id = `answer${index}`;
-    label.textContent = answer;
-    answersDiv.appendChild(label);
-
-    label.addEventListener("click", () => {
-      if (!isAnswerBlocked) {
-        checkAnswer(answer, questionData.correct);
-      }
-    });
-  });
-
-  // Zeige die Antworten mit einem kleinen Delay
   setTimeout(() => {
+    answerGenMessage.classList.add('hidden');
+    answerGenMessage.classList.remove('blink-text');
+    
+    const shuffledAnswers = [...questionData.answers];
+    shuffleArray(shuffledAnswers);
+
+    shuffledAnswers.forEach((answer, index) => {
+      const label = document.createElement("div");
+      label.className = "answer-label";
+      label.id = `answer${index}`;
+      label.textContent = answer;
+      answersDiv.appendChild(label);
+      
+      label.addEventListener("click", () => {
+        if (!isAnswerBlocked) {
+          checkAnswer(answer, questionData.correct);
+        }
+      });
+    });
+
     const answerLabels = document.querySelectorAll('.answer-label');
     answerLabels.forEach((label) => {
       label.classList.add('visible');
     });
 
-    // Joker-Bar nach dem Erscheinen der Antworten anzeigen
     showJokerBar();
     startJokerTimer();
-  }, 500); // 500ms Delay
-  
-  // Start the per-question timer
-  startQuestionTimer();
+    startQuestionTimer();
+  }, 5000); // 5 Sekunden Verzögerung
 }
 
 function showJokerBar() {
@@ -275,14 +280,26 @@ function startQuestionTimer() {
 }
 
 function startJokerTimer() {
-  jokerTimeLeft = jokerTime;
   clearInterval(jokerTimerId);
-  jokerTimerId = setInterval(() => {
-    jokerTimeLeft--;
-    if (jokerTimeLeft <= 0) {
-      clearInterval(jokerTimerId);
-    }
-  }, 1000);
+  const jokerText = document.getElementById("joker-text");
+  jokerTimeLeft = jokerTime;
+
+  if (jokersLeft > 0) {
+    jokerText.textContent = `${jokersLeft} verbleibende Joker in ${jokerTimeLeft}s`;
+    jokerTimerId = setInterval(() => {
+      jokerTimeLeft--;
+      jokerText.textContent = `${jokersLeft} verbleibende Joker in ${jokerTimeLeft}s`;
+      if (jokerTimeLeft <= 0) {
+        clearInterval(jokerTimerId);
+        jokerText.textContent = `Joker sind jetzt deaktiviert.`;
+        document.querySelectorAll('.joker-btn').forEach(btn => {
+          btn.disabled = true;
+        });
+      }
+    }, 1000);
+  } else {
+    jokerText.textContent = `Keine Joker mehr verbleibend.`;
+  }
 }
 
 function checkAnswer(selectedAnswer, correctAnswer) {
@@ -320,16 +337,19 @@ function handleJoker() {
   if (jokersLeft > 0) {
     usedJokers++;
     jokersLeft--;
-
+    clearInterval(jokerTimerId);
+    
     const currentQuestion = questions[currentQuestionIndex];
-    const currentAnswers = currentQuestion.answers;
     const correctAnswer = currentQuestion.correct;
     let removedCount = 0;
     const answerLabels = document.querySelectorAll('.answer-label');
 
-    // Mache die Buttons sichtbar und deaktiviere den Joker, der verwendet wurde
     document.querySelectorAll('.joker-btn')[usedJokers - 1].classList.add('used');
     document.querySelectorAll('.joker-btn')[usedJokers - 1].disabled = true;
+    
+    document.querySelectorAll('.joker-btn').forEach(btn => {
+      btn.disabled = true;
+    });
 
     while (removedCount < 2) {
       const randomIndex = Math.floor(Math.random() * answerLabels.length);
@@ -340,6 +360,13 @@ function handleJoker() {
         answerToRemoveLabel.classList.add('used-joker-removed');
         removedCount++;
       }
+    }
+
+    const jokerText = document.getElementById("joker-text");
+    if (jokersLeft > 0) {
+        jokerText.textContent = `${jokersLeft} verbleibende Joker`;
+    } else {
+        jokerText.textContent = `Keine Joker mehr verbleibend.`;
     }
   }
 }
