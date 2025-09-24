@@ -314,17 +314,24 @@ function loadQuestion(){
         }, index * 150);
       });
       
-      // Hinweis anzeigen, dass Joker geladen werden
-      const jokerBar = document.getElementById("joker-bar");
-      if(jokerBar) {
-        jokerBar.classList.remove("hidden");
-        jokerBar.innerHTML = `<p class="blink-text" style="color: #bfa259; font-weight: bold;">Joker werden geladen...</p>`;
-      }
+      // NEUE JOKER LOGIK START
+      if (jokersLeft > 0) {
+        let jokerCountdown = 15;
+        jokerBar.classList.remove('hidden');
+        jokerBar.innerHTML = `<p class="blink-text" style="color: #bfa259; font-weight: bold;">Joker-Countdown: ${jokerCountdown}s</p>`;
       
-      // Joker-Buttons erst nach der zusätzlichen Verzögerung von 15 Sekunden laden
-      setTimeout(() => {
-          loadJokerButtons();
-      }, 15000);
+        const countdownInterval = setInterval(() => {
+          jokerCountdown--;
+          jokerBar.innerHTML = `<p class="blink-text" style="color: #bfa259; font-weight: bold;">Joker-Countdown: ${jokerCountdown}s</p>`;
+          if (jokerCountdown <= 0) {
+            clearInterval(countdownInterval);
+            loadJokerButtons();
+          }
+        }, 1000);
+      } else {
+        jokerBar.classList.add('hidden');
+      }
+      // NEUE JOKER LOGIK ENDE
       
     }, 5000);
 }
