@@ -1,505 +1,387 @@
 // Fragen-Pool (global)
 window.allQuestions = [
-  { question: "Wie heißt die Hauptstadt von Dragonflight?", answers: ["Dalaran","Orgrimmar","Dornogal","Valdrakken"], correct: "Valdrakken" },
-  { question: "Wer war kein Anführer der Horde?", answers: ["Arthas","Vol'jin","Thrall","Garrosh"], correct: "Arthas" },
-  { question: "Welche Farbe hat der Energiebalken von Wildheitsdruiden?", answers: ["Blau","Gelb","Rot","Grün"], correct: "Gelb" },
-  { question: "Wie heißt der Kontinent, auf dem Sturmwind ist?", answers: ["Kalimdor","Östliche Pestländer","Östliches Königreich","Azeroth"], correct: "Östliches Königreich" },
-  { question: "Welches ist keine Rasse der Horde?", answers: ["Goblin","Gnom","Blutelf","Untote"], correct: "Gnom" },
-  { question: "Welche Erweiterung erscheint im Jahr 2026?", answers: ["Cataclysm","The Last Titan","Midnight","Dragonflight"], correct: "Midnight" },
-  { question: "Mit welchem Raid wurde der mythische Raidmodus eingeführt?", answers: ["Terrasse des Endlosen Frühlings","Thron des Donners","Schlacht um Orgrimmar","Das Herz der Angst"], correct: "Schlacht um Orgrimmar" },
-  { question: "Welches AddOn erschien nach Wrath of the Lich King?", answers: ["Warlords of Draenor","Burning Crusade","Mists of Pandaria","Cataclysm"], correct: "Cataclysm" },
-  { question: "Wann ging es zurück nach Karazhan?", answers: ["Battle for Azeroth","Warlords of Draenor","Legion","Cataclysm"], correct: "Legion" },
-  { question: "In welche Instanz ging es erneut in Mists of Pandaria?", answers: ["Das Scharlachrote Kloster","Metbrauerei Glutbräu","Auchindoun","Todesminen"], correct: "Das Scharlachrote Kloster" },
-  { question: "Welches ist kein Raid aus Battle for Azeroth?", answers: ["Schlacht von Dazar'alor","Tiegel der Stürme","Der Ewige Palast","Der Schrein des Sturms"], correct: "Der Schrein des Sturms" },
-  { question: "Wo war Hemet Nesingwary erstmals mit seiner Jagdgesellschaft?", answers: ["Azurblaues Gebirge - Dragonflight","Nagrand - Burning Crusade","Schlingendorntal - Classic","Zuldazar - Battle for Azeroth"], correct: "Schlingendorntal - Classic" },
-  { question: "Wer oder was ist 'Antros'?", answers: ["Gastwirt in Oribos","Questmob in Maldraxxus","Weltboss in Zereth Mortis","Händler im Schlund"], correct: "Weltboss in Zereth Mortis" },
-  { question: "Wie heißt der grüne Netherdrache im Unteren Viertel?", answers: ["Barthamus","Malfas","Jorus","Zoya"], correct: "Zoya" },
-  { question: "Welcher Ruffraktion gehört 'König Yokkum' an?", answers: ["Die Söhne Hodirs","Die Kalu'ak","Die Taunka","Der Wyrmruhpakt"], correct: "Die Söhne Hodirs" },
-  { question: "Welches Gebiet sieht wie das Hordelogo aus?", answers: ["Tanaris","Azshara","Schattenhochland","Sümpfe des Elends"], correct: "Azshara" },
-  { question: "Wie hieß der Drache aus Cataclysm?", answers: ["Neltharion","Nefarian","Nozdormu","Nathanos"], correct: "Neltharion" },
-  { question: "Welche Erweiterung erschien nicht im November?", answers: ["Wrath of the Lich King - 2008","Warlords of Draenor - 2014","Shadowlands - 2020","Burning Crusade - 2007"], correct: "Burning Crusade - 2007" },
-  { question: "Welche Klasse können 'Kul Tiraner' 2025 nicht werden?", answers: ["Druiden","Schamane","Paladin","Mönch"], correct: "Paladin" },
-  { question: "Wie heißt der Allianzanführer aus 'Die Exodar'?", answers: ["Prophet Velen","Hochexarch Turalyon","Valeera Sanguinar","Vereesa Windläufer"], correct: "Prophet Velen" },
-  { question: "Welches Minievent findet immer im November statt?", answers: ["Tag der Toten","Piratentag","Wanderfest","Ruf des Skarabäus"], correct: "Tag der Toten" },
-  { question: "Wer oder was ist 'Michael 'Schmutz' Fink'?", answers: ["Angellehrer in Theramore","Kochlehrer in Sturmwind","Flugmeister in Gilneas","Gastwirt in Boralus"], correct:"Angellehrer in Theramore" },
-  { question: "Wo befindet sich die 'Zeitlose Insel'?", answers: ["Östlich in Pandaria","Nördlich auf den Dracheninseln","Westlich im Mahlstrom","Südlich in Zandalar"], correct: "Östlich in Pandaria" },
-  { question: "In welchem Gebiet befindet sich der 'Tempel der Erde'?", answers: ["Tiefenheim","Kun-Lai-Gipfel","Thaldraszus","Drachenöde"], correct: "Tiefenheim" },
-  { question: "Wie heißt der Endboss von Wrath of the Lich King?", answers: ["Arthas Menethil","Kel'Thuzad","Illidan Sturmgrimm","Deathwing"], correct: "Arthas Menethil" },
-  { question: "Welche Zone war das Startgebiet der Todesritter?", answers: ["Geisterlande","Tirisfal","Östliche Pestländer","Schwarze Festung"], correct: "Östliche Pestländer" },
-  { question: "Wer war der letzte Boss in der Schlacht um Orgrimmar?", answers: ["Garrosh Höllschrei","Varok Saurfang","Thrall","Anduin Wrynn"], correct: "Garrosh Höllschrei" },
-  { question: "Welche spielbare Rasse wurde in Legion eingeführt?", answers: ["Vulpera","Leerenelfen","Dämonenjäger","Keine Rasse, sondern eine Klasse"], correct: "Keine Rasse, sondern eine Klasse" },
-  { question: "Welche Klasse konnte man zu Classic nicht spielen?", answers: ["Paladin","Schurke","Mönch","Hexenmeister"], correct: "Mönch" },
-  { question: "Wie hieß die Hauptstadt der Orcs vor Orgrimmar?", answers: ["Sen’jin","Garadar","Durotar","Ogrimmar gab es schon"], correct: "Ogrimmar gab es schon" },
-  { question: "Welches legendäre Item bekam man in Classic durch eine Quest in Geschmolzener Kern?", answers: ["Sulfuras, Hand von Ragnaros","Schattenmourne","Donnerzorn, Gesegnete Klinge des Windsuchers","Aschenbringer"], correct: "Sulfuras, Hand von Ragnaros" },
-  { question: "Wie heißt die Hauptstadt der Nachtgeborenen?", answers: ["Shattrath","Suramar","Silbermond","Telogrus"], correct: "Suramar" },
-  { question: "Welche Zone liegt nicht in Nordend?", answers: ["Boreanische Tundra","Grizzlyhügel","Eiskrone","Schattenmondtal"], correct: "Schattenmondtal" },
-  { question: "Wie viele Spieler waren für Raids in Classic vorgesehen?", answers: ["10","20","25","40"], correct: "40" },
-  { question: "Welcher bekannte Charakter ist nicht Teil der Windläufer-Familie?", answers: ["Alleria","Sylvanas","Vereesa","Tyrande"], correct: "Tyrande" },
-  { question: "Welche Instanz in Classic war die erste mit 20 Spielern?", answers: ["Onyxias Hort","Zul'Gurub","Geschmolzener Kern","Pechschwingenhort"], correct: "Zul'Gurub" },
-  { question: "Welche Rolle übernimmt Anduin Wrynn hauptsächlich im Spiel?", answers: ["Tank","Heiler","DPS","Er ist kein Kämpfer"], correct: "Heiler" },
-  { question: "Wie heißt der erste Raid in Shadowlands?", answers: ["Sanktum der Herrschaft","Schloss Nathria","Mausoleum der Ersten","Tiegel der Stürme"], correct: "Schloss Nathria" },
-  { question: "Welche Region war in Cataclysm neu spielbar?", answers: ["Uldum","Nordend","Schlingendorntal","Das Brachland"], correct: "Uldum" },
-  { question: "Wie heißen die Reittiere, die man mit Ruhm bei den Kirin Tor in Wrath freischalten konnte?", answers: ["Phönixe","Greifen","Wasserstoffballons","Arkanwyrmlinge"], correct: "Arkanwyrmlinge" },
-  { question: "Welches dieser Addons hatte kein Levelcap von 120?", answers: ["Legion","Battle for Azeroth","Warlords of Draenor","Shadowlands"], correct: "Warlords of Draenor" },
-  { question: "Wer ist der Anführer der Draenei?", answers: ["Illidan","Kil'jaeden","Prophet Velen","Nobundo"], correct: "Prophet Velen" },
-  { question: "Wie heißt die Hauptstadt der Untoten?", answers: ["Unterstadt","Silbermond","Tirisfal","Lordaeron"], correct: "Unterstadt" },
-  { question: "Was war die erste neue spielbare Klasse nach Classic?", answers: ["Dämonenjäger","Todesritter","Mönch","Jäger"], correct: "Todesritter" },
-  { question: "Wie hieß die Orc-Frau, die Thrall in Durnholde erzogen hat?", answers: ["Draka","Aggra","Taretha","Geyah"], correct: "Taretha" },																
-  { question: "Welche alte Gottheit lag unter dem Tempel von Ahn’Qiraj?", answers: ["C’Thun","Yogg-Saron","N’Zoth","Y’Shaarj"], correct: "C’Thun" },																
-  { question: "Wie hieß die ursprüngliche Hauptstadt der Nachtelfen?", answers: ["Suramar","Darnassus","Zin-Azshari","Ashenvale"], correct: "Zin-Azshari" },																
-  { question: "Welcher Drache half bei der Erschaffung der Dämonenseele?", answers: ["Malygos","Neltharion","Nozdormu","Alexstrasza"], correct: "Neltharion" },																
-  { question: "Welcher Charakter war nicht Mitglied der 'Scharlachroten Flamme'?", answers: ["Sally Weißsträhne","Renault Mograine","Whitemane","Uther"], correct: "Uther" },																
-  { question: "Wer schmiedete die ursprüngliche Frostgram?", answers: ["Der Lichkönig","Kil’jaeden","Ner’zhul","Die Nathrezim"], correct: "Die Nathrezim" },																
-  { question: "Wofür sind Murlocs berühmt?", answers: ["Ihre Kampfkraft","Ihre epischen Quests","Ihre Sprache","Ihr Gurgl-Geräusch"], correct: "Ihr Gurgl-Geräusch" },																
-  { question: "Wie heißt der erste Raid in Classic WoW?", answers: ["Geschmolzener Kern","Zul'Gurub","Pechschwingenhort","Onyxias Hort"], correct: "Geschmolzener Kern" },																
-  { question: "Welche Klasse wurde in The Burning Crusade neu spielbar?", answers: ["Todesritter","Mönch","Dämonenjäger","Keine – nur Rassen"], correct: "Keine – nur Rassen" },																
-  { question: "Wie viele Spieler waren ursprünglich für Onyxias Hort vorgesehen?", answers: ["10","20","25","40"], correct: "40" },																
-  { question: "Wer war der letzte Boss in Karazhan?", answers: ["Prinz Malchezaar","Moroes","Kurator","Medivh"], correct: "Prinz Malchezaar" },																
-  { question: "Welche Erweiterung brachte den Dungeonfinder ins Spiel?", answers: ["Wrath of the Lich King","Burning Crusade","Cataklysm","Mists of Pandaria"], correct: "Wrath of the Lich King" },																
-  { question: "Welche Klasse wurde mit Mists of Pandaria neu eingeführt?", answers: ["Mönch","Todesritter","Dämonenjäger","Runenmeister"], correct: "Mönch" },																
-  { question: "Welche Farbe hat das Mana von Schamanen?", answers: ["Blau","Gelb","Rot","Grün"], correct: "Blau" },																
-  { question: "Welche Rolle war Arthas Menethil vor seiner Verwandlung?", answers: ["Paladin","Priester","Krieger","Todesritter"], correct: "Paladin" },																
-  { question: "Wie viele Addons gab es bis 2025?", answers: ["9","10","11","12"], correct: "10" },																
-  { question: "Wie heißt das Volk, das in Warlords of Draenor eingeführt wurde?", answers: ["Vulpera","Orcs","Oger","Kein neues Volk"], correct: "Kein neues Volk" },																
-  { question: "Welcher Charakter sagt 'Ihr seid noch nicht vorbereitet!'?", answers: ["Illidan","Arthas","Thrall","Sylvanas"], correct: "Illidan" },																
-  { question: "Wer war der Endboss von Legion?", answers: ["Kil’jaeden","Sargeras","Argus der Zerrütter","Illidan"], correct: "Argus der Zerrütter" },																
-  { question: "Was war das Levelcap in Classic?", answers: ["50","55","60","70"], correct: "60" },																
-  { question: "Welche Fraktion wohnt in Shattrath und ist neutral?", answers: ["Die Aldor & Seher","Die Kalu’ak","Die Nachtgeborenen","Die Draenei"], correct: "Die Aldor & Seher" },																
-  { question: "Welches legendäre Item bekam man in Wrath of the Lich King?", answers: ["Donnerzorn","Schattengram","Atiesh","Sulfuras"], correct: "Schattengram" },																
-  { question: "Welche spielbare Rasse ist keine Allianz-Rasse?", answers: ["Worgen","Gnome","Blutelfen","Draenei"], correct: "Blutelfen" },																
-  { question: "Wer war der erste Anführer der Verlassenen?", answers: ["Sylvanas","Varimathras","Kel'Thuzad","Putress"], correct: "Sylvanas" },																
-  { question: "Welche Klasse startete zu Classic mit einem Totem-System?", answers: ["Schamane","Druide","Paladin","Priester"], correct: "Schamane" },																
-  { question: "Wie heißt der erste Raid in Burning Crusade?", answers: ["Gruuls Unterschlupf","Karazhan","Magtheridons Kammer","Hyjalgipfel"], correct: "Karazhan" },																
-  { question: "Welcher Boss in Ulduar war optional und besonders schwer?", answers: ["Algalon der Beobachter","Yogg-Saron","Mimiron","Thorim"], correct: "Algalon der Beobachter" },																
-  { question: "Wie viele Flügel hat Naxxramas?", answers: ["3","4","5","6"], correct: "4" },																
-  { question: "Welcher Raid endete mit dem Kampf gegen Gul’dan?", answers: ["Die Nachtfestung","Höllenfeuerzitadelle","Grabmal des Sargeras","Schwarzfelsgießerei"], correct: "Die Nachtfestung" },																
-  { question: "Welches Volk lebt in Eiskrone im Gebiet der Kalu’ak?", answers: ["Trolle","Taunka","Murlocs","Goblins"], correct: "Taunka" },																
-  { question: "Welcher alte Gott lag unter Ulduar?", answers: ["C’Thun","N’Zoth","Yogg-Saron","Y’Shaarj"], correct: "Yogg-Saron" },																
-  { question: "Was war das Maximallevel in Mists of Pandaria?", answers: ["85","90","95","100"], correct: "90" },																
-  { question: "Wie hieß die letzte Instanz in Warlords of Draenor?", answers: ["Schwarzfelsgießerei","Hochfels","Höllenfeuerzitadelle","Obere Schwarzfelsspitze"], correct: "Höllenfeuerzitadelle" },																
-  { question: "Welche spielbare Klasse benutzt Runenmacht?", answers: ["Hexenmeister","Todesritter","Dämonenjäger","Mönch"], correct: "Todesritter" },																
-  { question: "Welcher Drache wurde zum Aspekt der Zeit?", answers: ["Nozdormu","Malygos","Ysera","Kalecgos"], correct: "Nozdormu" },																
-  { question: "Wer war der erste Boss in der Eiskronenzitadelle?", answers: ["Lord Mark’gar","Lady Todeswisper","Professor Seuchenmord","Sindragosa"], correct: "Lord Mark’gar" },																
-  { question: "Welche Stadt wurde in Cataclysm zerstört?", answers: ["Darnassus","Theramore","Unterstadt","Gilneas"], correct: "Theramore" },																
-  { question: "Welche Hauptstadt der Horde liegt in Kalimdor?", answers: ["Unterstadt","Orgrimmar","Silbermond","Shattrath"], correct: "Orgrimmar" },																
-  { question: "Welcher Boss war Endgegner in 'Der Pechschwingenhort'?", answers: ["Ragnaros","Nefarian","Onyxia","Chromaggus"], correct: "Nefarian" },																
-  { question: "Wie heißt der Begleiter von Thrall?", answers: ["Schneesang","Schneewehe","Schneegipfel","Schneesturm"], correct: "Schneesang" },																
-  { question: "Wie viele Inseln bilden die Verheerten Inseln?", answers: ["3","4","5","6"], correct: "5" },																
-  { question: "Wer war der letzte Boss in 'Drachenseele'?", answers: ["Malygos","Todesschwinge","Neltharion","Sinestra"], correct: "Todesschwinge" },																
-  { question: "Wie viele Reittiere braucht man für den Erfolg 'Reittiermeister'?", answers: ["50","100","150","250"], correct: "100" },																
-  { question: "Welche Zone wurde mit Cataclysm in zwei Level-Bereiche geteilt?", answers: ["Schlingendorntal","Das Brachland","Schattenhochland","Arathihochland"], correct: "Das Brachland" },																
-  { question: "Welche Erweiterung brachte die 'Verbündeten Völker'?", answers: ["Warlords of Draenor","Legion","Battle for Azeroth","Shadowlands"], correct: "Battle for Azeroth" },																
-  { question: "Wer wurde nach Vol’jins Tod Kriegshäuptling der Horde?", answers: ["Sylvanas Windläufer","Thrall","Garrosh Höllschrei","Cairne Bluthuf"], correct: "Sylvanas Windläufer" },																
-  { question: "Welcher Raidboss war Endgegner in 'Der Geschmolzene Kern'?", answers: ["Onyxia","Ragnaros","Majordomus Exekutus","Geddon"], correct: "Ragnaros" },																
-  { question: "Welche Erweiterung brachte die Artefaktwaffen?", answers: ["Legion","Warlords of Draenor","Battle for Azeroth","Shadowlands"], correct: "Legion" },																
-  { question: "Wer tötete König Varian Wrynn?", answers: ["Sargeras","Gul’dan","Orcische Höllschmiede","Gul’dan & die Legion"], correct: "Gul’dan & die Legion" },																
-  { question: "Welcher Raid war Teil von Battle for Azeroth?", answers: ["Schlacht von Dazar’alor","Tempel von Ahn’Qiraj","Onyxias Hort","Sanktum der Herrschaft"], correct: "Schlacht von Dazar’alor" },																
-  { question: "Welche Zone ist kein Startgebiet?", answers: ["Dun Morogh","Mulgore","Dämmerwald","Teldrassil"], correct: "Dämmerwald" },																
-  { question: "Welches Volk lebt in Silbermond?", answers: ["Blutelfen","Hochelfen","Nachtelfen","Leerenelfen"], correct: "Blutelfen" },																
-  { question: "Welche Waffe führte Illidan im Schwarzen Tempel?", answers: ["Schattengram","Aschenbringer","Kriegsgleven von Azzinoth","Frostgram"], correct: "Kriegsgleven von Azzinoth" },																
-  { question: "Welche Zone ist Heimat der Tauren?", answers: ["Durotar","Mulgore","Brachland","Feralas"], correct: "Mulgore" },																
-  { question: "Welche Fraktion lebt in Eiskrone und liebt die Jagd?", answers: ["Die Taunka","Die Kalu’ak","Die Orakel","Die Tuskarr"], correct: "Die Taunka" },																
-  { question: "Welches Mount droppt mit extrem niedriger Chance in Stratholme?", answers: ["Totenschwurs Todesstreitross","Al'ars Asche","Anzu","Unbesiegbar"], correct: "Totenschwurs Todesstreitross" },																
-  { question: "Wie Viele Haustiere muss man für den Erfolg 'Haustierkämpfer von Azeroth' sammeln?", answers: ["150","200","300","400"], correct: "200" },																
-  { question: "Welches Haustier bekam man für den 10. Geburtstag von WoW?", answers: ["Klein-Ragnaros","Klein-Illidan","Murloc mit Geburtstagskappe","Geschmolzenes Kernhündchen"], correct: "Geschmolzenes Kernhündchen" },																
-  { question: "Wie heißt das kleine Mini-Murloc-Maskottchen, das auf vielen BlizzCons verteilt wurde?", answers: ["Murky","Grunty","Murkablo","Mini-Diablo"], correct: "Murky" },																
-  { question: "Welches Pet bekam man in der Collector’s Edition von Burning Crusade?", answers: ["Turtle","Wyrmling","Netherwelpe","Zergling"], correct: "Netherwelpe" },																
-  { question: "Seit welchem Addon gibt es das Transmog-System?", answers: ["Cataclysm","Mists of Pandaria","Warlords of Draenor","Legion"], correct: "Cataclysm" },																
-  { question: "Welche Farbe hat das Transmogrifikations-Set vom Scharlachroten Kloster?", answers: ["Blau","Grün","Rot","Violett"], correct: "Rot" },																
-  { question: "Welcher Erfolg schaltet den Titel 'der Verrückte' frei?", answers: ["Der Wahnsinnige","Der Unermüdliche","Der Unerschrockene","Der Verwegene"], correct: "Der Wahnsinnige" },				
-  {question: "Wie lautet Thralls richtiger Name?" , answers: ["Thrall","Go'el","Helot","Thralldom"], correct: "Go'el" },	
-  {question: "Was bedeutet 'Thrall' wirklich?" , answers: ["Sklave","Erlöser","Bewahrer","Unhold"] , correct: "Sklave" },																
+{ question: "Wie heißt die Hauptstadt von Dragonflight?", answers: ["Dalaran","Orgrimmar","Dornogal","Valdrakken"], correct: "Valdrakken" },																
+{ question: "Wer war kein Anführer der Horde?", answers: ["Arthas","Vol'jin","Thrall","Garrosh"], correct: "Arthas" },																
+{ question: "Welche Farbe hat der Energiebalken von Wildheitsdruiden?", answers: ["Blau","Gelb","Rot","Grün"], correct: "Gelb" },																
+{ question: "Wie heißt der Kontinent, auf dem Sturmwind ist?", answers: ["Kalimdor","Östliche Pestländer","Östliches Königreich","Azeroth"], correct: "Östliches Königreich" },																
+{ question: "Welches ist keine Rasse der Horde?", answers: ["Goblin","Gnom","Blutelf","Untote"], correct: "Gnom" },																
+{ question: "Welche Erweiterung erscheint im Jahr 2026?", answers: ["Cataclysm","The Last Titan","Midnight","Dragonflight"], correct: "Midnight" },																
+{ question: "Mit welchem Raid wurde der mythische Raidmodus eingeführt?", answers: ["Terrasse des Endlosen Frühlings","Thron des Donners","Schlacht um Orgrimmar","Das Herz der Angst"], correct: "Schlacht um Orgrimmar" },																
+{ question: "Welches AddOn erschien nach Wrath of the Lich King?", answers: ["Warlords of Draenor","Burning Crusade","Mists of Pandaria","Cataclysm"], correct: "Cataclysm" },																
+{ question: "Wann ging es zurück nach Karazhan?", answers: ["Battle for Azeroth","Warlords of Draenor","Legion","Cataclysm"], correct: "Legion" },																
+{ question: "In welche Instanz ging es erneut in Mists of Pandaria?", answers: ["Das Scharlachrote Kloster","Metbrauerei Glutbräu","Auchindoun","Todesminen"], correct: "Das Scharlachrote Kloster" },																
+{ question: "Welches ist kein Raid aus Battle for Azeroth?", answers: ["Schlacht von Dazar'alor","Tiegel der Stürme","Der Ewige Palast","Der Schrein des Sturms"], correct: "Der Schrein des Sturms" },																
+{ question: "Wo war Hemet Nesingwary erstmals mit seiner Jagdgesellschaft?", answers: ["Azurblaues Gebirge - Dragonflight","Nagrand - Burning Crusade","Schlingendorntal - Classic","Zuldazar - Battle for Azeroth"], correct: "Schlingendorntal - Classic" },																
+{ question: "Wer oder was ist 'Antros'?", answers: ["Gastwirt in Oribos","Questmob in Maldraxxus","Weltboss in Zereth Mortis","Händler im Schlund"], correct: "Weltboss in Zereth Mortis" },																
+{ question: "Wie heißt der grüne Netherdrache im Unteren Viertel?", answers: ["Barthamus","Malfas","Jorus","Zoya"], correct: "Zoya" },																
+{ question: "Welcher Ruffraktion gehört 'König Yokkum' an?", answers: ["Die Söhne Hodirs","Die Kalu'ak","Die Taunka","Der Wyrmruhpakt"], correct: "Die Söhne Hodirs" },																
+{ question: "Welches Gebiet sieht wie das Hordelogo aus?", answers: ["Tanaris","Azshara","Schattenhochland","Sümpfe des Elends"], correct: "Azshara" },																
+{ question: "Wie hieß der Drache aus Cataclysm?", answers: ["Neltharion","Nefarian","Nozdormu","Nathanos"], correct: "Neltharion" },																
+{ question: "Welche Erweiterung erschien nicht im November?", answers: ["Wrath of the Lich King - 2008","Warlords of Draenor - 2014","Shadowlands - 2020","Burning Crusade - 2007"], correct: "Burning Crusade - 2007" },																
+{ question: "Welche Klasse können 'Kul Tiraner' 2025 nicht werden?", answers: ["Druiden","Schamane","Paladin","Mönch"], correct: "Paladin" },																
+{ question: "Wie heißt der Allianzanführer aus 'Die Exodar'?", answers: ["Prophet Velen","Hochexarch Turalyon","Valeera Sanguinar","Vereesa Windläufer"], correct: "Prophet Velen" },																
+{ question: "Welches Minievent findet immer im November statt?", answers: ["Tag der Toten","Piratentag","Wanderfest","Ruf des Skarabäus"], correct: "Tag der Toten" },																
+{ question: "Wer oder was ist 'Michael 'Schmutz' Fink'?", answers: ["Angellehrer in Theramore","Kochlehrer in Sturmwind","Flugmeister in Gilneas","Gastwirt in Boralus"], correct:"Angellehrer in Theramore" },																
+{ question: "Wo befindet sich die 'Zeitlose Insel'?", answers: ["Östlich in Pandaria","Nördlich auf den Dracheninseln","Westlich im Mahlstrom","Südlich in Zandalar"], correct: "Östlich in Pandaria" },																
+{ question: "In welchem Gebiet befindet sich der 'Tempel der Erde'?", answers: ["Tiefenheim","Kun-Lai-Gipfel","Thaldraszus","Drachenöde"], correct: "Tiefenheim" },																
+{ question: "Wie heißt der Endboss von Wrath of the Lich King?", answers: ["Arthas Menethil","Kel'Thuzad","Illidan Sturmgrimm","Deathwing"], correct: "Arthas Menethil" },																
+{ question: "Welche Zone war das Startgebiet der Todesritter?", answers: ["Geisterlande","Tirisfal","Östliche Pestländer","Westliche Pestländer"], correct: "Östliche Pestländer" },																
+{ question: "Wer war der letzte Boss in der Schlacht um Orgrimmar?", answers: ["Garrosh Höllschrei","Varok Saurfang","Thrall","Anduin Wrynn"], correct: "Garrosh Höllschrei" },																
+{ question: "Welche spielbare Rasse wurde in Legion eingeführt?", answers: ["Vulpera","Leerenelfen","Dämonenjäger","Keine Rasse, sondern eine Klasse"], correct: "Keine Rasse, sondern eine Klasse" },																
+{ question: "Welche Klasse konnte man zu Classic nicht spielen?", answers: ["Paladin","Schurke","Mönch","Hexenmeister"], correct: "Mönch" },																
+{ question: "Wie hieß die Hauptstadt der Orcs vor Orgrimmar?", answers: ["Sen’jin","Garadar","Durotar","Ogrimmar"], correct: "Ogrimmar" },																
+{ question: "Welches legendäre Item bekam man in Classic durch eine Quest in Geschmolzener Kern?", answers: ["Sulfuras, Hand von Ragnaros","Schattenmourne","Donnerzorn, Gesegnete Klinge des Windsuchers","Aschenbringer"], correct: "Sulfuras, Hand von Ragnaros" },																
+{ question: "Wie heißt die Hauptstadt der Nachtgeborenen?", answers: ["Shattrath","Suramar","Silbermond","Telogrus"], correct: "Suramar" },																
+{ question: "Welche Zone liegt nicht in Nordend?", answers: ["Boreanische Tundra","Grizzlyhügel","Eiskrone","Schattenmondtal"], correct: "Schattenmondtal" },																
+{ question: "Wie viele Spieler waren für Raids in Classic vorgesehen?", answers: ["10","20","25","40"], correct: "40" },																
+{ question: "Welcher bekannte Charakter ist nicht Teil der Windläufer-Familie?", answers: ["Alleria","Sylvanas","Vereesa","Tyrande"], correct: "Tyrande" },																
+{ question: "Welche Instanz in Classic war die erste mit 20 Spielern?", answers: ["Onyxias Hort","Zul'Gurub","Geschmolzener Kern","Pechschwingenhort"], correct: "Zul'Gurub" },																
+{ question: "Welche Rolle übernimmt Anduin Wrynn hauptsächlich im Spiel?", answers: ["Tank","Heiler","DPS","Er ist kein Kämpfer"], correct: "Heiler" },																
+{ question: "Wie heißt der erste Raid in Shadowlands?", answers: ["Sanktum der Herrschaft","Schloss Nathria","Mausoleum der Ersten","Tiegel der Stürme"], correct: "Schloss Nathria" },																
+{ question: "Welche Region war in Cataclysm neu spielbar?", answers: ["Uldum","Nordend","Schlingendorntal","Das Brachland"], correct: "Uldum" },																
+{ question: "Wie heißen die Reittiere, die man mit Ruhm bei den Kirin Tor in Wrath freischalten konnte?", answers: ["Phönixe","Greifen","Wasserstoffballons","Arkanwyrmlinge"], correct: "Arkanwyrmlinge" },																
+{ question: "Welches dieser Addons hatte kein Levelcap von 120?", answers: ["Legion","Battle for Azeroth","Warlords of Draenor","Shadowlands"], correct: "Warlords of Draenor" },																
+{ question: "Wer ist der Anführer der Draenei?", answers: ["Illidan","Kil'jaeden","Prophet Velen","Nobundo"], correct: "Prophet Velen" },																
+{ question: "Wie heißt die Hauptstadt der Untoten?", answers: ["Unterstadt","Silbermond","Tirisfal","Lordaeron"], correct: "Unterstadt" },																
+{ question: "Was war die erste neue spielbare Klasse nach Classic?", answers: ["Dämonenjäger","Todesritter","Mönch","Jäger"], correct: "Todesritter" },																
+{ question: "Wie hieß die Orc-Frau, die Thrall in Durnholde erzogen hat?", answers: ["Draka","Aggra","Taretha","Geyah"], correct: "Taretha" },																
+{ question: "Welche alte Gottheit lag unter dem Tempel von Ahn’Qiraj?", answers: ["C’Thun","Yogg-Saron","N’Zoth","Y’Shaarj"], correct: "C’Thun" },																
+{ question: "Wie hieß die ursprüngliche Hauptstadt der Nachtelfen?", answers: ["Suramar","Darnassus","Zin-Azshari","Ashenvale"], correct: "Zin-Azshari" },																
+{ question: "Welcher Drache half bei der Erschaffung der Dämonenseele?", answers: ["Malygos","Neltharion","Nozdormu","Alexstrasza"], correct: "Neltharion" },																
+{ question: "Welcher Charakter war nicht Mitglied der 'Scharlachroten Flamme'?", answers: ["Sally Weißsträhne","Renault Mograine","Whitemane","Uther"], correct: "Uther" },																
+{ question: "Wer schmiedete die ursprüngliche Frostgram?", answers: ["Der Lichkönig","Kil’jaeden","Ner’zhul","Die Nathrezim"], correct: "Die Nathrezim" },																
+{ question: "Wofür sind Murlocs berühmt?", answers: ["Ihre Kampfkraft","Ihre epischen Quests","Ihre Sprache","Ihr Gurgl-Geräusch"], correct: "Ihr Gurgl-Geräusch" },																
+{ question: "Wie heißt der erste Raid in Classic WoW?", answers: ["Geschmolzener Kern","Zul'Gurub","Pechschwingenhort","Onyxias Hort"], correct: "Geschmolzener Kern" },																
+{ question: "Welche Klasse wurde in The Burning Crusade neu spielbar?", answers: ["Todesritter","Mönch","Dämonenjäger","Keine – nur Rassen"], correct: "Keine – nur Rassen" },																
+{ question: "Wie viele Spieler waren ursprünglich für Onyxias Hort vorgesehen?", answers: ["10","20","25","40"], correct: "40" },																
+{ question: "Wer war der letzte Boss in Karazhan?", answers: ["Prinz Malchezaar","Moroes","Kurator","Medivh"], correct: "Prinz Malchezaar" },																
+{ question: "Welche Erweiterung brachte den Dungeonfinder ins Spiel?", answers: ["Wrath of the Lich King","Burning Crusade","Cataklysm","Mists of Pandaria"], correct: "Wrath of the Lich King" },																
+{ question: "Welche Klasse wurde mit Mists of Pandaria neu eingeführt?", answers: ["Mönch","Todesritter","Dämonenjäger","Runenmeister"], correct: "Mönch" },																
+{ question: "Welche Farbe hat das Mana von Schamanen?", answers: ["Blau","Gelb","Rot","Grün"], correct: "Blau" },																
+{ question: "Welche Rolle war Arthas Menethil vor seiner Verwandlung?", answers: ["Paladin","Priester","Krieger","Todesritter"], correct: "Paladin" },																
+{ question: "Wie viele Addons gab es bis 2025?", answers: ["9","10","11","12"], correct: "10" },																
+{ question: "Wie heißt das Volk, das in Warlords of Draenor eingeführt wurde?", answers: ["Vulpera","Orcs","Oger","Kein neues Volk"], correct: "Kein neues Volk" },																
+{ question: "Welcher Charakter sagt 'Ihr seid noch nicht vorbereitet!'?", answers: ["Illidan","Arthas","Thrall","Sylvanas"], correct: "Illidan" },																
+{ question: "Wer war der Endboss von Legion?", answers: ["Kil’jaeden","Sargeras","Argus der Zerrütter","Illidan"], correct: "Argus der Zerrütter" },																
+{ question: "Was war das Levelcap in Classic?", answers: ["50","55","60","70"], correct: "60" },																
+{ question: "Welche Fraktion wohnt in Shattrath und ist neutral?", answers: ["Die Aldor & Seher","Die Kalu’ak","Die Nachtgeborenen","Die Draenei"], correct: "Die Aldor & Seher" },																
+{ question: "Welches legendäre Item bekam man in Wrath of the Lich King?", answers: ["Donnerzorn","Schattengram","Atiesh","Sulfuras"], correct: "Schattengram" },																
+{ question: "Welche spielbare Rasse ist keine Allianz-Rasse?", answers: ["Worgen","Gnome","Blutelfen","Draenei"], correct: "Blutelfen" },																
+{ question: "Wer war der erste Anführer der Verlassenen?", answers: ["Sylvanas","Varimathras","Kel'Thuzad","Putress"], correct: "Sylvanas" },																
+{ question: "Welche Klasse startete zu Classic mit einem Totem-System?", answers: ["Schamane","Druide","Paladin","Priester"], correct: "Schamane" },																
+{ question: "Wie heißt der erste Raid in Burning Crusade?", answers: ["Gruuls Unterschlupf","Karazhan","Magtheridons Kammer","Hyjalgipfel"], correct: "Karazhan" },																
+{ question: "Welcher Boss in Ulduar war optional und besonders schwer?", answers: ["Algalon der Beobachter","Yogg-Saron","Mimiron","Thorim"], correct: "Algalon der Beobachter" },																
+{ question: "Wie viele Flügel hat Naxxramas?", answers: ["3","4","5","6"], correct: "4" },																
+{ question: "Welcher Raid endete mit dem Kampf gegen Gul’dan?", answers: ["Die Nachtfestung","Höllenfeuerzitadelle","Grabmal des Sargeras","Schwarzfelsgießerei"], correct: "Die Nachtfestung" },																
+{ question: "Welches Volk lebt in Eiskrone im Gebiet der Kalu’ak?", answers: ["Trolle","Taunka","Murlocs","Goblins"], correct: "Taunka" },																
+{ question: "Welcher alte Gott lag unter Ulduar?", answers: ["C’Thun","N’Zoth","Yogg-Saron","Y’Shaarj"], correct: "Yogg-Saron" },																
+{ question: "Was war das Maximallevel in Mists of Pandaria?", answers: ["85","90","95","100"], correct: "90" },																
+{ question: "Wie hieß die letzte Instanz in Warlords of Draenor?", answers: ["Schwarzfelsgießerei","Hochfels","Höllenfeuerzitadelle","Obere Schwarzfelsspitze"], correct: "Höllenfeuerzitadelle" },																
+{ question: "Welche spielbare Klasse benutzt Runenmacht?", answers: ["Hexenmeister","Todesritter","Dämonenjäger","Mönch"], correct: "Todesritter" },																
+{ question: "Welcher Drache wurde zum Aspekt der Zeit?", answers: ["Nozdormu","Malygos","Ysera","Kalecgos"], correct: "Nozdormu" },																
+{ question: "Wer war der erste Boss in der Eiskronenzitadelle?", answers: ["Lord Mark’gar","Lady Todeswisper","Professor Seuchenmord","Sindragosa"], correct: "Lord Mark’gar" },																
+{ question: "Welche Stadt wurde in Cataclysm zerstört?", answers: ["Darnassus","Theramore","Unterstadt","Gilneas"], correct: "Theramore" },																
+{ question: "Welche Hauptstadt der Horde liegt in Kalimdor?", answers: ["Unterstadt","Orgrimmar","Silbermond","Shattrath"], correct: "Orgrimmar" },																
+{ question: "Welcher Boss war Endgegner in 'Der Pechschwingenhort'?", answers: ["Ragnaros","Nefarian","Onyxia","Chromaggus"], correct: "Nefarian" },																
+{ question: "Wie heißt der Begleiter von Thrall?", answers: ["Schneesang","Schneewehe","Schneegipfel","Schneesturm"], correct: "Schneesang" },																
+{ question: "Wie viele Inseln bilden die Verheerten Inseln?", answers: ["3","4","5","6"], correct: "5" },																
+{ question: "Wer war der letzte Boss in 'Drachenseele'?", answers: ["Malygos","Todesschwinge","Neltharion","Sinestra"], correct: "Todesschwinge" },																
+{ question: "Wie viele Reittiere braucht man für den Erfolg 'Reittiermeister'?", answers: ["50","100","150","250"], correct: "100" },																
+{ question: "Welche Zone wurde mit Cataclysm in zwei Level-Bereiche geteilt?", answers: ["Schlingendorntal","Das Brachland","Schattenhochland","Arathihochland"], correct: "Das Brachland" },																
+{ question: "Welche Erweiterung brachte die 'Verbündeten Völker'?", answers: ["Warlords of Draenor","Legion","Battle for Azeroth","Shadowlands"], correct: "Battle for Azeroth" },																
+{ question: "Wer wurde nach Vol’jins Tod Kriegshäuptling der Horde?", answers: ["Sylvanas Windläufer","Thrall","Garrosh Höllschrei","Cairne Bluthuf"], correct: "Sylvanas Windläufer" },																
+{ question: "Welcher Raidboss war Endgegner in 'Der Geschmolzene Kern'?", answers: ["Onyxia","Ragnaros","Majordomus Exekutus","Geddon"], correct: "Ragnaros" },																
+{ question: "Welche Erweiterung brachte die Artefaktwaffen?", answers: ["Legion","Warlords of Draenor","Battle for Azeroth","Shadowlands"], correct: "Legion" },																
+{ question: "Wer tötete König Varian Wrynn?", answers: ["Sargeras","Gul’dan","Orcische Höllschmiede","Gul’dan & die Legion"], correct: "Gul’dan & die Legion" },																
+{ question: "Welcher Raid war Teil von Battle for Azeroth?", answers: ["Schlacht von Dazar’alor","Tempel von Ahn’Qiraj","Onyxias Hort","Sanktum der Herrschaft"], correct: "Schlacht von Dazar’alor" },																
+{ question: "Welche Zone ist kein Startgebiet?", answers: ["Dun Morogh","Mulgore","Dämmerwald","Teldrassil"], correct: "Dämmerwald" },																
+{ question: "Welches Volk lebt in Silbermond?", answers: ["Blutelfen","Hochelfen","Nachtelfen","Leerenelfen"], correct: "Blutelfen" },																
+{ question: "Welche Waffe führte Illidan im Schwarzen Tempel?", answers: ["Schattengram","Aschenbringer","Kriegsgleven von Azzinoth","Frostgram"], correct: "Kriegsgleven von Azzinoth" },																
+{ question: "Welche Zone ist Heimat der Tauren?", answers: ["Durotar","Mulgore","Brachland","Feralas"], correct: "Mulgore" },																
+{ question: "Welche Fraktion lebt in Eiskrone und liebt die Jagd?", answers: ["Die Taunka","Die Kalu’ak","Die Orakel","Die Tuskarr"], correct: "Die Taunka" },																
+{ question: "Welches Mount droppt mit extrem niedriger Chance in Stratholme?", answers: ["Totenschwurs Todesstreitross","Al'ars Asche","Anzu","Unbesiegbar"], correct: "Totenschwurs Todesstreitross" },																
+{ question: "Wie Viele Haustiere muss man für den Erfolg 'Haustierkämpfer von Azeroth' sammeln?", answers: ["150","200","300","400"], correct: "200" },																
+{ question: "Welches Haustier bekam man für den 10. Geburtstag von WoW?", answers: ["Klein-Ragnaros","Klein-Illidan","Murloc mit Geburtstagskappe","Geschmolzenes Kernhündchen"], correct: "Geschmolzenes Kernhündchen" },																
+{ question: "Wie heißt das kleine Mini-Murloc-Maskottchen, das auf vielen BlizzCons verteilt wurde?", answers: ["Murky","Grunty","Murkablo","Mini-Diablo"], correct: "Murky" },																
+{ question: "Welches Pet bekam man in der Collector’s Edition von Burning Crusade?", answers: ["Turtle","Wyrmling","Netherwelpe","Zergling"], correct: "Netherwelpe" },																
+{ question: "Seit welchem Addon gibt es das Transmog-System?", answers: ["Cataclysm","Mists of Pandaria","Warlords of Draenor","Legion"], correct: "Cataclysm" },																
+{ question: "Welche Farbe hat das Transmogrifikations-Set vom Scharlachroten Kloster?", answers: ["Blau","Grün","Rot","Violett"], correct: "Rot" },																
+{ question: "Welcher Erfolg schaltet den Titel 'der Verrückte' frei?", answers: ["Der Wahnsinnige","Der Unermüdliche","Der Unerschrockene","Der Verwegene"], correct: "Der Wahnsinnige" },																
+{ question: "Wie lautet Thralls richtiger Name?" , answers: ["Thrall","Go'el","Helot","Thralldom"], correct: "Go'el" },																
+{ question: "Was bedeutet 'Thrall' wirklich?" , answers: ["Sklave","Erlöser","Bewahrer","Unhold"] , correct: "Sklave" },																
 ];
 
-// Hintergrund-Bilder
-const backgrounds = [
-  "url('pics/assets/bg1.jpg')",
-  "url('pics/assets/bg2.jpg')",
-  "url('pics/assets/bg3.jpg')",
-  "url('pics/assets/bg4.jpg')",
-  "url('pics/assets/bg5.jpg')",
-  "url('pics/assets/bg6.jpg')",
-  "url('pics/assets/bg7.jpg')",
-  "url('pics/assets/bg8.jpg')",
-  "url('pics/assets/bg9.jpg')",
-  "url('pics/assets/bg10.jpg')",
-  "url('pics/assets/bg11.jpg')",
-  "url('pics/assets/bg12.jpg')",
-];
+let usedJokers = 0;
+let jokersLeft = 5;
 
-// Zustandsvariablen
 let questions = [];
-let currentQuestion = 0;
+let currentQuestionIndex = 0;
+let score = 0;
 let correctCount = 0;
 let falseCount = 0;
 let timeOverCount = 0;
-let score = 0;
-let timeLeft = 30;
-let timerInterval = null;
-let jokerUsedThisQuestion = false;
-
-let totalTime = 600; // 20 Fragen x 30 Sekunden
+let totalTime = 600;
 let remainingTime = totalTime;
-let totalTimerInterval = null;
+let timerId;
+let isAnswerBlocked = false;
+let jokerTimerId;
+let jokerTimeLeft;
+const jokerTime = 15;
 
-// Neu: Joker-Logik
-let jokersLeft = 5;
-let usedJokers = 0;
-let jokerStates = ['unused', 'unused', 'unused', 'unused', 'unused'];
+document.getElementById("start-btn").addEventListener("click", () => {
+  showScreen('countdown-screen');
+  startCountdown();
+});
+document.getElementById("restart-btn").addEventListener("click", restartGame);
 
-
-// Screen Management
-function showScreen(screenId) {
-  document.querySelectorAll('.quiz-container').forEach(screen => {
-    screen.classList.remove('active');
-  });
-  
-  const targetScreen = document.getElementById(screenId);
-  if (targetScreen) {
-    targetScreen.classList.add('active');
-  }
-}
-
-// Shuffle
 function shuffleArray(array) {
-  for (let i = array.length -1; i>0; i--){
-    const j = Math.floor(Math.random() * (i+1));
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
     [array[i], array[j]] = [array[j], array[i]];
   }
-  return array;
 }
 
-function pickRandomQuestions(all, n){
-  return shuffleArray([...all]).slice(0,n);
+function startCountdown() {
+  let count = 5;
+  const countdownElement = document.getElementById("countdown");
+  countdownElement.classList.add('blink-text');
+
+  const countdownInterval = setInterval(() => {
+    count--;
+    countdownElement.textContent = count;
+    if (count <= 0) {
+      clearInterval(countdownInterval);
+      countdownElement.classList.remove('blink-text');
+      showScreen('game-screen');
+      startGame();
+    }
+  }, 1000);
 }
 
-// Smooth Color Helper
-function getSmoothColor(percent) {
-  let hue;
-  if (percent <= 50) {
-    hue = (percent / 50) * 60; // 0 bis 60 (Rot zu Gelb)
-  } else {
-    hue = 60 + ((percent - 50) / 50) * 60; // 60 bis 120 (Gelb zu Grün)
-  }
-  return `linear-gradient(to right, hsl(${hue}, 100%, 50%), hsl(${hue}, 80%, 40%))`;
-}
-
-// Start
-window.startCountdown = function() {
-  currentQuestion = 0;
+function startGame() {
+  shuffleArray(window.allQuestions);
+  questions = window.allQuestions.slice(0, 20);
+  currentQuestionIndex = 0;
   score = 0;
   correctCount = 0;
   falseCount = 0;
   timeOverCount = 0;
+  totalTime = 600;
   remainingTime = totalTime;
-  jokersLeft = 5;
   usedJokers = 0;
-  jokerStates = ['unused', 'unused', 'unused', 'unused', 'unused'];
-
-  questions = pickRandomQuestions(window.allQuestions, Math.min(20, window.allQuestions.length));
-
-  showScreen('countdown-screen');
-  
-  let countdown = 5;
-  const countdownElement = document.getElementById("countdown");
-  const interval = setInterval(()=>{
-    countdown--;
-    if(countdown>0) countdownElement.textContent = countdown;
-    else {
-      clearInterval(interval);
-      countdownElement.textContent = "Los!";
-      setTimeout(()=>{
-        showScreen('game-screen');
-        startTotalTimer();
-        loadQuestion();
-      }, 1000);
-    }
-  },1000);
-};
-
-// Gesamt-Timer
-function startTotalTimer(){
-  if(totalTimerInterval) return;
-
-  totalTimerInterval = setInterval(()=>{
-    remainingTime--;
-    let percent = Math.max(0, (remainingTime / totalTime) * 100);
-    
-    const totalBar = document.getElementById("total-bar");
-    const totalText = document.getElementById("total-text");
-    
-    if (totalBar && totalText) {
-      totalBar.style.width = percent + "%";
-      totalBar.style.background = getSmoothColor(percent);
-      totalText.textContent = `${remainingTime}s`;
-    }
-
-    if(remainingTime <=0){
-      clearInterval(totalTimerInterval);
-      totalTimerInterval = null;
-      remainingTime = 0;
-      showEnd();
-    }
-  },1000);
+  jokersLeft = 5;
+  document.getElementById("total-text").textContent = `${remainingTime}s`;
+  document.getElementById("total-bar").style.width = '100%';
+  document.getElementById("joker-bar").innerHTML = '';
+  displayQuestionAndAnswers();
+  startTotalTimer();
 }
 
-// Frage laden
-function loadQuestion(){
-    if(currentQuestion >= questions.length){
-      showEnd();
-      return;
-    }
-    
-    jokerUsedThisQuestion = false;
+function displayQuestionAndAnswers() {
+  isAnswerBlocked = false;
+  const questionData = questions[currentQuestionIndex];
+  document.getElementById("progress-text").textContent = `Frage ${currentQuestionIndex + 1} von ${questions.length}`;
+  document.getElementById("progress-bar").style.width = `${((currentQuestionIndex + 1) / questions.length) * 100}%`;
+  document.getElementById("question").textContent = questionData.question;
 
-    const q = questions[currentQuestion];
-    
-    const randomBg = backgrounds[Math.floor(Math.random() * backgrounds.length)];
-    document.body.style.backgroundImage = randomBg;
-    document.body.style.backgroundSize = "cover";
-    document.body.style.backgroundPosition = "center";
-    
-    // Fortschrittsbalken aktualisieren
-    const progressBar = document.getElementById("progress-bar");
-    const progressText = document.getElementById("progress-text");
-    const progress = (currentQuestion / questions.length) * 100;
-    progressBar.style.width = progress + "%";
-    progressText.textContent = `Frage ${currentQuestion+1} von ${questions.length}`;
+  const answersDiv = document.getElementById("answers");
+  answersDiv.innerHTML = '';
 
-    document.getElementById("question").textContent = q.question;
-    document.getElementById("score").innerHTML = `Punkte: <span style="color:#ffe88c">${score}</span>`;
-    document.getElementById("result").textContent = "";
-    document.getElementById("next-btn-container").innerHTML = "";
-    document.getElementById("answers").innerHTML = "";
-    
-    startTimer();
+  const shuffledAnswers = [...questionData.answers];
+  shuffleArray(shuffledAnswers);
 
-    const answersDiv = document.getElementById("answers");
-    const jokerBar = document.getElementById("joker-bar");
-    
-    // Initialer Zustand: Lade-Nachricht anzeigen, Joker-Leiste verstecken
-    answersDiv.innerHTML = `<p class="blink-text" style="color: #bfa259; font-weight: bold;">Antworten werden generiert...</p>`;
-    jokerBar.classList.add("hidden");
+  shuffledAnswers.forEach((answer, index) => {
+    const label = document.createElement("div");
+    label.className = "answer-label";
+    label.id = `answer${index}`;
+    label.textContent = answer;
+    answersDiv.appendChild(label);
 
-    let jokerCountdownSeconds = 5;
-    let jokerCountdownInterval = null;
-
-    if (jokersLeft > 0) {
-      // Joker-Countdown-Nachricht anzeigen
-      jokerBar.innerHTML = `<p class="blink-text" style="color: #bfa259; font-weight: bold;">${jokersLeft} verbleibende Joker in ${jokerCountdownSeconds} Sekunden</p>`;
-      jokerBar.classList.remove("hidden");
-      
-      // Countdown starten
-      jokerCountdownInterval = setInterval(() => {
-        jokerCountdownSeconds--;
-        if (jokerCountdownSeconds > 0) {
-          jokerBar.innerHTML = `<p class="blink-text" style="color: #bfa259; font-weight: bold;">${jokersLeft} verbleibende Joker in ${jokerCountdownSeconds} Sekunden</p>`;
-        } else {
-          clearInterval(jokerCountdownInterval);
-        }
-      }, 1000);
-    }
-    
-    setTimeout(() => {
-      // Countdown-Nachricht entfernen
-      if(jokerCountdownInterval) {
-        clearInterval(jokerCountdownInterval);
+    label.addEventListener("click", () => {
+      if (!isAnswerBlocked) {
+        checkAnswer(answer, questionData.correct);
       }
-      answersDiv.innerHTML = "";
-      
-      const answerElements = [];
-
-      shuffleArray([...q.answers]).forEach(ans=>{
-        const div = document.createElement("div");
-        div.classList.add("answer-label");
-        div.textContent = ans;
-        div.addEventListener("click", ()=>checkAnswer(ans));
-        answersDiv.appendChild(div);
-        answerElements.push(div);
-      });
-      
-      answerElements.forEach((div, index) => {
-        setTimeout(() => {
-          div.classList.add('visible');
-        }, index * 150);
-      });
-      
-      loadJokerButtons();
-      
-    }, 5000);
-}
-
-// Joker-Logik in einer separaten Funktion
-function loadJokerButtons() {
-    const jokerBar = document.getElementById("joker-bar");
-    jokerBar.innerHTML = "";
-    
-    jokerBar.classList.remove('hidden');
-    
-    // Status der Joker-Anzeige festlegen
-    if (jokersLeft > 0) {
-      jokerBar.innerHTML = `<p class="blink-text" style="color: #bfa259; font-weight: bold;">${jokersLeft} verbleibende Joker</p>`;
-    } else {
-      jokerBar.innerHTML = `<p class="blink-text" style="color: #ff0000; font-weight: bold;">Keine Joker mehr!</p>`;
-    }
-    
-    // Jetzt die Buttons hinzufügen
-    for (let i = 0; i < 5; i++) {
-        const jokerBtn = document.createElement('button');
-        jokerBtn.textContent = '50:50';
-        jokerBtn.className = 'joker-btn';
-        
-        if (jokerStates[i] === 'used' || jokersLeft === 0 || jokerUsedThisQuestion) {
-            jokerBtn.classList.add('used');
-            jokerBtn.disabled = true;
-        } else {
-            jokerBtn.disabled = false;
-            jokerBtn.addEventListener('click', () => useJoker(jokerBtn, i));
-        }
-        jokerBar.appendChild(jokerBtn);
-    }
-}
-
-function useJoker(clickedButton, jokerIndex) {
-  const q = questions[currentQuestion];
-  const wrongAnswers = q.answers.filter(a => a !== q.correct);
-  shuffleArray(wrongAnswers);
-  const toRemove = wrongAnswers.slice(0, 2);
-
-  document.querySelectorAll(".answer-label").forEach(div => {
-    if (toRemove.includes(div.textContent)) {
-      div.style.opacity = "0.3";
-      div.style.pointerEvents = "none";
-    }
+    });
   });
 
-  jokersLeft--;
-  jokerStates[jokerIndex] = 'used';
-  jokerUsedThisQuestion = true;
-  usedJokers++;
+  // Zeige die Antworten mit einem kleinen Delay
+  setTimeout(() => {
+    const answerLabels = document.querySelectorAll('.answer-label');
+    answerLabels.forEach((label) => {
+      label.classList.add('visible');
+    });
 
-  loadJokerButtons();
+    // Joker-Bar nach dem Erscheinen der Antworten anzeigen
+    showJokerBar();
+    startJokerTimer();
+  }, 500); // 500ms Delay
+  
+  // Start the per-question timer
+  startQuestionTimer();
 }
 
+function showJokerBar() {
+  const jokerBar = document.getElementById("joker-bar");
+  jokerBar.innerHTML = '';
+  jokerBar.classList.remove('hidden');
 
-// Frage-Timer
-function startTimer(){
-  clearInterval(timerInterval);
-  timeLeft = 30;
+  const jokerText = document.createElement("span");
+  jokerText.id = "joker-text";
+  jokerBar.appendChild(jokerText);
 
-  timerInterval = setInterval(()=>{
-    timeLeft--;
-    let percent = Math.max(0, (timeLeft/30)*100);
-    
-    const timerBar = document.getElementById("timer-bar");
-    const timeText = document.getElementById("time-text");
-    
-    if (timerBar && timeText) {
-      timerBar.style.width = percent + "%";
-      timerBar.style.background = getSmoothColor(percent);
-      timeText.textContent = `${timeLeft}s`;
+  for (let i = 0; i < 5; i++) {
+    const jokerButton = document.createElement("button");
+    jokerButton.id = `joker-btn-${i}`;
+    jokerButton.className = "joker-btn";
+    jokerButton.textContent = '50:50';
+
+    if (jokersLeft <= i) {
+      jokerButton.classList.add('used');
+      jokerButton.disabled = true;
+    } else {
+      jokerButton.disabled = false;
     }
 
-    if(timeLeft <=0){
-      clearInterval(timerInterval);
-      if (timeText) timeText.textContent="0s";
-      checkAnswer(null,true);
-    }
-  },1000);
-  
+    jokerButton.addEventListener("click", handleJoker);
+    jokerBar.appendChild(jokerButton);
+  }
+}
+
+function startQuestionTimer() {
+  clearInterval(timerId);
   const timerBar = document.getElementById("timer-bar");
   const timeText = document.getElementById("time-text");
-  if (timerBar && timeText) {
-    timerBar.style.width = "100%";
-    timerBar.style.background = getSmoothColor(100);
+  let timeLeft = 30;
+  timerBar.style.width = '100%';
+  timeText.textContent = `${timeLeft}s`;
+
+  timerId = setInterval(() => {
+    timeLeft--;
     timeText.textContent = `${timeLeft}s`;
-  }
+    const percentage = (timeLeft / 30) * 100;
+    timerBar.style.width = `${percentage}%`;
+
+    if (percentage <= 25) {
+      timerBar.style.background = 'linear-gradient(90deg, #d42e2e, #ff6666)';
+    }
+
+    if (timeLeft <= 0) {
+      clearInterval(timerId);
+      isAnswerBlocked = true;
+      timeOverCount++;
+      setTimeout(nextQuestion, 2000);
+    }
+  }, 1000);
 }
 
-// Antwort prüfen
-function checkAnswer(selected, auto=false){
-  clearInterval(timerInterval);
-  
-  const jokerBar = document.getElementById("joker-bar");
-  if(jokerBar) jokerBar.classList.add("hidden");
+function startJokerTimer() {
+  jokerTimeLeft = jokerTime;
+  clearInterval(jokerTimerId);
+  jokerTimerId = setInterval(() => {
+    jokerTimeLeft--;
+    if (jokerTimeLeft <= 0) {
+      clearInterval(jokerTimerId);
+    }
+  }, 1000);
+}
 
-  const q = questions[currentQuestion];
-  const result = document.getElementById("result");
-  const answers = document.querySelectorAll(".answer-label");
+function checkAnswer(selectedAnswer, correctAnswer) {
+  isAnswerBlocked = true;
+  clearInterval(timerId);
+  clearInterval(jokerTimerId);
 
-  answers.forEach(div=>{
-    div.style.pointerEvents = "none";
-    if(div.textContent === q.correct) div.classList.add("correct");
-    if(selected && div.textContent === selected && div.textContent !== q.correct) div.classList.add("wrong");
+  const answerLabels = document.querySelectorAll('.answer-label');
+  answerLabels.forEach(label => {
+    label.removeEventListener('click', checkAnswer);
+    if (label.textContent === correctAnswer) {
+      label.classList.add('correct');
+    } else if (label.textContent === selectedAnswer) {
+      label.classList.add('wrong');
+    }
   });
 
-  let points = 0;
-  if(selected === q.correct){
+  const resultDiv = document.getElementById("result");
+  const bonusTime = 30 - (30 - jokerTime + jokerTimeLeft);
+  if (selectedAnswer === correctAnswer) {
+    score += 10 + bonusTime;
     correctCount++;
-    points = 10 + timeLeft;
-    score += points;
-    if (result) { 
-      result.textContent = `Richtig! (+${points} Punkte)`; 
-      result.style.color = "green"; 
-    }
-  } else if(auto){
-    timeOverCount++;
-    points = Math.max(5, 5 * currentQuestion + 5);
-    score -= points;
-    if (result) { 
-      result.textContent = `Zeit abgelaufen! (-${points} Punkte) Richtig: ${q.correct}`; 
-      result.style.color = "red"; 
-    }
+    resultDiv.textContent = `Richtig! Du hast ${10 + bonusTime} Punkte bekommen.`;
   } else {
+    score -= 10;
     falseCount++;
-    points = Math.floor(2 + timeLeft / 5);
-    score += points;
-    if (result) { 
-      result.textContent = `Falsch! (+${points} Bonuspunkte) Richtig: ${q.correct}`; 
-      result.style.color = "orange"; 
+    resultDiv.textContent = `Falsch! Die richtige Antwort war "${correctAnswer}". Du verlierst 10 Punkte.`;
+  }
+
+  currentQuestionIndex++;
+  setTimeout(nextQuestion, 2000);
+}
+
+function handleJoker() {
+  if (jokersLeft > 0) {
+    usedJokers++;
+    jokersLeft--;
+
+    const currentQuestion = questions[currentQuestionIndex];
+    const currentAnswers = currentQuestion.answers;
+    const correctAnswer = currentQuestion.correct;
+    let removedCount = 0;
+    const answerLabels = document.querySelectorAll('.answer-label');
+
+    // Mache die Buttons sichtbar und deaktiviere den Joker, der verwendet wurde
+    document.querySelectorAll('.joker-btn')[usedJokers - 1].classList.add('used');
+    document.querySelectorAll('.joker-btn')[usedJokers - 1].disabled = true;
+
+    while (removedCount < 2) {
+      const randomIndex = Math.floor(Math.random() * answerLabels.length);
+      const answerToRemoveLabel = answerLabels[randomIndex];
+      const answerText = answerToRemoveLabel.textContent;
+      if (answerText !== correctAnswer && !answerToRemoveLabel.classList.contains('used-joker-removed')) {
+        answerToRemoveLabel.style.display = 'none';
+        answerToRemoveLabel.classList.add('used-joker-removed');
+        removedCount++;
+      }
     }
   }
+}
 
-  const scoreElement = document.getElementById("score");
-  if (scoreElement) {
-    scoreElement.innerHTML = `Punkte: <span style="color:#ffe88c">${score}</span>`;
-  }
-
-  const nextBtnContainer = document.getElementById("next-btn-container");
-  if (nextBtnContainer) {
-    if(currentQuestion < questions.length-1)
-      nextBtnContainer.innerHTML = `<button id="next-btn">Nächste Frage</button>`;
-    else
-      nextBtnContainer.innerHTML = `<button id="end-btn">Quiz beenden</button>`;
-
-    const nb = document.getElementById("next-btn");
-    if(nb) nb.onclick = ()=>{ nextQuestion(); };
-    const eb = document.getElementById("end-btn");
-    if(eb) eb.onclick = ()=>{ showEnd(); };
+function nextQuestion() {
+  const resultDiv = document.getElementById("result");
+  resultDiv.textContent = '';
+  if (currentQuestionIndex < questions.length) {
+    displayQuestionAndAnswers();
+  } else {
+    endGame();
   }
 }
 
-function nextQuestion(){
-  currentQuestion++;
-  loadQuestion();
+function startTotalTimer() {
+  clearInterval(totalTimerId);
+  const totalBar = document.getElementById("total-bar");
+  const totalText = document.getElementById("total-text");
+  totalTimerId = setInterval(() => {
+    remainingTime--;
+    totalText.textContent = `${remainingTime}s`;
+    totalBar.style.width = `${(remainingTime / totalTime) * 100}%`;
+    if (remainingTime <= 0) {
+      clearInterval(totalTimerId);
+      endGame();
+    }
+  }, 1000);
 }
 
-function showEnd(){
-  if (totalTimerInterval) {
-    clearInterval(totalTimerInterval);
-    totalTimerInterval = null;
-  }
-
+function endGame() {
+  clearInterval(timerId);
+  clearInterval(totalTimerId);
   let bonus = correctCount * 10;
   let bonus2 = falseCount * 5;
   let bonus3 = timeOverCount * 15;
-  let bonus4 = usedJokers * 10;
-  let bonus5 = jokersLeft * 50;
+  let bonus4 = usedJokers * 20;
+  let bonus5 = jokersLeft * 15;
   let finalScore = score + bonus + bonus2 + remainingTime - bonus3 - bonus4 + bonus5;
-  
+
   showScreen('end-screen');
-  
-  document.getElementById("end-content").innerHTML=`
+
+  document.getElementById("end-content").innerHTML = `
     <h2>Quiz beendet!</h2>
     <p>Dein Punktestand: <strong style="color:#ffe88c">${score}</strong></p>
     <p>Deine Restzeit: <strong style="color:#ffe88c">${remainingTime}</strong></p>
@@ -509,17 +391,17 @@ function showEnd(){
     <p>Genutzte Joker: <strong style="color:#ffe88c">${usedJokers}</strong> <span style="color:red">(-${bonus4} Punkte)</span></p>
     <p>Nicht genutzte Joker: <strong style="color:#ffe88c">${jokersLeft}</strong> <span style="color:green">(+${bonus5})</span></p>
     <hr style="border-color: #bfa259; margin: 20px 0;">
-    <h2>Dein Endstand: <strong style="color:#ffe88c">${finalScore}</strong></h2>
+    <h2>Dein Endpunktestand: <strong style="color:#ffe88c">${finalScore}</strong></h2>
   `;
 }
 
-// Start-Button Event
-document.addEventListener('DOMContentLoaded', function() {
-  const startBtn = document.getElementById("start-btn");
-  if (startBtn) {
-    startBtn.addEventListener("click", () => {
-      showScreen('countdown-screen');
-      startCountdown();
-    });
-  }
-});
+function restartGame() {
+  showScreen('start-screen');
+}
+
+function showScreen(screenId) {
+  document.querySelectorAll('.quiz-container').forEach(screen => {
+    screen.classList.remove('active');
+  });
+  document.getElementById(screenId).classList.add('active');
+}
