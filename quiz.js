@@ -319,7 +319,7 @@ function loadQuestion(){
         let jokerCountdown = 15;
         jokerBar.classList.remove('hidden');
         jokerBar.innerHTML = `<p class="blink-text" style="color: #bfa259; font-weight: bold;">${jokersLeft} verbleibende Joker in ${jokerCountdown}s</p>`;
-      
+        
         const countdownInterval = setInterval(() => {
           jokerCountdown--;
           jokerBar.innerHTML = `<p class="blink-text" style="color: #bfa259; font-weight: bold;">${jokersLeft} verbleibende Joker in ${jokerCountdown}s</p>`;
@@ -329,7 +329,9 @@ function loadQuestion(){
           }
         }, 1000);
       } else {
-        jokerBar.classList.add('hidden');
+        jokerBar.classList.remove('hidden');
+        jokerBar.innerHTML = `<p class="blink-text" style="color: #bfa259; font-weight: bold;">Keine Joker mehr verbleibend</p>`;
+        loadJokerButtons();
       }
       // NEUE JOKER LOGIK ENDE
       
