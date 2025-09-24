@@ -2,26 +2,26 @@ body {
   font-family: 'Cinzel', serif;
   background: url('pics/assets/bg1.jpg') no-repeat center center fixed;
   background-size: cover;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  min-height:100vh;
-  margin:0;
+  display: flex; /* Flexbox für die Zentrierung */
+  justify-content: center; /* Horizontale Zentrierung */
+  align-items: center; /* Vertikale Zentrierung */
+  min-height: 100vh;
+  margin: 0;
   color: #f0e6d2;
 }
 
 .quiz-container {
-  background: rgba(25,25,25,0.95);
+  background: rgba(25, 25, 25, 0.95);
   padding: 24px;
   border-radius: 16px;
   max-width: 720px;
   width: 100%;
-  text-align:center;
+  text-align: center;
   border: 3px solid #bfa259;
   box-shadow: 0 0 30px rgba(191, 162, 89, 0.3);
-  transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
-  transform: scale(1);
+  transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
   opacity: 0;
+  transform: scale(0.95);
 }
 
 .quiz-container.active {
@@ -35,7 +35,7 @@ body {
   text-align: left;
 }
 
-h1, h2 {  
+h1, h2 {
   font-family: 'Cinzel', serif;
   margin-bottom: 10px;
   color: #f0d07b;
@@ -111,7 +111,7 @@ button:active {
   cursor: pointer;
   transition: background-color 0.2s, transform 0.2s, box-shadow 0.2s, opacity 0.3s;
   text-align: left;
-  opacity: 0; /* Starte mit 0, wird durch JS sichtbar */
+  opacity: 0;
   transform: translateY(10px);
 }
 
@@ -128,17 +128,17 @@ button:active {
 
 /* NEUE STYLES FÜR ANTWORT-FEEDBACK */
 .answer-label.correct {
-  background-color: #1b5e20; /* Dunkelgrün */
-  border-color: #4caf50; /* Hellgrün */
-  box-shadow: 0 0 15px #4caf50; /* Grüner Glow */
+  background-color: #1b5e20;
+  border-color: #4caf50;
+  box-shadow: 0 0 15px #4caf50;
   transform: scale(1.02);
   pointer-events: none;
 }
 
 .answer-label.wrong {
-  background-color: #b71c1c; /* Dunkelrot */
-  border-color: #e53935; /* Hellrot */
-  box-shadow: 0 0 15px #e53935; /* Roter Glow */
+  background-color: #b71c1c;
+  border-color: #e53935;
+  box-shadow: 0 0 15px #e53935;
   transform: scale(1.02);
   pointer-events: none;
 }
@@ -217,7 +217,7 @@ button:active {
   border: 2px solid #9c8449;
   border-radius: 50%;
   width: 60px;
-  height: 60px; 
+  height: 60px;
   font-family: 'Cinzel', serif;
   font-weight: bold;
   cursor: pointer;
