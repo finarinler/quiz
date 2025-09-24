@@ -1,4 +1,3 @@
-
 // Fragen-Pool (global)
 
 window.allQuestions = [
@@ -274,7 +273,7 @@ function loadQuestion(){
     // Joker-Logik
     const jokerBtn = document.getElementById("joker-btn");
     if(jokerBtn){
-      jokerBtn.disabled = false;
+      jokerBtn.disabled = true;
       // Entferne alten Listener, falls er existiert
       const newBtn = jokerBtn.cloneNode(true);
       jokerBtn.parentNode.replaceChild(newBtn, jokerBtn);
@@ -329,6 +328,12 @@ function loadQuestion(){
         }, index * 150);
       });
     }, 5000);
+
+    // Joker-Button nach 15 Sekunden aktivieren (5 Sekunden nach den Antworten)
+    setTimeout(()=>{
+      const jokerBtn = document.getElementById("joker-btn");
+      if(jokerBtn) jokerBtn.disabled = false;
+    }, 15000);
 }
 
 // Frage-Timer
@@ -473,27 +478,3 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
