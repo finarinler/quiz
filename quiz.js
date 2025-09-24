@@ -316,18 +316,13 @@ function loadQuestion(){
       
       // NEUE JOKER LOGIK START
       if (jokersLeft > 0) {
-        let jokerCountdown = 15;
         jokerBar.classList.remove('hidden');
-        jokerBar.innerHTML = `<p class="blink-text" style="color: #bfa259; font-weight: bold;">Joker-Countdown: ${jokerCountdown}s</p>`;
-      
-        const countdownInterval = setInterval(() => {
-          jokerCountdown--;
-          jokerBar.innerHTML = `<p class="blink-text" style="color: #bfa259; font-weight: bold;">Joker-Countdown: ${jokerCountdown}s</p>`;
-          if (jokerCountdown <= 0) {
-            clearInterval(countdownInterval);
-            loadJokerButtons();
-          }
-        }, 1000);
+        jokerBar.innerHTML = `<p class="blink-text" style="color: #bfa259; font-weight: bold;">${jokersLeft} verbleibende Joker</p>`;
+        
+        setTimeout(() => {
+          loadJokerButtons();
+        }, 15000);
+        
       } else {
         jokerBar.classList.add('hidden');
       }
