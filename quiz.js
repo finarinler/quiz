@@ -271,33 +271,37 @@ function loadQuestion(){
     }
 
     // Joker-Logik
+    const jokerBar = document.querySelector(".joker-bar");
     const jokerBtn = document.getElementById("joker-btn");
-    if(jokerBtn){
-      jokerBtn.disabled = true;
-      // Entferne alten Listener, falls er existiert
-      const newBtn = jokerBtn.cloneNode(true);
-      jokerBtn.parentNode.replaceChild(newBtn, jokerBtn);
-      const clonedJokerBtn = document.getElementById("joker-btn");
-      
-      clonedJokerBtn.addEventListener("click", () => {
-        if (jokersLeft <= 0) return;
 
-        const wrongAnswers = q.answers.filter(a => a !== q.correct);
-        shuffleArray(wrongAnswers);
-        const toRemove = wrongAnswers.slice(0, 2);
+    if (jokerBar && jokerBtn) {
+        jokerBar.classList.add('hidden');
+        jokerBtn.disabled = true;
 
-        document.querySelectorAll(".answer-label").forEach(div => {
-          if (toRemove.includes(div.textContent)) {
-            div.style.opacity = "0.3";
-            div.style.pointerEvents = "none";
-          }
+        const newBtn = jokerBtn.cloneNode(true);
+        jokerBtn.parentNode.replaceChild(newBtn, jokerBtn);
+        const clonedJokerBtn = document.getElementById("joker-btn");
+
+        clonedJokerBtn.addEventListener("click", () => {
+            if (jokersLeft <= 0) return;
+
+            const wrongAnswers = q.answers.filter(a => a !== q.correct);
+            shuffleArray(wrongAnswers);
+            const toRemove = wrongAnswers.slice(0, 2);
+
+            document.querySelectorAll(".answer-label").forEach(div => {
+                if (toRemove.includes(div.textContent)) {
+                    div.style.opacity = "0.3";
+                    div.style.pointerEvents = "none";
+                }
+            });
+
+            jokersLeft--;
+            usedJokers++;
+            document.getElementById("joker-count").textContent = `Übrig: ${jokersLeft}`;
+            clonedJokerBtn.disabled = true;
+            jokerBar.classList.add('hidden');
         });
-
-        jokersLeft--;
-        usedJokers++;
-        document.getElementById("joker-count").textContent = `Übrig: ${jokersLeft}`;
-        clonedJokerBtn.disabled = true;
-      });
     }
 
     // Timer sofort starten
@@ -329,10 +333,16 @@ function loadQuestion(){
       });
     }, 5000);
 
-    // Joker-Button nach 15 Sekunden aktivieren (5 Sekunden nach den Antworten)
+    // Joker-Button nach 15 Sekunden (5 + 10s) aktivieren und anzeigen
     setTimeout(()=>{
-      const jokerBtn = document.getElementById("joker-btn");
-      if(jokerBtn) jokerBtn.disabled = false;
+      if (jokersLeft > 0) {
+        const jokerBar = document.querySelector(".joker-bar");
+        const jokerBtn = document.getElementById("joker-btn");
+        if (jokerBar && jokerBtn) {
+          jokerBar.classList.remove('hidden');
+          jokerBtn.disabled = false;
+        }
+      }
     }, 15000);
 }
 
@@ -377,6 +387,10 @@ function startTimer(){
 // Antwort prüfen
 function checkAnswer(selected, auto=false){
   clearInterval(timerInterval);
+  const jokerBar = document.querySelector(".joker-bar");
+  if (jokerBar) {
+      jokerBar.classList.add('hidden');
+  }
 
   const q = questions[currentQuestion];
   const result = document.getElementById("result");

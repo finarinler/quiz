@@ -208,5 +208,8 @@ summary h2 {
   color: #ffe88c;
   text-shadow: 0 0 10px #ffcc00, 0 0 20px #ff9900;
   font-weight: bold;
+}
 
+.hidden {
+  display: none;
 }
