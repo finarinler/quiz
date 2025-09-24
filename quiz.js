@@ -1,3 +1,4 @@
+
 // Fragen-Pool (global)
 
 window.allQuestions = [
@@ -311,7 +312,7 @@ function loadQuestion(){
     const answersDiv = document.getElementById("answers");
     answersDiv.innerHTML = `<p class="blink-text" style="color: #bfa259; font-weight: bold;">Antworten werden generiert...</p>`;
 
-    // Antworten nach 5 Sekunden anzeigen und smooth einblenden
+    // Antworten und Joker-Button nach 5 Sekunden anzeigen und smooth einblenden
     setTimeout(() => {
       answersDiv.innerHTML = ""; // Hinweis entfernen
       
@@ -331,18 +332,21 @@ function loadQuestion(){
           div.classList.add('visible');
         }, index * 150);
       });
-    }, 5000);
 
-    // Joker-Button nach 15 Sekunden (5 + 10s) aktivieren und anzeigen
-    setTimeout(()=>{
+      // Joker-Button einblenden, aber noch deaktiviert lassen
       if (jokersLeft > 0) {
         const jokerBar = document.querySelector(".joker-bar");
-        const jokerBtn = document.getElementById("joker-btn");
-        if (jokerBar && jokerBtn) {
+        if (jokerBar) {
           jokerBar.classList.remove('hidden');
-          jokerBtn.disabled = false;
         }
       }
+
+    }, 5000);
+
+    // Joker-Button nach weiteren 10 Sekunden (insgesamt 15s) aktivieren
+    setTimeout(()=>{
+      const jokerBtn = document.getElementById("joker-btn");
+      if(jokerBtn) jokerBtn.disabled = false;
     }, 15000);
 }
 
