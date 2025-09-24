@@ -60,7 +60,7 @@ window.allQuestions = [
 { question: "Welche Farbe hat das Mana von Schamanen?", answers: ["Blau","Gelb","Rot","Grün"], correct: "Blau" },																
 { question: "Welche Rolle war Arthas Menethil vor seiner Verwandlung?", answers: ["Paladin","Priester","Krieger","Todesritter"], correct: "Paladin" },																
 { question: "Wie viele Addons gab es bis 2025?", answers: ["9","10","11","12"], correct: "10" },																
-{ question: "Wie heißt das Volk, das in Warlords of Draenor eingeführt wurde?", answers: ["Vulpera","Orcs","Oger","Kein neues Volk"], correct: "Kein neues Volk" },																
+{ question: "Welches Volk, das in Warlords of Draenor eingeführt wurde?", answers: ["Vulpera","Orcs","Oger","Kein neues Volk"], correct: "Kein neues Volk" },																
 { question: "Welcher Charakter sagt 'Ihr seid noch nicht vorbereitet!'?", answers: ["Illidan","Arthas","Thrall","Sylvanas"], correct: "Illidan" },																
 { question: "Wer war der Endboss von Legion?", answers: ["Kil’jaeden","Sargeras","Argus der Zerrütter","Illidan"], correct: "Argus der Zerrütter" },																
 { question: "Was war das Levelcap in Classic?", answers: ["50","55","60","70"], correct: "60" },																
@@ -172,7 +172,10 @@ function startGame() {
   jokersLeft = 5;
   document.getElementById("total-text").textContent = `${remainingTime}s`;
   document.getElementById("total-bar").style.width = '100%';
-  document.getElementById("joker-bar").innerHTML = '';
+  
+  // Die Joker-Leiste am Start verbergen
+  document.getElementById("joker-bar").classList.add('hidden');
+  
   displayQuestionAndAnswers();
   startTotalTimer();
 }
@@ -237,7 +240,7 @@ function showJokerBar() {
   for (let i = 0; i < 5; i++) {
     const jokerButton = document.createElement("button");
     jokerButton.id = `joker-btn-${i}`;
-    jokerButton.className = "joker-btn";
+    jokerButton.className = "joker-btn joker-button-hidden"; // Buttons standardmäßig verstecken
     jokerButton.textContent = '50:50';
 
     if (jokersLeft <= i) {
@@ -291,14 +294,17 @@ function startJokerTimer() {
       jokerText.textContent = `${jokersLeft} verbleibende Joker in ${jokerTimeLeft}s`;
       if (jokerTimeLeft <= 0) {
         clearInterval(jokerTimerId);
-        jokerText.textContent = `Joker sind jetzt deaktiviert.`;
+        jokerText.textContent = `Joker sind jetzt aktiv!`;
         document.querySelectorAll('.joker-btn').forEach(btn => {
-          btn.disabled = true;
+          btn.classList.remove('joker-button-hidden'); // Buttons anzeigen
         });
       }
     }, 1000);
   } else {
     jokerText.textContent = `Keine Joker mehr verbleibend.`;
+    document.querySelectorAll('.joker-btn').forEach(btn => {
+      btn.classList.remove('joker-button-hidden'); // Buttons direkt anzeigen
+    });
   }
 }
 
@@ -412,11 +418,11 @@ function endGame() {
     <h2>Quiz beendet!</h2>
     <p>Dein Punktestand: <strong style="color:#ffe88c">${score}</strong></p>
     <p>Deine Restzeit: <strong style="color:#ffe88c">${remainingTime}</strong></p>
-    <p>Deine richtigen Antworten: <strong style="color:#ffe88c">${correctCount}</strong> <span style="color:green">(+${bonus} Bonuspunkte)</span></p>
-    <p>Deine falschen Antworten: <strong style="color:#ffe88c">${falseCount}</strong> <span style="color:orange">(+${bonus2} Bonuspunkte)</span></p>
-    <p>Abgelaufene Zeit: <strong style="color:#ffe88c">${timeOverCount}</strong> <span style="color:red">(-${bonus3} Punkte)</span></p>
-    <p>Genutzte Joker: <strong style="color:#ffe88c">${usedJokers}</strong> <span style="color:red">(-${bonus4} Punkte)</span></p>
-    <p>Nicht genutzte Joker: <strong style="color:#ffe88c">${jokersLeft}</strong> <span style="color:green">(+${bonus5})</span></p>
+    <p>Deine richtigen Antworten: <strong style="color:#ffe88c">${correctCount}</strong> <span style="color:green\">(+${bonus} Bonuspunkte)</span></p>
+    <p>Deine falschen Antworten: <strong style="color:#ffe88c">${falseCount}</strong> <span style="color:orange\">(+${bonus2} Bonuspunkte)</span></p>
+    <p>Abgelaufene Zeit: <strong style="color:#ffe88c">${timeOverCount}</strong> <span style="color:red\">(-\${bonus3} Punkte)</span></p>
+    <p>Genutzte Joker: <strong style="color:#ffe88c">${usedJokers}</strong> <span style="color:red\">(-\${bonus4} Punkte)</span></p>
+    <p>Nicht genutzte Joker: <strong style="color:#ffe88c">${jokersLeft}</strong> <span style="color:green\">(+\${bonus5})</span></p>
     <hr style="border-color: #bfa259; margin: 20px 0;">
     <h2>Dein Endpunktestand: <strong style="color:#ffe88c">${finalScore}</strong></h2>
   `;
