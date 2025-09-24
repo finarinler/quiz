@@ -143,6 +143,9 @@ let totalTime = 600; // 20 Fragen x 30 Sekunden
 let remainingTime = totalTime;
 let totalTimerInterval = null;
 
+let jokersLeft = 5;
+let usedJokers = 0;
+
 // Screen Management
 function showScreen(screenId) {
   // Alle Screens verstecken
@@ -307,6 +310,29 @@ function loadQuestion(){
   }, 5000); // 5000 Millisekunden = 5 Sekunden
 }
 
+  // Joker-Logik
+  const jokerBtn = document.getElementById("joker-btn");
+  jokerBtn.addEventListener("click", () => {
+    if (jokersLeft <= 0) return;
+
+    const wrongAnswers = q.answers.filter(a => a !== q.correct);
+    shuffleArray(wrongAnswers);
+    const toRemove = wrongAnswers.slice(0,2);
+
+    document.querySelectorAll(".answer-label").forEach(div => {
+      if (toRemove.includes(div.textContent)) {
+        div.style.opacity = "0.3";
+        div.style.pointerEvents = "none";
+      }
+    });
+
+    jokersLeft--;
+    usedJokers++;
+    document.getElementById("joker-count").textContent = `Übrig: ${jokersLeft}`;
+    jokerBtn.disabled = true;
+  });
+
+
 // Frage-Timer
 function startTimer(){
   clearInterval(timerInterval);
@@ -418,7 +444,9 @@ function showEnd(){
   let bonus = correctCount * 10;
   let bonus2 = falseCount * 5;
   let bonus3 = timeOverCount * 15;
-  let finalScore = score + bonus + bonus2 + remainingTime - bonus3;
+  let bonus4 = usedJokers * 10;
+  let bonus5 = jokersLeft * 50;
+  let finalScore = score + bonus + bonus2 + remainingTime - bonus3 - bonus4 + bonus5;
   
   showScreen('end-screen');
   
@@ -429,6 +457,8 @@ function showEnd(){
     <p>Deine richtigen Antworten: <strong style="color:#ffe88c">${correctCount}</strong> <span style="color:green">(+${bonus} Bonuspunkte)</span></p>
     <p>Deine falschen Antworten: <strong style="color:#ffe88c">${falseCount}</strong> <span style="color:orange">(+${bonus2} Bonuspunkte)</span></p>
     <p>Abgelaufene Zeit: <strong style="color:#ffe88c">${timeOverCount}</strong> <span style="color:red">(-${bonus3} Punkte)</span></p>
+    <p>Genutzte Joker: <strong style="color:#ffe88c">${usedJokers}</strong> <span style="color:red">(-${bonus4} Punkte)</span></p>
+    <p>Nicht genutzte Joker: <strong style="color:#ffe88c">${jokersLeft}</strong> <span style="color:green">(+${bonus5})</span></p>
     <hr style="border-color: #bfa259; margin: 20px 0;">
     <h2>Dein Endstand: <strong style="color:#ffe88c">${finalScore}</strong></h2>
   `;
