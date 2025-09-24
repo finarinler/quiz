@@ -107,8 +107,8 @@ window.allQuestions = [
   { question: "Seit welchem Addon gibt es das Transmog-System?", answers: ["Cataclysm","Mists of Pandaria","Warlords of Draenor","Legion"], correct: "Cataclysm" },																
   { question: "Welche Farbe hat das Transmogrifikations-Set vom Scharlachroten Kloster?", answers: ["Blau","Grün","Rot","Violett"], correct: "Rot" },																
   { question: "Welcher Erfolg schaltet den Titel 'der Verrückte' frei?", answers: ["Der Wahnsinnige","Der Unermüdliche","Der Unerschrockene","Der Verwegene"], correct: "Der Wahnsinnige" },				
-  { question: "Wie lautet Thralls richtiger Name?" , answers: ["Thrall","Go'el","Helot","Thralldom"], correct: "Go'el" },	
-  { question: "Was bedeutet 'Thrall' wirklich?" , answers: ["Sklave","Erlöser","Bewahrer","Unhold"] , correct: "Sklave" },																
+  {question: "Wie lautet Thralls richtiger Name?" , answers: ["Thrall","Go'el","Helot","Thralldom"], correct: "Go'el" },	
+  {question: "Was bedeutet 'Thrall' wirklich?" , answers: ["Sklave","Erlöser","Bewahrer","Unhold"] , correct: "Sklave" },																
 ];
 
 // Hintergrund-Bilder
@@ -324,7 +324,7 @@ function loadJokerButtons() {
     
     // Status der Joker-Anzeige festlegen
     if (jokersLeft > 0) {
-      // Wenn Joker vorhanden sind, wird der Text dynamisch angezeigt
+      jokerBar.innerHTML = `<p class="blink-text" style="color: #bfa259; font-weight: bold;">${jokersLeft} verbleibende Joker</p>`;
     } else {
       jokerBar.innerHTML = `<p class="blink-text" style="color: #ff0000; font-weight: bold;">Keine Joker mehr!</p>`;
     }
@@ -493,7 +493,7 @@ function showEnd(){
     <p>Deine falschen Antworten: <strong style="color:#ffe88c">${falseCount}</strong> <span style="color:orange">(+${bonus2} Bonuspunkte)</span></p>
     <p>Abgelaufene Zeit: <strong style="color:#ffe88c">${timeOverCount}</strong> <span style="color:red">(-${bonus3} Punkte)</span></p>
     <p>Genutzte Joker: <strong style="color:#ffe88c">${usedJokers}</strong> <span style="color:red">(-${bonus4} Punkte)</span></p>
-    <p>Nicht genutzte Joker: <strong style="color:#ffe88c">${jokersLeft}</strong> <span style="color:green">(+${bonus5})</span></p>
+    <p>Nicht genutzte Joker: <strong style="color:#ffe88c">${jokersLeft}</strong> <span style="color:green">(+${bonus5} Bonuspunkte)</span></p>
     <hr style="border-color: #bfa259; margin: 20px 0;">
     <h2>Dein Endstand: <strong style="color:#ffe88c">${finalScore}</strong></h2>
   `;
