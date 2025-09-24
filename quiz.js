@@ -244,93 +244,91 @@ function startTotalTimer(){
 
 // Frage laden - nur dynamischen Content ändern
 function loadQuestion(){
-  if(currentQuestion >= questions.length){ 
-    showEnd(); 
-    return; 
-  }
-  
-  const q = questions[currentQuestion];
+    if(currentQuestion >= questions.length){
+      showEnd();
+      return;
+    }
 
-  // Zufälliger Hintergrund
-  const randomBg = backgrounds[Math.floor(Math.random() * backgrounds.length)];
+    const q = questions[currentQuestion];
+
+    // Zufälliger Hintergrund
+    const randomBg = backgrounds[Math.floor(Math.random() * backgrounds.length)];
     document.body.style.backgroundImage = randomBg;
     document.body.style.backgroundSize = "cover";
     document.body.style.backgroundPosition = "center";
 
-  // Nur den dynamischen Inhalt ändern, nicht das gesamte HTML
-  document.getElementById("dynamic-content").innerHTML = `
-    <div class="progress-text">Frage ${currentQuestion+1} von ${questions.length}</div>
-    <div class="progress-bar-container"><div class="progress-bar" id="progress-bar"></div></div>
-    <h2 id="question">${q.question}</h2>
-    <div id="answers"></div>
-    <div class="timer-wrapper">
-      <span class="time-text" id="time-text">30s</span>
-      <div class="timer-container"><div class="timer-bar" id="timer-bar"></div></div>
-    </div>
-    <div class="result" id="result"></div>
-    <div class="score" id="score">Punkte: ${score}</div>
-    <div id="next-btn-container"></div>
-  `;
+    // Nur den Text und die Inhalte ändern, die sich wirklich ändern
+    document.getElementById("progress-text").textContent = `Frage ${currentQuestion+1} von ${questions.length}`;
+    document.getElementById("question").textContent = q.question;
+    document.getElementById("score").innerHTML = `Punkte: <span style="color:#ffe88c">${score}</span>`;
+    document.getElementById("result").textContent = ""; // Ergebnis zurücksetzen
+    document.getElementById("answers").innerHTML = ""; // Antworten-Container leeren
 
-  // Progress-Balken
-  const progressPercent = ((currentQuestion + 1) / questions.length) * 100;
-  const progressBar = document.getElementById("progress-bar");
-  if (progressBar) {
-    progressBar.style.width = progressPercent + "%";
-  }
+    // Progress-Balken
+    const progressPercent = ((currentQuestion + 1) / questions.length) * 100;
+    const progressBar = document.getElementById("progress-bar");
+    if (progressBar) {
+      progressBar.style.width = progressPercent + "%";
+    }
 
-  // Joker-Logik
-  const jokerBtn = document.getElementById("joker-btn");
-  jokerBtn.addEventListener("click", () => {
-    if (jokersLeft <= 0) return;
+    // Joker-Logik
+    const jokerBtn = document.getElementById("joker-btn");
+    if(jokerBtn){
+      jokerBtn.disabled = false;
+      // Entferne alten Listener, falls er existiert
+      const newBtn = jokerBtn.cloneNode(true);
+      jokerBtn.parentNode.replaceChild(newBtn, jokerBtn);
+      const clonedJokerBtn = document.getElementById("joker-btn");
+      
+      clonedJokerBtn.addEventListener("click", () => {
+        if (jokersLeft <= 0) return;
 
-    const wrongAnswers = q.answers.filter(a => a !== q.correct);
-    shuffleArray(wrongAnswers);
-    const toRemove = wrongAnswers.slice(0,2);
+        const wrongAnswers = q.answers.filter(a => a !== q.correct);
+        shuffleArray(wrongAnswers);
+        const toRemove = wrongAnswers.slice(0, 2);
 
-    document.querySelectorAll(".answer-label").forEach(div => {
-      if (toRemove.includes(div.textContent)) {
-        div.style.opacity = "0.3";
-        div.style.pointerEvents = "none";
-      }
-    });
+        document.querySelectorAll(".answer-label").forEach(div => {
+          if (toRemove.includes(div.textContent)) {
+            div.style.opacity = "0.3";
+            div.style.pointerEvents = "none";
+          }
+        });
 
-    jokersLeft--;
-    usedJokers++;
-    document.getElementById("joker-count").textContent = `Übrig: ${jokersLeft}`;
-    jokerBtn.disabled = true;
-   }, { once: true });
+        jokersLeft--;
+        usedJokers++;
+        document.getElementById("joker-count").textContent = `Übrig: ${jokersLeft}`;
+        clonedJokerBtn.disabled = true;
+      });
+    }
 
+    // Timer sofort starten
+    startTimer();
 
-  // Timer sofort starten
-  startTimer();
+    // Hinweis anzeigen, dass Antworten generiert werden
+    const answersDiv = document.getElementById("answers");
+    answersDiv.innerHTML = `<p class="blink-text" style="color: #bfa259; font-weight: bold;">Antworten werden generiert...</p>`;
 
-  // Hinweis anzeigen, dass Antworten generiert werden
-  const answersDiv = document.getElementById("answers");
-  answersDiv.innerHTML = `<p class="blink-text" style="color: #bfa259; font-weight: bold;">Antworten werden generiert...</p>`;
+    // Antworten nach 5 Sekunden anzeigen und smooth einblenden
+    setTimeout(() => {
+      answersDiv.innerHTML = ""; // Hinweis entfernen
+      
+      const answerElements = [];
 
-  // Antworten nach 5 Sekunden anzeigen und smooth einblenden
-  setTimeout(() => {
-    answersDiv.innerHTML = ""; // Hinweis entfernen
-    
-    const answerElements = [];
-
-    shuffleArray([...q.answers]).forEach(ans=>{
-      const div = document.createElement("div");
-      div.classList.add("answer-label");
-      div.textContent = ans;
-      div.addEventListener("click", ()=>checkAnswer(ans));
-      answersDiv.appendChild(div);
-      answerElements.push(div);
-    });
-    
-    // Jede Antwort mit einer gestaffelten Verzögerung einblenden (jetzt 150ms statt 100ms)
-    answerElements.forEach((div, index) => {
-      setTimeout(() => {
-        div.classList.add('visible');
-      }, index * 150); // Verzögerung um 150ms, um den Effekt zu verlangsamen
-    });
-  }, 5000); // 5000 Millisekunden = 5 Sekunden
+      shuffleArray([...q.answers]).forEach(ans=>{
+        const div = document.createElement("div");
+        div.classList.add("answer-label");
+        div.textContent = ans;
+        div.addEventListener("click", ()=>checkAnswer(ans));
+        answersDiv.appendChild(div);
+        answerElements.push(div);
+      });
+      
+      answerElements.forEach((div, index) => {
+        setTimeout(() => {
+          div.classList.add('visible');
+        }, index * 150);
+      });
+    }, 5000);
 }
 
 // Frage-Timer
@@ -345,6 +343,7 @@ function startTimer(){
     const timerBar = document.getElementById("timer-bar");
     const timeText = document.getElementById("time-text");
     
+    // Sicherstellen, dass die Elemente existieren
     if (timerBar && timeText) {
       timerBar.style.width = percent + "%";
       timerBar.style.background = getSmoothColor(percent);
