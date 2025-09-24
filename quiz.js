@@ -107,8 +107,8 @@ window.allQuestions = [
   { question: "Seit welchem Addon gibt es das Transmog-System?", answers: ["Cataclysm","Mists of Pandaria","Warlords of Draenor","Legion"], correct: "Cataclysm" },																
   { question: "Welche Farbe hat das Transmogrifikations-Set vom Scharlachroten Kloster?", answers: ["Blau","Grün","Rot","Violett"], correct: "Rot" },																
   { question: "Welcher Erfolg schaltet den Titel 'der Verrückte' frei?", answers: ["Der Wahnsinnige","Der Unermüdliche","Der Unerschrockene","Der Verwegene"], correct: "Der Wahnsinnige" },				
-  {question: "Wie lautet Thralls richtiger Name?" , answers: ["Thrall","Go'el","Helot","Thralldom"], correct: "Go'el" },	
-  {question: "Was bedeutet 'Thrall' wirklich?" , answers: ["Sklave","Erlöser","Bewahrer","Unhold"] , correct: "Sklave" },																
+  { question: "Wie lautet Thralls richtiger Name?" , answers: ["Thrall","Go'el","Helot","Thralldom"], correct: "Go'el" },	
+  { question: "Was bedeutet 'Thrall' wirklich?" , answers: ["Sklave","Erlöser","Bewahrer","Unhold"] , correct: "Sklave" },																
 ];
 
 // Hintergrund-Bilder
@@ -303,25 +303,13 @@ function loadQuestion(){
         }, index * 150);
       });
       
-      // Countdown für Joker startet jetzt erst NACHDEM die Antworten sichtbar sind
-      if(jokerBar) {
-        let jokerCountdown = 15;
-        const updateJokerText = () => {
-          jokerBar.innerHTML = `<p class="blink-text" style="color: #bfa259; font-weight: bold;">${jokersLeft} verbleibende Joker in ${jokerCountdown}s</p>`;
-        };
-        
-        updateJokerText();
-        jokerBar.classList.remove("hidden");
-        
-        const jokerCountdownInterval = setInterval(() => {
-          jokerCountdown--;
-          if (jokerCountdown > 0) {
-            updateJokerText();
-          } else {
-            clearInterval(jokerCountdownInterval);
-            loadJokerButtons();
-          }
-        }, 1000);
+      // Joker-Logik jetzt mit Bedingung
+      if(jokersLeft > 0) {
+        setTimeout(() => {
+          loadJokerButtons();
+        }, 5000); // Verzögerte Anzeige der Joker
+      } else {
+        loadJokerButtons(); // Sofortige Anzeige, wenn keine Joker mehr übrig sind
       }
       
     }, 5000); // 5 Sekunden Verzögerung für die Antworten
@@ -332,24 +320,29 @@ function loadJokerButtons() {
     const jokerBar = document.getElementById("joker-bar");
     jokerBar.innerHTML = "";
     
-    if (jokersLeft > 0 || usedJokers > 0) {
-        jokerBar.classList.remove('hidden');
-        for (let i = 0; i < 5; i++) {
-            const jokerBtn = document.createElement('button');
-            jokerBtn.textContent = '50:50';
-            jokerBtn.className = 'joker-btn';
-            
-            if (jokerStates[i] === 'used' || jokerUsedThisQuestion) {
-                jokerBtn.classList.add('used');
-                jokerBtn.disabled = true;
-            } else {
-                jokerBtn.disabled = false;
-                jokerBtn.addEventListener('click', () => useJoker(jokerBtn, i));
-            }
-            jokerBar.appendChild(jokerBtn);
-        }
+    jokerBar.classList.remove('hidden');
+    
+    // Status der Joker-Anzeige festlegen
+    if (jokersLeft > 0) {
+      // Wenn Joker vorhanden sind, wird der Text dynamisch angezeigt
     } else {
-        jokerBar.classList.add('hidden');
+      jokerBar.innerHTML = `<p class="blink-text" style="color: #ff0000; font-weight: bold;">Keine Joker mehr!</p>`;
+    }
+    
+    // Jetzt die Buttons hinzufügen
+    for (let i = 0; i < 5; i++) {
+        const jokerBtn = document.createElement('button');
+        jokerBtn.textContent = '50:50';
+        jokerBtn.className = 'joker-btn';
+        
+        if (jokerStates[i] === 'used' || jokersLeft === 0 || jokerUsedThisQuestion) {
+            jokerBtn.classList.add('used');
+            jokerBtn.disabled = true;
+        } else {
+            jokerBtn.disabled = false;
+            jokerBtn.addEventListener('click', () => useJoker(jokerBtn, i));
+        }
+        jokerBar.appendChild(jokerBtn);
     }
 }
 
