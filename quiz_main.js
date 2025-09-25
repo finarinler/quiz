@@ -233,7 +233,9 @@ function displayQuestionAndAnswers() {
     
     elements.questionElement.textContent = currentQuestion.question;
     elements.progressText.textContent = `Frage ${currentQuestionIndex + 1} von ${questions.length}`;
-    elements.progressBar.style.width = `${((currentQuestionIndex) / questions.length) * 100}%`;
+    
+    // KORRIGIERTE LOGIK: Zeigt den aktuellen Fortschritt (Index + 1)
+    elements.progressBar.style.width = `${((currentQuestionIndex + 1) / questions.length) * 100}%`;
     
     isAnswerBlocked = true;
     startQuestionTimer();
