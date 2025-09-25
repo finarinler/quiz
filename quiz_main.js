@@ -257,8 +257,6 @@ function displayQuestionAndAnswers() {
         if (jokersLeft > 0) {
             startJokerCountdown();
         } else {
-            // **KORREKTUR:** Kurze Verzögerung, um sicherzustellen,
-            // dass die Joker nicht vor den Antworten erscheinen.
             setTimeout(() => {
                 elements.jokerBar.classList.remove('hidden');
             }, 100); 
