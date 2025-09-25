@@ -130,7 +130,7 @@ let questionTimeLeft = questionTime;
 let timerId;
 
 let jokerTimerId;
-const totalJokers = 5;
+const totalJokers = 3;
 let jokersLeft = totalJokers;
 
 let isAnswerBlocked = false;
