@@ -427,10 +427,23 @@ function startTotalTimer() {
   clearInterval(totalTimerId);
   const totalBar = document.getElementById("total-bar");
   const totalText = document.getElementById("total-text");
+  
   totalTimerId = setInterval(() => {
     remainingTime--;
+    
+    const percentage = (remainingTime / totalTime) * 100;
+
+    totalBar.style.width = `${percentage}%`;
     totalText.textContent = `${remainingTime}s`;
-    totalBar.style.width = `${(remainingTime / totalTime) * 100}%`;
+    
+    const rightPosition = 100 - percentage;
+    
+    totalText.style.right = `calc(${rightPosition}% - 40px)`;
+    
+    if (percentage <= 5) {
+      totalText.style.right = `calc(100% - 5px)`; 
+    }
+    
     if (remainingTime <= 0) {
       clearInterval(totalTimerId);
       endGame();
