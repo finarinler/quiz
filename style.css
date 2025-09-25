@@ -121,9 +121,11 @@ button:hover {
 
 .progress-bar {
   height: 100%;
-  width: 0%;
+  /* width: 0%; <-- Diese Zeile wurde entfernt, um Konflikte mit JS zu vermeiden */
   background: #bfa259;
   transition: width 0.5s ease;
+  /* NEU: Box-Shadow hinzugefügt, damit der Balken auch bei 5% gut sichtbar ist */
+  box-shadow: 0 0 8px #ffe88c, 0 0 5px #bfa259 inset; 
 }
 
 .progress-text {
