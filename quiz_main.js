@@ -253,11 +253,13 @@ function displayQuestionAndAnswers() {
             setTimeout(() => label.classList.add('visible'), 50);
         });
         
-         // Logik für Joker-Anzeige
+        // Logik für Joker-Anzeige
         if (jokersLeft > 0) {
             startJokerCountdown();
         } else {
-            elements.jokerBar.classList.remove('hidden');
+            setTimeout(() => {
+                elements.jokerBar.classList.remove('hidden');
+            }, 100); 
         }
         
     }, 5000);
