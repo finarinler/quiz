@@ -154,6 +154,11 @@ button:hover {
   text-shadow: 1px 1px 2px #000;
 }
 
+.timer-text-display {
+    text-align: center;
+    margin-top: 5px;
+}
+
 #total-text {
   position: static; 
   display: block;
