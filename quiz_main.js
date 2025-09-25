@@ -428,6 +428,11 @@ function startTotalTimer() {
   const totalBar = document.getElementById("total-bar");
   const totalText = document.getElementById("total-text");
   
+  if (totalBar) {
+    totalBar.style.background = '#6fba3c'; 
+    if (totalText) totalText.style.color = '#2b2b2b'; 
+  }
+
   totalTimerId = setInterval(() => {
     remainingTime--;
     
@@ -435,22 +440,26 @@ function startTotalTimer() {
 
     if (totalBar) {
         totalBar.style.width = `${percentage}%`;
-    }
-    if (totalText) {
-        totalText.textContent = `${remainingTime}s`;
-        if (percentage <= 10) {
-            totalText.style.color = '#d42e2e'; 
+        if (percentage <= 25) {
+            totalBar.style.background = '#d42e2e'; 
+            if (totalText) totalText.style.color = '#f0e6d2'; 
         } else {
-            totalText.style.color = '#2b2b2b'; 
+            totalBar.style.background = '#6fba3c'; 
+            if (totalText) totalText.style.color = '#2b2b2b';
         }
     }
     
+    if (totalText) {
+        totalText.textContent = `${remainingTime}s`;
+    }
+
     if (remainingTime <= 0) {
       clearInterval(totalTimerId);
       endGame();
     }
   }, 1000);
 }
+
 function endGame() {
   clearInterval(timerId);
   clearInterval(totalTimerId);
