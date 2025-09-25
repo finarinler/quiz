@@ -340,7 +340,6 @@ summary h2 {
   border-radius: 5px;
   overflow: hidden;
   box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5);
-  position: relative;
 }
 
 .total-bar {
