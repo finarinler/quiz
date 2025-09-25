@@ -1,4 +1,4 @@
-const SHEET_API_URL = "https://sheetdb.io/api/v1/n06cty279499m"; 
+const SHEET_API_URL = "https://sheetdb.io/api/v1/oupzazkmpdakls"; 
 // Fragen-Pool (global)
 window.allQuestions = [
     // ...
@@ -542,7 +542,7 @@ async function sendScore(name, score) {
     const messageElement = document.getElementById('leaderboard-message');
     
     // Prüfen, ob die API URL gesetzt ist
-    if (SHEET_API_URL === "https://sheetdb.io/api/v1/n06cty279499m") {
+    if (SHEET_API_URL === "https://sheetdb.io/api/v1/oupzazkmpdakl") {
         messageElement.textContent = 'FEHLER: Bitte ersetze "HIER_IHRE_GENERIERTE_API_URL_EINSETZEN" in quiz_main.js durch deine tatsächliche Sheet API URL.';
         return;
     }
@@ -585,7 +585,7 @@ async function getScores() {
     const displayElement = document.getElementById('leaderboard-display');
     
     // Prüfen, ob die API URL gesetzt ist
-    if (SHEET_API_URL === "https://sheetdb.io/api/v1/n06cty279499m") {
+    if (SHEET_API_URL === "https://sheetdb.io/api/v1/oupzazkmpdakl") {
         displayElement.innerHTML = '<p style="color:red;">FEHLER: Bitte ersetze die Platzhalter-API-URL in quiz_main.js, um die Bestenliste zu laden.</p>';
         return;
     }
