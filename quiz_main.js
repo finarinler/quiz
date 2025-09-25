@@ -436,12 +436,10 @@ function startTotalTimer() {
     totalBar.style.width = `${percentage}%`;
     totalText.textContent = `${remainingTime}s`;
     
-    const rightPosition = 100 - percentage;
-    
-    totalText.style.right = `calc(${rightPosition}% - 40px)`;
-    
-    if (percentage <= 5) {
-      totalText.style.right = `calc(100% - 5px)`; 
+    if (percentage <= 10) {
+        totalText.style.color = '#d42e2e';
+    } else {
+        totalText.style.color = '#2b2b2b';
     }
     
     if (remainingTime <= 0) {
