@@ -24,17 +24,14 @@ body {
   opacity: 0;
   visibility: hidden;
   position: absolute;
+  display: none; /* Standardmäßig ausblenden */
 }
 
 .quiz-container.active {
   opacity: 1;
   visibility: visible;
   position: static;
-  display: block;
-}
-
-.quiz-container {
-  display: none;
+  display: block; /* Nur aktive Container anzeigen */
 }
 
 .total-wrapper {
@@ -219,6 +216,12 @@ summary h2 {
   margin-bottom: 20px;
 }
 
+@keyframes pulse-timer {
+    0% { box-shadow: 0 0 10px rgba(255, 200, 50, 0.7), 0 0 20px rgba(255, 200, 50, 0.5); }
+    50% { box-shadow: 0 0 15px rgba(255, 220, 80, 0.9), 0 0 30px rgba(255, 220, 80, 0.7); }
+    100% { box-shadow: 0 0 10px rgba(255, 200, 50, 0.7), 0 0 20px rgba(255, 200, 50, 0.5); }
+}
+
 @keyframes blink {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.4; }
@@ -297,16 +300,9 @@ summary h2 {
   font-weight: bold;
 }
 
-#answer-generation-message {
-  font-size: 12px;
-  font-weight: bold;
-  color: #f0d07b;
-  text-shadow: 2px 2px 5px #000;
-  margin-top: 20px;
-}
-
+#answer-generation-message,
 #joker-timer-message {
-  font-size: 12px;
+  font-size: 14px;
   font-weight: bold;
   color: #f0d07b;
   text-shadow: 2px 2px 5px #000;
