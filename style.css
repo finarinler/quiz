@@ -340,3 +340,91 @@ summary h2 {
   font-family: 'Arial', sans-serif;
   text-shadow: 1px 1px 2px #000;
 }
+
+/* --- Hauptmenü-Grid Styling --- */
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+  margin-top: 30px;
+}
+
+.menu-box {
+  background: rgba(40, 40, 40, 0.9);
+  padding: 20px;
+  border-radius: 10px;
+  border: 2px solid #5a5a5a;
+  text-decoration: none;
+  color: #f0e6d2;
+  transition: transform 0.3s, box-shadow 0.3s;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-height: 120px;
+}
+
+.menu-box h2 {
+  color: #bfa259;
+  font-size: 1.5em;
+  margin-top: 0;
+  margin-bottom: 5px;
+}
+
+.menu-box p {
+  font-size: 0.9em;
+  margin: 0;
+}
+
+/* Styling für die aktive Quiz-Box */
+.menu-box.active-content {
+  border-color: #ffe88c; /* Gold-Rand für aktive Inhalte */
+  background: rgba(50, 50, 50, 0.95);
+  box-shadow: 0 0 15px rgba(255, 232, 140, 0.4);
+  cursor: pointer;
+}
+
+.menu-box.active-content:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(255, 232, 140, 0.8);
+}
+
+/* Styling für 'Coming Soon' Boxen */
+.menu-box.coming-soon {
+  opacity: 0.6;
+  border-style: dashed;
+  cursor: not-allowed;
+  pointer-events: none; /* Macht die Box nicht klickbar */
+}
+
+.menu-box.coming-soon h2 {
+  color: #8c8c8c; /* Grauer Text für inaktive Inhalte */
+}
+
+/* Details/Summary für "Wie funktioniert das Quiz" */
+details {
+  text-align: left;
+  background: rgba(40, 40, 40, 0.8);
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid #5a5a5a;
+  margin-top: 20px;
+}
+
+summary {
+  cursor: pointer;
+}
+
+summary h2 {
+  display: inline;
+  color: #f0e6d2; /* Weißlicher Text für den Titel */
+  text-shadow: none;
+  margin-bottom: 0;
+}
+
+details p {
+  margin-left: 10px;
+  font-size: 0.95em;
+  line-height: 1.4;
+}

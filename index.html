@@ -2,18 +2,83 @@
 <html lang="de">
 <head>
   <meta charset="utf-8" />
-  <title>WoW Quiz</title>
+  <title>WoW Quiz - Hauptmenü</title>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="quiz-container active">
-    <h1>Bald wieder da!</h1>
-    <p>Das Quiz wird gerade auf eine neue Version gebracht!</p>
-    <p>Nicht mehr lang und du kannst dein Wissen wieder testen.</p>
-  </div>
-  <div id="version-number">v0.3</div>
-  <script src="quiz.js"></script>
-</body>
-</html>
+  <div class="quiz-container active" id="main-menu-screen">
+    <h1>Willkommen zum WoW-Quiz</h1>
+    <p>Wähle eine Kategorie, um dein Wissen zu testen.</p>
+    
+    <div class="menu-grid">
+      <a href="quiz_main.html" class="menu-box active-content">
+        <h2>Das Quiz</h2>
+        <p>Starte das World of Warcraft Quiz!</p>
+      </a>
+      
+      <div class="menu-box coming-soon">
+        <h2>Dungeons</h2>
+        <p>Coming Soon</p>
+      </div>
+      <div class="menu-box coming-soon">
+        <h2>Raids</h2>
+        <p>Coming Soon</p>
+      </div>
+      <div class="menu-box coming-soon">
+        <h2>Berufe</h2>
+        <p>Under Construction</p>
+      </div>
+      <div class="menu-box coming-soon">
+        <h2>Klassen</h2>
+        <p>Coming Soon</p>
+      </div>
+      <div class="menu-box coming-soon">
+        <h2>Instanzen</h2>
+        <p>Coming Soon</p>
+      </div>
+      <div class="menu-box coming-soon">
+        <h2>Transmog</h2>
+        <p>Coming Soon</p>
+      </div>
+      <div class="menu-box coming-soon">
+        <h2>PvP-Könige</h2>
+        <p>Under Construction</p>
+      </div>
+      <div class="menu-box coming-soon">
+        <h2>Classic-Wissen</h2>
+        <p>Coming Soon</p>
+      </div>
+      <div class="menu-box coming-soon">
+        <h2>Legendäre Items</h2>
+        <p>Under Construction</p>
+      </div>
+      <div class="menu-box coming-soon">
+        <h2>Erweiterungen</h2>
+        <p>Coming Soon</p>
+      </div>
+      <div class="menu-box coming-soon">
+        <h2>Gebiete</h2>
+        <p>Coming Soon</p>
+      </div>
+    </div>
+    
+    <hr style="border-color: #bfa259; margin: 30px 0;">
+    
+    <details>
+      <summary><h2>Wie funktioniert das Quiz?</h2></summary>
+      <br>
+      <p>Beantworte alle Fragen, die dir gestellt werden.</p>
+      <p>Pro Frage hast du 30 Sekunden Zeit.</p>
+      <p>Falls du dir mal nicht sicher bist, stehen dir 5 '50:50-Joker' zur Verfügung.</p>
+      <p>Jede richtig beantwortete Frage gibt dir 10 + die Restzeit der Frage an Punkten.</p>
+      <p>Jede falsch beantwortete Frage gibt dir ein paar Bonuspunkte für den Versuch.</p>
+      <p>Bei Zeitablauf werden dir Punkte abgezogen.</p>
+      <p>Am Ende werden Bonuspunkte und Minuspunkte basierend auf deiner Leistung verrechnet.</p>
+      <p>Deine finale Punktezahl wird dann angezeigt.</p>
+    </details>
 
+  </div>
+  <div id="version-number">v0.4 (Menü-Update)</div>
+  </body>
+</html>
