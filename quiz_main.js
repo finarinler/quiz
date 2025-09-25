@@ -1,7 +1,7 @@
-const SHEET_API_URL = "https://sheetdb.io/api/v1/oupzazkmpdakls"; 
+// ...
 // Fragen-Pool (global)
 window.allQuestions = [
-    // ...
+    // ... (Fragen bleiben unverändert)
     { question: "Wie heißt die Hauptstadt von Dragonflight?", answers: ["Dalaran","Orgrimmar","Dornogal","Valdrakken"], correct: "Valdrakken" },								
     { question: "Wer war kein Anführer der Horde?", answers: ["Arthas","Vol'jin","Thrall","Garrosh"], correct: "Arthas" },								
     { question: "Welche Farbe hat der Energiebalken von Wildheitsdruiden?", answers: ["Blau","Gelb","Rot","Grün"], correct: "Gelb" },								
@@ -41,7 +41,7 @@ window.allQuestions = [
     { question: "Welche Rolle übernimmt Anduin Wrynn hauptsächlich im Spiel?", answers: ["Tank","Heiler","DPS","Er ist kein Kämpfer"], correct: "Heiler" },																
     { question: "Wie heißt der erste Raid in Shadowlands?", answers: ["Sanktum der Herrschaft","Schloss Nathria","Mausoleum der Ersten","Tiegel der Stürme"], correct: "Schloss Nathria" },																
     { question: "Welche Region war in Cataclysm neu spielbar?", answers: ["Uldum","Nordend","Schlingendorntal","Das Brachland"], correct: "Uldum" },																
-    { question: "Wie heißen die Reittiere, die man mit Ruhm bei den Kirin Tor in Wrath freischalten konnte?", answers: ["Phönixe","Greifen","Wasserstoffballons","Arkanwyrmlinge"], correct: "Arkanwyrmlinge" },																
+    { question: "Wie heißen die Reittiere, die man mit Ruhm bei den Kirin Tor in Wrath of the Lich King freischalten konnte?", answers: ["Phönixe","Greifen","Wasserstoffballons","Arkanwyrmlinge"], correct: "Arkanwyrmlinge" },																																
     { question: "Welches dieser Addons hatte kein Levelcap von 120?", answers: ["Legion","Battle for Azeroth","Warlords of Draenor","Shadowlands"], correct: "Warlords of Draenor" },																
     { question: "Wer ist der Anführer der Draenei?", answers: ["Illidan","Kil'jaeden","Prophet Velen","Nobundo"], correct: "Prophet Velen" },																
     { question: "Wie heißt die Hauptstadt der Untoten?", answers: ["Unterstadt","Silbermond","Tirisfal","Lordaeron"], correct: "Unterstadt" },																
@@ -477,15 +477,15 @@ function handleJoker(event) {
 }
 
 // =========================================================================================
-// ENDGAME UND BESTENLISTE (NEUE LOGIK)
+// ENDGAME
 // =========================================================================================
 
-// Beendet das Spiel und zeigt die Auswertung an (HIER WURDE DIE LOGIK ERWEITERT)
+// Beendet das Spiel und zeigt die Auswertung an
 function endGame() {
     clearInterval(totalTimerId);
     stopAllTimers();
 
-    // Berechnung des finalen Scores (aus Ihrem Original-Code übernommen)
+    // Berechnung des finalen Scores
     const usedJokers = totalJokers - jokersLeft;
     const bonusCorrect = correctCount * 5;
     const bonusFalse = falseCount * 2;
@@ -509,120 +509,7 @@ function endGame() {
         <p>Verbleibende Joker: <strong style="color:green">${jokersLeft}</strong> (+${bonusJokersLeft} Bonuspunkte)</p>
         <hr style="border-color: #bfa259; margin: 20px 0;">
         
-        <h3>Speichere dein globales Ergebnis!</h3>
-        <input type="text" id="player-name-input" placeholder="Gib deinen Namen ein" maxlength="20" style="padding: 10px; margin: 10px auto; display: block; width: 80%; max-width: 300px; background-color: #1a1a1a; color: #f0e6d2; border: 1px solid #bfa259; border-radius: 5px;">
-        <button id="submit-score-btn" style="margin-top: 10px;">Punktzahl in Bestenliste speichern</button>
-        <p id="leaderboard-message" style="margin-top: 10px; color: orange;"></p>
-        <button onclick="location.reload()" style="margin-top: 20px;">Neues Spiel</button>
-
-        <button id="show-leaderboard-btn" style="margin-top: 20px;">Bestenliste aktualisieren</button>
-        <div id="leaderboard-display" style="margin-top: 20px;"></div>
+        <p>Herzlichen Glückwunsch!</p>
+        <button onclick="window.location.href = 'index.html'" style="margin-top: 20px;">Zum Hauptmenü</button>
     `;
-
-    // Event-Listener für das Speichern der Punktzahl
-    document.getElementById('submit-score-btn').addEventListener('click', () => {
-        const playerName = document.getElementById('player-name-input').value.trim();
-        if (playerName) {
-            // Sende den bereinigten finalDisplayScore
-            sendScore(playerName, finalDisplayScore);
-        } else {
-            document.getElementById('leaderboard-message').textContent = 'Bitte gib einen Namen ein!';
-        }
-    });
-
-    // Event-Listener für das Anzeigen der Bestenliste
-    document.getElementById('show-leaderboard-btn').addEventListener('click', getScores);
-    
-    // Versuche, die Bestenliste beim Laden des Endbildschirms anzuzeigen
-    getScores();
-}
-
-// NEUE Funktion zum Senden des Punktestands an die Google Sheet API
-async function sendScore(name, score) {
-    const messageElement = document.getElementById('leaderboard-message');
-    
-    // Prüfen, ob die API URL gesetzt ist
-    if (SHEET_API_URL === "https://sheetdb.io/api/v1/oupzazkmpdakls") {
-        messageElement.textContent = 'FEHLER: Bitte ersetze "HIER_IHRE_GENERIERTE_API_URL_EINSETZEN" in quiz_main.js durch deine tatsächliche Sheet API URL.';
-        return;
-    }
-
-    try {
-        const response = await fetch(SHEET_API_URL, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            // Das Datenformat muss zu Ihren Spaltennamen (user, score) passen
-            body: JSON.stringify({
-                data: { 
-                    user: name,
-                    score: score // Score als Zahl senden
-                }
-            }),
-        });
-
-        const data = await response.json();
-        
-        if (response.ok) {
-            messageElement.textContent = 'Punktzahl erfolgreich in Google Sheets gespeichert!';
-            document.getElementById('submit-score-btn').disabled = true;
-            document.getElementById('player-name-input').disabled = true;
-            getScores(); // Bestenliste nach erfolgreichem Speichern aktualisieren
-        } else {
-            // Versuche, eine Fehlermeldung aus der Antwort zu ziehen, falls vorhanden
-            const errorMessage = data.message || response.statusText || 'Unbekannter API Fehler';
-            messageElement.textContent = `Fehler beim Speichern: ${errorMessage}`;
-        }
-    } catch (error) {
-        messageElement.textContent = 'Netzwerkfehler beim Speichern der Punktzahl. Prüfen Sie die API URL und die CORS-Einstellungen des Wrappers.';
-        console.error('Error:', error);
-    }
-}
-
-// NEUE Funktion zum Abrufen der Bestenliste von der Google Sheet API
-async function getScores() {
-    const displayElement = document.getElementById('leaderboard-display');
-    
-    // Prüfen, ob die API URL gesetzt ist
-    if (SHEET_API_URL === "https://sheetdb.io/api/v1/oupzazkmpdakls") {
-        displayElement.innerHTML = '<p style="color:red;">FEHLER: Bitte ersetze die Platzhalter-API-URL in quiz_main.js, um die Bestenliste zu laden.</p>';
-        return;
-    }
-
-    displayElement.innerHTML = 'Lade Bestenliste von Google Sheets...';
-
-    try {
-        const response = await fetch(SHEET_API_URL);
-        const scores = await response.json();
-        
-        if (Array.isArray(scores)) {
-            // Filtern und Sortieren (nur die Top 10)
-            const sortedScores = scores
-                .filter(item => item.user && item.score && !isNaN(parseInt(item.score))) // Ungültige Einträge filtern
-                .sort((a, b) => parseInt(b.score) - parseInt(a.score)); // Nach Score absteigend sortieren
-            
-            let html = '<h3>Globale Top 10 Bestenliste</h3><ol style="text-align: left; max-width: 300px; margin: 10px auto; padding-left: 20px;">';
-            
-            // Nur die ersten 10 Elemente anzeigen
-            sortedScores.slice(0, 10).forEach((item) => {
-                // Sicherstellen, dass der Score als Zahl formatiert wird
-                const scoreValue = parseInt(item.score);
-                html += `
-                    <li style="margin: 5px 0;">
-                        <strong style="color:#ffe88c">${item.user}</strong>: ${scoreValue.toLocaleString()} Punkte
-                    </li>
-                `;
-            });
-
-            html += '</ol>';
-            displayElement.innerHTML = html;
-
-        } else {
-            displayElement.innerHTML = `<p style="color:red;">Fehler beim Laden der Bestenliste: Ungültiges Datenformat von der API. (Erwartet Array, erhalten: ${typeof scores})</p>`;
-        }
-    } catch (error) {
-        displayElement.innerHTML = '<p style="color:red;">Netzwerkfehler beim Abrufen der Bestenliste. Bitte prüfen Sie Ihre API URL und ob der Wrapper-Service korrekt läuft.</p>';
-        console.error('Error:', error);
-    }
 }
