@@ -41,7 +41,7 @@ window.allQuestions = [
     { question: "Welche Rolle übernimmt Anduin Wrynn hauptsächlich im Spiel?", answers: ["Tank","Heiler","DPS","Er ist kein Kämpfer"], correct: "Heiler" },																
     { question: "Wie heißt der erste Raid in Shadowlands?", answers: ["Sanktum der Herrschaft","Schloss Nathria","Mausoleum der Ersten","Tiegel der Stürme"], correct: "Schloss Nathria" },																
     { question: "Welche Region war in Cataclysm neu spielbar?", answers: ["Uldum","Nordend","Schlingendorntal","Das Brachland"], correct: "Uldum" },																
-    { question: "Wie heißen die Reittiere, die man mit Ruhm bei den Kirin Tor in Wrath freischalten konnte?", answers: ["Phönixe","Greifen","Wasserstoffballons","Arkanwyrmlinge"], correct: "Arkanwyrmlinge" },																
+    { question: "Wie heißen die Reittiere, die man mit Ruhm bei den Kirin Tor in Wrath of the Lich King freischalten konnte?", answers: ["Phönixe","Greifen","Wasserstoffballons","Arkanwyrmlinge"], correct: "Arkanwyrmlinge" },																																
     { question: "Welches dieser Addons hatte kein Levelcap von 120?", answers: ["Legion","Battle for Azeroth","Warlords of Draenor","Shadowlands"], correct: "Warlords of Draenor" },																
     { question: "Wer ist der Anführer der Draenei?", answers: ["Illidan","Kil'jaeden","Prophet Velen","Nobundo"], correct: "Prophet Velen" },																
     { question: "Wie heißt die Hauptstadt der Untoten?", answers: ["Unterstadt","Silbermond","Tirisfal","Lordaeron"], correct: "Unterstadt" },																
@@ -565,7 +565,7 @@ async function sendScore(name, score) {
         const data = await response.json();
         
         if (response.ok) {
-            messageElement.textContent = 'Punktzahl erfolgreich in Google Sheets gespeichert!';
+            messageElement.textContent = 'Punktzahl erfolgreich gespeichert!';
             document.getElementById('submit-score-btn').disabled = true;
             document.getElementById('player-name-input').disabled = true;
             getScores(); // Bestenliste nach erfolgreichem Speichern aktualisieren
