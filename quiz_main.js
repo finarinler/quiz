@@ -125,7 +125,7 @@ let timeOverCount = 0;
 let totalTime = 600;
 let remainingTime = totalTime;
 let timerId;
-let questionTimeLeft; // Neue Variable
+let questionTimeLeft;
 let totalTimerId;
 let isAnswerBlocked = false;
 let jokerTimerId;
@@ -136,8 +136,6 @@ document.getElementById("start-btn").addEventListener("click", () => {
   showScreen('countdown-screen');
   startCountdown();
 });
-
-// Die Neustart-Logik wird entfernt.
 
 function shuffleArray(array) {
   for (let i = array.length - 1; i > 0; i--) {
@@ -179,7 +177,6 @@ function startGame() {
   document.getElementById("total-bar").style.width = '100%';
   document.getElementById("score").textContent = `Punkte: 0`;
   
-  // Die Joker-Leiste am Start verbergen
   document.getElementById("joker-bar").classList.add('hidden');
   
   displayQuestionAndAnswers();
@@ -192,7 +189,7 @@ function displayQuestionAndAnswers() {
   const answersDiv = document.getElementById("answers");
   const answerGenMessage = document.getElementById("answer-generation-message");
   const resultDiv = document.getElementById("result");
-  resultDiv.textContent = ''; // Ergebnis-Text vom vorherigen Mal löschen
+  resultDiv.textContent = '';
 
   document.getElementById("progress-text").textContent = `Frage ${currentQuestionIndex + 1} von ${questions.length}`;
   document.getElementById("progress-bar").style.width = `${((currentQuestionIndex + 1) / questions.length) * 100}%`;
@@ -200,7 +197,6 @@ function displayQuestionAndAnswers() {
   answersDiv.innerHTML = '';
   document.getElementById("joker-bar").classList.add('hidden');
   
-  // Anzeigen der "Generiere Antworten..." Nachricht
   answerGenMessage.classList.remove('hidden');
   answerGenMessage.classList.add('blink-text');
 
@@ -233,7 +229,7 @@ function displayQuestionAndAnswers() {
     showJokerBar();
     startJokerTimer();
     startQuestionTimer();
-  }, 5000); // 5 Sekunden Verzögerung
+  }, 5000); 
 }
 
 function showJokerBar() {
@@ -251,7 +247,7 @@ function startQuestionTimer() {
     return; 
   }
 
-  questionTimeLeft = 30; // Globale Variable setzen
+  questionTimeLeft = 30; 
   timerBar.style.width = '100%';
   timerBar.style.background = 'linear-gradient(90deg, #6fba3c, #6fba3c)';
   timeText.textContent = `${questionTimeLeft}s`;
@@ -276,15 +272,13 @@ function startQuestionTimer() {
   }, 1000);
 }
 
-// NEUE Funktion: Behandelt das Zeitlimit
 function handleTimeOut() {
   timeOverCount++;
-  score -= 10; // Sofortiger Abzug, wie bei falscher Antwort
+  score -= 10;
   document.getElementById("score").innerHTML = `Punkte: <span style="color:#ffe88c">${score}</span>`;
   const resultDiv = document.getElementById("result");
   const currentQuestion = questions[currentQuestionIndex];
   
-  // Markiere die richtige Antwort
   document.querySelectorAll('.answer-label').forEach(label => {
     if (label.textContent === currentQuestion.correct) {
       label.classList.add('correct');
@@ -296,17 +290,14 @@ function handleTimeOut() {
 }
 
 
-// NEU: Funktion zum Erstellen der Joker-Buttons
 function createJokerButtons() {
     const jokerBar = document.getElementById("joker-bar");
-    // Buttons erstellen und anzeigen
     for (let i = 0; i < 5; i++) {
         const jokerButton = document.createElement("button");
         jokerButton.id = `joker-btn-${i}`;
         jokerButton.className = "joker-btn";
         jokerButton.textContent = '50:50';
         
-        // Alle bereits benutzten Joker (Index 0 bis (4 - jokersLeft))
         if (i < 5 - jokersLeft) { 
             jokerButton.classList.add('used');
             jokerButton.disabled = true;
@@ -323,11 +314,16 @@ function createJokerButtons() {
 function startJokerTimer() {
   clearInterval(jokerTimerId);
   const jokerBar = document.getElementById("joker-bar");
-  const jokerTimerMessage = document.getElementById("joker-timer-message");
   
-  jokerBar.innerHTML = '';
-  jokerBar.appendChild(jokerTimerMessage);
+  if (!jokerBar) return;
 
+  jokerBar.innerHTML = '';
+  
+  const jokerTimerMessage = document.createElement('div');
+  jokerTimerMessage.id = 'joker-timer-message';
+  jokerTimerMessage.classList.add('hidden');
+  jokerBar.appendChild(jokerTimerMessage);
+  
   if (jokersLeft > 0) {
     jokerTimerMessage.classList.remove('hidden');
     jokerTimerMessage.classList.add('blink-text');
@@ -352,7 +348,7 @@ function startJokerTimer() {
   } else {
     jokerTimerMessage.classList.add('hidden');
     jokerTimerMessage.classList.remove('blink-text');
-    createJokerButtons(); // Buttons auch anzeigen, wenn Joker 0 sind (alle als 'used')
+    createJokerButtons();
   }
 }
 
@@ -372,7 +368,6 @@ function checkAnswer(selectedAnswer, correctAnswer) {
   });
 
   const resultDiv = document.getElementById("result");
-  // Bonuszeit jetzt basierend auf der verbleibenden Zeit des 30s-Timers
   const bonusTime = questionTimeLeft > 0 ? questionTimeLeft : 0;
   if (selectedAnswer === correctAnswer) {
     score += 10 + bonusTime;
@@ -400,9 +395,7 @@ function handleJoker() {
     let removedCount = 0;
     const answerLabels = document.querySelectorAll('.answer-label');
 
-    // Alle Joker-Buttons deaktivieren, um Mehrfachnutzung zu verhindern
     document.querySelectorAll('.joker-btn').forEach((btn, index) => {
-      // Den gerade genutzten Button als 'used' markieren
       if (index === 5 - jokersLeft - 1 && !btn.classList.contains('used')) {
           btn.classList.add('used');
       }
@@ -450,9 +443,9 @@ function endGame() {
   clearInterval(totalTimerId);
   let bonus = correctCount * 10;
   let bonus2 = falseCount * 5;
-  let penalty3 = timeOverCount * 15; // Abzug für Zeitablauf
-  let penalty4 = usedJokers * 20; // Abzug für genutzte Joker
-  let bonus5 = jokersLeft * 15; // Bonus für ungenutzte Joker
+  let penalty3 = timeOverCount * 15;
+  let penalty4 = usedJokers * 20;
+  let bonus5 = jokersLeft * 15;
   
   // Gesamter Final Score
   let finalScore = score + bonus + bonus2 + remainingTime - penalty3 - penalty4 + bonus5;
