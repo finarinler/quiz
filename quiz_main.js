@@ -136,11 +136,10 @@ let usedJokers = 0;
 let isAnswerBlocked = false; // Blockiert Klicks während der Verzögerung
 let currentCorrectAnswer = null;
 
-// Initialisierung bei DOM-Load
+// Initialisierung bei DOM-Load (RESTART ENTFERNT)
 document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('start-btn').addEventListener('click', startQuiz);
     document.getElementById('next-question-btn').addEventListener('click', nextQuestion);
-    document.getElementById('restart-btn').addEventListener('click', restartQuiz);
     showScreen('start-screen');
 });
 
@@ -192,7 +191,7 @@ function shuffleArray(array) {
     return array;
 }
 
-// Zeigt die aktuelle Frage und Antworten an (GEÄNDERTE LOGIK)
+// Zeigt die aktuelle Frage und Antworten an
 function displayQuestionAndAnswers() {
     if (currentQuestionIndex >= questions.length) {
         endGame();
@@ -436,7 +435,7 @@ function showJokerBar() {
     }
 }
 
-// Startet den Joker-Timer (GEÄNDERT: Zeigt Joker sofort nach Timeout an)
+// Startet den Joker-Timer (Zeigt Joker sofort nach Timeout an)
 function startJokerTimer() {
     clearInterval(jokerTimerId); // Stoppt den alten Timer (falls vorhanden)
     const jokerBar = document.getElementById("joker-bar");
@@ -546,13 +545,4 @@ function endGame() {
         <p>Genutzte Joker: <strong style="color:red">${usedJokers}</strong> (-${bonus4} Punkte)</p>
         <p>Nicht genutzte Joker: <strong style="color:green">${jokersLeft}</strong> (+${bonus5} Bonuspunkte)</p>
     `;
-}
-
-// Neustart des Spiels
-function restartQuiz() {
-    showScreen('start-screen');
-    // Alle Timer und Intervalle sicher löschen
-    clearInterval(totalTimerId);
-    clearInterval(timerId);
-    clearInterval(jokerTimerId);
 }
