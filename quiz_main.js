@@ -70,7 +70,7 @@ window.allQuestions = [
     { question: "Welche spielbare Rasse ist keine Allianz-Rasse?", answers: ["Worgen","Gnome","Blutelfen","Draenei"], correct: "Blutelfen" },																
     { question: "Wer war der erste Anführer der Verlassenen?", answers: ["Sylvanas","Varimathras","Kel'Thuzad","Putress"], correct: "Sylvanas" },																
     { question: "Welche Klasse startete zu Classic mit einem Totem-System?", answers: ["Schamane","Druide","Paladin","Priester"], correct: "Schamane" },																
-    { question: "Wie heißt der erste Raid in Burning Crusade?", answers: ["Gruuls Unterschlupf","Karazhan","Magtheridons Kammer","Hyjalgipfel"], correct: "Karazhan" },																
+    { question: "Wie heißt der erster Raid in Burning Crusade?", answers: ["Gruuls Unterschlupf","Karazhan","Magtheridons Kammer","Hyjalgipfel"], correct: "Karazhan" },																
     { question: "Welcher Boss in Ulduar war optional und besonders schwer?", answers: ["Algalon der Beobachter","Yogg-Saron","Mimiron","Thorim"], correct: "Algalon der Beobachter" },																
     { question: "Wie viele Flügel hat Naxxramas?", answers: ["3","4","5","6"], correct: "4" },																
     { question: "Welcher Raid endete mit dem Kampf gegen Gul’dan?", answers: ["Die Nachtfestung","Höllenfeuerzitadelle","Grabmal des Sargeras","Schwarzfelsgießerei"], correct: "Grabmal des Sargeras" },																
@@ -120,7 +120,7 @@ let correctCount = 0;
 let falseCount = 0;
 let timeOverCount = 0;
 
-const totalTime = 600; // 10 Minuten Gesamtzeit
+const totalTime = 600;
 let remainingTime = totalTime;
 let totalTimerId;
 
@@ -132,7 +132,7 @@ let jokerTimerId;
 const totalJokers = 5;
 let jokersLeft = totalJokers;
 
-let isAnswerBlocked = false; // Blockiert Klicks während der Verzögerung
+let isAnswerBlocked = false;
 let currentCorrectAnswer = null;
 
 // DOM-Elemente
@@ -156,12 +156,12 @@ const elements = {
     endContent: document.getElementById('end-content')
 };
 
-// Initialisierung bei DOM-Load
+// Initialisierung
 document.addEventListener('DOMContentLoaded', () => {
     elements.startButton.addEventListener('click', startQuiz);
     elements.nextButton.addEventListener('click', nextQuestion);
     showScreen('start-screen');
-    createJokerButtons(); // Joker-Buttons einmalig erstellen
+    createJokerButtons();
 });
 
 // Steuert die Bildschirmanzeige
@@ -175,9 +175,9 @@ function showScreen(screenId) {
     }
 }
 
-// Startet den Countdown und dann das Quiz
+// Startet das Quiz
 function startQuiz() {
-    questions = shuffleArray([...window.allQuestions]).slice(0, 20); // 20 zufällige Fragen wählen
+    questions = shuffleArray([...window.allQuestions]).slice(0, 20);
     
     // Spielzustand zurücksetzen
     currentQuestionIndex = 0;
@@ -188,10 +188,9 @@ function startQuiz() {
     remainingTime = totalTime;
     jokersLeft = totalJokers;
     
-    // Joker-Buttons zurücksetzen
     document.querySelectorAll('.joker-btn').forEach(btn => {
         btn.classList.remove('used');
-        btn.disabled = true; // Werden pro Frage aktiviert
+        btn.disabled = true;
     });
 
     showScreen('countdown-screen');
@@ -251,15 +250,20 @@ function displayQuestionAndAnswers() {
             label.dataset.answer = answer;
             label.addEventListener('click', checkAnswer);
             elements.answersDiv.appendChild(label);
-            setTimeout(() => label.classList.add('visible'), 50); // Kleiner Delay für die Animation
+            setTimeout(() => label.classList.add('visible'), 50);
         });
         
-        // Joker-Countdown starten, wenn Antworten sichtbar sind
-        startJokerCountdown();
+        // NEUE LOGIK: Entscheidet, wie und wann die Joker-Leiste angezeigt wird
+        if (jokersLeft > 0) {
+            startJokerCountdown(); // Startet den 15s Countdown, wenn Joker verfügbar sind
+        } else {
+            elements.jokerBar.classList.remove('hidden'); // Zeigt die "verbrauchten" Joker sofort an
+        }
+        
     }, 5000);
 }
 
-// Setzt die Benutzeroberfläche für eine neue Frage zurück
+// Setzt die UI für eine neue Frage zurück
 function resetQuestionUI() {
     elements.answersDiv.innerHTML = '';
     elements.resultElement.textContent = '';
@@ -268,7 +272,6 @@ function resetQuestionUI() {
     elements.jokerBar.classList.add('hidden');
     elements.jokerTimerMessage.classList.add('hidden');
     
-    // Deaktiviert alle Joker-Buttons für die neue Frage
     document.querySelectorAll('.joker-btn:not(.used)').forEach(btn => {
         btn.disabled = true;
     });
@@ -294,7 +297,7 @@ function checkAnswer(event) {
         selectedLabel.classList.add('correct');
         elements.resultElement.innerHTML = `<span style="color:green; font-weight:bold;">Richtig! (+${10 + questionTimeLeft} Punkte)</span>`;
     } else {
-        score += 5; // Bonus für den Versuch
+        score += 5;
         falseCount++;
         selectedLabel.classList.add('wrong');
         elements.resultElement.innerHTML = `<span style="color:red; font-weight:bold;">Falsch! Die richtige Antwort war: ${currentCorrectAnswer} (+5 Bonuspunkte)</span>`;
@@ -311,7 +314,7 @@ function checkAnswer(event) {
     }, 1500);
 }
 
-// Behandelt das Ablaufen der Frage-Zeit
+// Behandelt Zeitüberschreitung
 function handleTimeOut() {
     isAnswerBlocked = true;
     timeOverCount++;
@@ -324,7 +327,7 @@ function handleTimeOut() {
         }
     });
     
-    score = Math.max(0, score - 5); // 5 Punkte Abzug
+    score = Math.max(0, score - 5);
 
     elements.resultElement.innerHTML = `<span style="color:orange; font-weight:bold;">Zeit abgelaufen! Die richtige Antwort war: ${currentCorrectAnswer} (-5 Punkte)</span>`;
     
@@ -333,7 +336,7 @@ function handleTimeOut() {
     }, 1500);
 }
 
-// Stoppt Frage- und Joker-Timer
+// Stoppt alle laufenden Timer
 function stopAllTimers() {
     clearInterval(timerId);
     clearInterval(jokerTimerId);
@@ -341,13 +344,13 @@ function stopAllTimers() {
     elements.jokerTimerMessage.classList.add('hidden');
 }
 
-// Geht zur nächsten Frage über
+// Geht zur nächsten Frage
 function nextQuestion() {
     currentQuestionIndex++;
     displayQuestionAndAnswers();
 }
 
-// Startet den Timer für die Gesamtzeit
+// Startet und aktualisiert den Gesamt-Timer
 function startTotalTimer() {
   clearInterval(totalTimerId);
   updateTotalTimerDisplay();
@@ -363,7 +366,6 @@ function startTotalTimer() {
   }, 1000);
 }
 
-// Aktualisiert die Anzeige der Gesamtzeit
 function updateTotalTimerDisplay() {
   const percentage = (remainingTime / totalTime) * 100;
   elements.totalBar.style.width = `${percentage}%`;
@@ -371,7 +373,7 @@ function updateTotalTimerDisplay() {
   elements.totalText.textContent = `${remainingTime}s`;
 }
 
-// Startet den Timer für die aktuelle Frage
+// Startet und aktualisiert den Fragen-Timer
 function startQuestionTimer() {
   clearInterval(timerId);
   questionTimeLeft = questionTime;
@@ -396,10 +398,8 @@ function startQuestionTimer() {
   }, 1000);
 }
 
-// Startet den Countdown für die Joker
+// Startet den Countdown für die Joker-Verfügbarkeit
 function startJokerCountdown() {
-    if (jokersLeft <= 0) return;
-
     let countdown = 15;
     elements.jokerCountdown.textContent = countdown;
     elements.jokerTimerMessage.classList.remove('hidden');
@@ -412,7 +412,6 @@ function startJokerCountdown() {
             clearInterval(jokerTimerId);
             elements.jokerTimerMessage.classList.add('hidden');
             elements.jokerBar.classList.remove('hidden');
-            // Aktiviert verfügbare Joker-Buttons
             document.querySelectorAll('.joker-btn:not(.used)').forEach(btn => {
                 btn.disabled = false;
             });
@@ -420,20 +419,20 @@ function startJokerCountdown() {
     }, 1000);
 }
 
-// Erstellt die Joker-Buttons einmalig
+// Erstellt die Joker-Buttons einmalig beim Laden der Seite
 function createJokerButtons() {
-    elements.jokerBar.innerHTML = ''; // Leert die Leiste vor dem Erstellen
+    elements.jokerBar.innerHTML = '';
     for (let i = 0; i < totalJokers; i++) {
         const jokerButton = document.createElement("button");
         jokerButton.className = "joker-btn";
         jokerButton.textContent = '50:50';
-        jokerButton.disabled = true; // Standardmäßig deaktiviert
+        jokerButton.disabled = true;
         jokerButton.addEventListener("click", handleJoker);
         elements.jokerBar.appendChild(jokerButton);
     }
 }
 
-// Verarbeitet die Nutzung eines Jokers
+// Verarbeitet die Joker-Nutzung
 function handleJoker(event) {
     if (jokersLeft <= 0) return;
 
@@ -451,13 +450,12 @@ function handleJoker(event) {
         shuffledWrongAnswers[i].remove();
     }
     
-    // Deaktiviert alle anderen Joker-Buttons für diese Frage
     document.querySelectorAll('.joker-btn:not(.used)').forEach(btn => {
         btn.disabled = true;
     });
 }
 
-// Ende des Spiels und Anzeige der Ergebnisse
+// Beendet das Spiel und zeigt die Auswertung an
 function endGame() {
     clearInterval(totalTimerId);
     stopAllTimers();
@@ -475,7 +473,7 @@ function endGame() {
     elements.endContent.innerHTML = `
         <h2>Quiz beendet!</h2>
         <p>Dein finaler Punktestand: <strong style="color:#ffe88c; font-size:1.5em">${finalScore}</strong></p>
-        <hr>
+        <hr style="border-color: #bfa259; margin: 20px 0;">
         <p>Restzeit: <strong style="color:#ffe88c">${remainingTime}s</strong></p>
         <p>Richtige Antworten: <strong style="color:green">${correctCount}</strong> (+${bonusCorrect} Bonuspunkte)</p>
         <p>Falsche Antworten: <strong style="color:orange">${falseCount}</strong> (+${bonusFalse} Bonuspunkte)</p>
