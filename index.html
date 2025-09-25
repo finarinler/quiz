@@ -2,18 +2,41 @@
 <html lang="de">
 <head>
   <meta charset="utf-8" />
-  <title>WoW Quiz</title>
+  <title>WoW Quiz - Hauptmenü</title>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="quiz-container active">
-    <h1>Bald wieder da!</h1>
-    <p>Das Quiz wird gerade auf eine neue Version gebracht!</p>
-    <p>Nicht mehr lang und du kannst dein Wissen wieder testen.</p>
+  
+  <div id="main-menu-wrapper">
+    
+    <div id="surrounding-boxes">
+      <div class="surrounding-box box-1"><button class="menu-button">TÜR 1</button></div>
+      <div class="surrounding-box box-2"><button class="menu-button">TÜR 2</button></div>
+      <div class="surrounding-box box-3"><button class="menu-button">TÜR 3</button></div>
+      <div class="surrounding-box box-4"><button class="menu-button">TÜR 4</button></div>
+      <div class="surrounding-box box-5"><button class="menu-button">TÜR 5</button></div>
+      <div class="surrounding-box box-6"><button class="menu-button">TÜR 6</button></div>
+      <div class="surrounding-box box-7"><button class="menu-button">TÜR 7</button></div>
+      <div class="surrounding-box box-8"><button class="menu-button">TÜR 8</button></div>
+      <div class="surrounding-box box-9"><button class="menu-button">TÜR 9</button></div>
+      <div class="surrounding-box box-10"><button class="menu-button">TÜR 10</button></div>
+    </div>
+    
+    <div id="center-content" class="quiz-container active">
+      
+      <div class="quiz-start-box">
+        <a href="quiz_main.html">
+          <button id="start-btn" class="main-start-button">QUIZ STARTEN</button>
+        </a>
+      </div>
+      
+      <h2 id="how-to-play-title">WIE WIRD GESPIELT</h2>
+      
+    </div>
+    
   </div>
+  
   <div id="version-number">v0.3</div>
-  <script src="quiz.js"></script>
 </body>
 </html>
-

@@ -340,3 +340,123 @@ summary h2 {
   font-family: 'Arial', sans-serif;
   text-shadow: 1px 1px 2px #000;
 }
+
+#main-menu-wrapper {
+  position: relative;
+  /* Größer als der zentrale Inhalt, um Platz für die umgebenden Boxen zu schaffen */
+  width: 900px; 
+  height: 600px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px; /* Optional: etwas Rand zur Seite */
+}
+
+/* Zentraler Inhaltsbereich, der in der Mitte positioniert wird */
+#center-content {
+  /* Nimmt die zentralen Styles des .quiz-container an, wird aber über dem Wrapper zentriert */
+  max-width: 400px; 
+  padding: 30px 50px; 
+  z-index: 10; /* Stellt sicher, dass er über den umliegenden Boxen liegt */
+  
+  /* Flexbox für die innere Anordnung des Buttons (oben) und des Titels (darunter) */
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  
+  /* Setzt die Sichtbarkeit/Position, da es die .quiz-container.active Klasse überschreibt */
+  position: relative; 
+  opacity: 1;
+  visibility: visible;
+  display: flex;
+}
+
+/* Style für den "Wie wird gespielt" Titel */
+#how-to-play-title {
+  color: #ffe88c; /* Goldene Farbe */
+  font-size: 2em;
+  margin: 0;
+  text-shadow: 0 0 5px #bfa259;
+}
+
+/* Style für den Haupt-Start-Button */
+.main-start-button {
+  background: #bfa259;
+  color: #191919;
+  border: 2px solid #9c8449;
+  border-radius: 8px;
+  padding: 15px 30px;
+  font-family: 'Cinzel', serif;
+  font-weight: bold;
+  font-size: 1.2em;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+  text-transform: uppercase;
+  width: 100%; /* Macht den Button im Container breit */
+  box-sizing: border-box;
+}
+
+.main-start-button:hover {
+  background: #cfae64;
+  transform: scale(1.02);
+  box-shadow: 0 0 15px rgba(255, 255, 150, 0.7);
+}
+
+/* Container für die 10 umgebenden Boxen */
+#surrounding-boxes {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Style für die umgebenden Boxen (sie werden um den zentralen Bereich herum positioniert) */
+.surrounding-box {
+  position: absolute;
+  width: 100px;
+  height: 80px;
+  background: rgba(40, 40, 40, 0.7);
+  border: 2px solid #bfa259;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0 10px rgba(191, 162, 89, 0.3);
+  z-index: 5; 
+}
+
+/* Style für die Buttons in den umgebenden Boxen */
+.menu-button {
+  background: #9c8449;
+  color: #f0e6d2;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 15px;
+  font-family: 'Cinzel', serif;
+  font-size: 0.9em;
+  cursor: pointer;
+  transition: background 0.2s;
+  font-weight: bold;
+}
+
+.menu-button:hover {
+  background: #bfa259;
+}
+
+/* Positionierung der 10 umgebenden Boxen: top/left/right/bottom werden relativ zum #main-menu-wrapper gesetzt */
+/* Oben */
+.box-1 { top: -40px; left: 50px; } 
+.box-2 { top: -40px; left: 250px; }
+.box-3 { top: -40px; right: 250px; }
+.box-4 { top: -40px; right: 50px; }
+
+/* Mitte */
+.box-5 { top: 150px; left: -80px; } 
+.box-6 { top: 150px; right: -80px; }
+
+/* Unten */
+.box-7 { bottom: -40px; left: 50px; } 
+.box-8 { bottom: -40px; left: 250px; }
+.box-9 { bottom: -40px; right: 250px; }
+.box-10 { bottom: -40px; right: 50px; }
