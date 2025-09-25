@@ -247,11 +247,16 @@ function displayQuestionAndAnswers() {
         
     }, 5000); // 5 Sekunden für Antwort-Anzeige (wie gewünscht)
 
-    // 3. Joker nach 15 Sekunden (5s Antwort-Verzögerung + 10s extra) anzeigen
+    // 3. Joker-Countdown und Anzeige nach 20 Sekunden (5s Antwort-Verzögerung + 15s extra)
+    // Die Joker erscheinen, wenn der Frage-Timer bei 10s ist.
     setTimeout(() => {
-        showJokerBar();
+        showJokerBar(); // Startet den Joker-Countdown (15s)
+    }, 5000); // Joker-Logik startet, sobald Antworten sichtbar sind (nach 5s)
+    
+    // Die Joker-Buttons erscheinen, wenn der Timer von showJokerBar abgelaufen ist.
+    setTimeout(() => {
         startJokerTimer(); // Ruft die jetzt sofortige Joker-Erstellung auf
-    }, 15000); // 15 Sekunden, bis die Joker erscheinen
+    }, 20000); // 20 Sekunden, bis die Joker erscheinen (5s Antworten + 15s Countdown)
 }
 
 // Überprüft die ausgewählte Antwort
@@ -421,7 +426,7 @@ function startQuestionTimer() {
       clearInterval(jokerTimerId);
       isAnswerBlocked = true;
       handleTimeOut();
-      // setTimeout(nextQuestion, 2000); <-- DIESER AUTOMATISCHE AUFRUF WURDE ENTFERNT
+      // Automatische Weiterleitung wurde entfernt
     }
   }, 1000);
 }
@@ -433,40 +438,58 @@ function showJokerBar() {
     if (jokerBar) {
         jokerBar.classList.remove('hidden');
     }
+    startJokerCountdown(); // Startet den 15-Sekunden-Joker-Countdown
 }
 
-// Startet den Joker-Timer (Zeigt Joker sofort nach Timeout an)
+function startJokerCountdown() {
+    let countdown = 15;
+    const msgElement = document.getElementById('joker-timer-message');
+    const countdownElement = document.getElementById('joker-countdown');
+
+    if (!msgElement) return;
+    
+    // Nachricht anzeigen
+    msgElement.classList.remove('hidden'); 
+
+    // Alle Buttons (falls aus vorheriger Runde vorhanden) verstecken
+    document.querySelectorAll('.joker-btn').forEach(btn => btn.classList.add('hidden'));
+
+    const countdownInterval = setInterval(() => {
+        countdown--;
+        countdownElement.textContent = countdown;
+        
+        if (countdown <= 0) {
+            clearInterval(countdownInterval);
+            msgElement.classList.add('hidden'); // Nachricht ausblenden
+        }
+    }, 1000);
+}
+
+
+// Startet den Joker-Timer (Erstellt Joker Buttons)
 function startJokerTimer() {
     clearInterval(jokerTimerId); // Stoppt den alten Timer (falls vorhanden)
     const jokerBar = document.getElementById("joker-bar");
     
     if (!jokerBar) return; // Sicherheits-Check
 
-    jokerBar.innerHTML = ''; // Vorherigen Inhalt löschen
-    
-    // Die Joker werden sofort erstellt, da die 15 Sekunden Verzögerung im
-    // displayQuestionAndAnswers-Timeout geregelt wurden.
-    
-    if (jokersLeft > 0) {
-        createJokerButtons(); 
-    } else {
-        // Keine Joker mehr, zeige die Bar trotzdem für das Design an.
-        createJokerButtons();
-    }
+    // Die Joker-Buttons werden jetzt erstellt und angezeigt.
+    createJokerButtons(); 
 }
 
 function createJokerButtons() {
     const jokerBar = document.getElementById("joker-bar");
     if (!jokerBar) return;
 
-    // Wir entfernen die Nachricht und erstellen nur die Buttons
-    jokerBar.innerHTML = '';
+    // Alte Buttons entfernen (um Duplikate zu vermeiden, falls vorhanden)
+    document.querySelectorAll('.joker-btn').forEach(btn => btn.remove());
 
     for (let i = 0; i < 5; i++) {
         const jokerButton = document.createElement("button");
         jokerButton.id = `joker-btn-${i}`;
         jokerButton.className = "joker-btn";
         jokerButton.textContent = '50:50';
+        jokerButton.classList.remove('hidden'); // Wichtig: Sichtbar machen
         
         // Index i < (5 - jokersLeft) bedeutet, dass der Button bereits benutzt ist.
         if (i < 5 - jokersLeft) { 
