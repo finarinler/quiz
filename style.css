@@ -147,8 +147,9 @@ button:hover {
   transition: width 1s linear; 
   box-shadow: 0 0 10px rgba(255, 200, 50, 0.7), 0 0 20px rgba(255, 200, 50, 0.5);
   animation: pulse-timer 1.5s infinite;
-  background-size: 200% 100%; /* Wichtig: Doppelte Breite für Verschiebung */
-  background-position: 100% 0; /* Standardposition auf Grün (wird von JS gesteuert) */
+  background-size: 200% 100%; 
+  background-position: 100% 0; 
+  transform-origin: left; /* Wichtig: Balken pulsiert von links */
 }
 
 #time-text {
@@ -184,8 +185,9 @@ button:hover {
   transition: width 1s linear;
   box-shadow: 0 0 10px rgba(255, 200, 50, 0.7), 0 0 20px rgba(255, 200, 50, 0.5);
   animation: pulse-timer 1.5s infinite;
-  background-size: 200% 100%; /* Wichtig: Doppelte Breite für Verschiebung */
-  background-position: 100% 0; /* Standardposition auf Grün (wird von JS gesteuert) */
+  background-size: 200% 100%; 
+  background-position: 100% 0; 
+  transform-origin: left; /* Wichtig: Balken pulsiert von links */
 }
 
 .result, .score, .countdown {
@@ -222,10 +224,20 @@ summary h2 {
   margin-bottom: 20px;
 }
 
+/* EPISCHE PULS-ANIMATION */
 @keyframes pulse-timer {
-    0% { box-shadow: 0 0 10px rgba(255, 200, 50, 0.7), 0 0 20px rgba(255, 200, 50, 0.5); }
-    50% { box-shadow: 0 0 15px rgba(255, 220, 80, 0.9), 0 0 30px rgba(255, 220, 80, 0.7); }
-    100% { box-shadow: 0 0 10px rgba(255, 200, 50, 0.7), 0 0 20px rgba(255, 200, 50, 0.5); }
+    0% { 
+        box-shadow: 0 0 10px rgba(255, 200, 50, 0.7), 0 0 20px rgba(255, 200, 50, 0.5);
+        transform: scaleY(1); /* Normale Größe */
+    }
+    50% { 
+        box-shadow: 0 0 25px rgba(255, 220, 80, 1), 0 0 40px rgba(255, 220, 80, 0.8); /* Stärkerer Leuchteffekt */
+        transform: scaleY(1.1); /* 10% vertikal anschwellen */
+    }
+    100% { 
+        box-shadow: 0 0 10px rgba(255, 200, 50, 0.7), 0 0 20px rgba(255, 200, 50, 0.5);
+        transform: scaleY(1);
+    }
 }
 
 @keyframes blink {
