@@ -1,6 +1,4 @@
 // Fragen-Pool (global)
-
-
 window.allQuestions = [
 { question: "Wie heißt die Hauptstadt von Dragonflight?", answers: ["Dalaran","Orgrimmar","Dornogal","Valdrakken"], correct: "Valdrakken" },																
 { question: "Wer war kein Anführer der Horde?", answers: ["Arthas","Vol'jin","Thrall","Garrosh"], correct: "Arthas" },																
@@ -125,7 +123,7 @@ let timeOverCount = 0;
 let totalTime = 600;
 let remainingTime = totalTime;
 let timerId;
-let questionTimeLeft;
+let questionTimeLeft; // Neue Variable
 let totalTimerId;
 let isAnswerBlocked = false;
 let jokerTimerId;
@@ -136,6 +134,14 @@ document.getElementById("start-btn").addEventListener("click", () => {
   showScreen('countdown-screen');
   startCountdown();
 });
+
+// Der Neustart-Button existiert nur im Endbildschirm
+document.addEventListener("click", (event) => {
+  if (event.target.id === "restart-btn") {
+    restartGame();
+  }
+});
+
 
 function shuffleArray(array) {
   for (let i = array.length - 1; i > 0; i--) {
@@ -177,6 +183,7 @@ function startGame() {
   document.getElementById("total-bar").style.width = '100%';
   document.getElementById("score").textContent = `Punkte: 0`;
   
+  // Die Joker-Leiste am Start verbergen
   document.getElementById("joker-bar").classList.add('hidden');
   
   displayQuestionAndAnswers();
@@ -189,7 +196,7 @@ function displayQuestionAndAnswers() {
   const answersDiv = document.getElementById("answers");
   const answerGenMessage = document.getElementById("answer-generation-message");
   const resultDiv = document.getElementById("result");
-  resultDiv.textContent = '';
+  resultDiv.textContent = ''; // Ergebnis-Text vom vorherigen Mal löschen
 
   document.getElementById("progress-text").textContent = `Frage ${currentQuestionIndex + 1} von ${questions.length}`;
   document.getElementById("progress-bar").style.width = `${((currentQuestionIndex + 1) / questions.length) * 100}%`;
@@ -197,6 +204,7 @@ function displayQuestionAndAnswers() {
   answersDiv.innerHTML = '';
   document.getElementById("joker-bar").classList.add('hidden');
   
+  // Anzeigen der "Generiere Antworten..." Nachricht
   answerGenMessage.classList.remove('hidden');
   answerGenMessage.classList.add('blink-text');
 
@@ -229,7 +237,7 @@ function displayQuestionAndAnswers() {
     showJokerBar();
     startJokerTimer();
     startQuestionTimer();
-  }, 5000); 
+  }, 5000); // 5 Sekunden Verzögerung
 }
 
 function showJokerBar() {
@@ -242,12 +250,7 @@ function startQuestionTimer() {
   clearInterval(timerId);
   const timerBar = document.getElementById("timer-bar");
   const timeText = document.getElementById("time-text");
-  
-  if (!timerBar || !timeText) {
-    return; 
-  }
-
-  questionTimeLeft = 30; 
+  questionTimeLeft = 30; // Globale Variable setzen
   timerBar.style.width = '100%';
   timerBar.style.background = 'linear-gradient(90deg, #6fba3c, #6fba3c)';
   timeText.textContent = `${questionTimeLeft}s`;
@@ -266,64 +269,20 @@ function startQuestionTimer() {
       clearInterval(timerId);
       clearInterval(jokerTimerId);
       isAnswerBlocked = true;
-      handleTimeOut();
+      timeOverCount++;
       setTimeout(nextQuestion, 2000);
     }
   }, 1000);
 }
 
-function handleTimeOut() {
-  timeOverCount++;
-  score -= 10;
-  document.getElementById("score").innerHTML = `Punkte: <span style="color:#ffe88c">${score}</span>`;
-  const resultDiv = document.getElementById("result");
-  const currentQuestion = questions[currentQuestionIndex];
-  
-  document.querySelectorAll('.answer-label').forEach(label => {
-    if (label.textContent === currentQuestion.correct) {
-      label.classList.add('correct');
-    }
-  });
-  
-  resultDiv.textContent = `Die Zeit ist abgelaufen! Die richtige Antwort war "${currentQuestion.correct}". Du verlierst 10 Punkte.`;
-  currentQuestionIndex++;
-}
-
-
-function createJokerButtons() {
-    const jokerBar = document.getElementById("joker-bar");
-    for (let i = 0; i < 5; i++) {
-        const jokerButton = document.createElement("button");
-        jokerButton.id = `joker-btn-${i}`;
-        jokerButton.className = "joker-btn";
-        jokerButton.textContent = '50:50';
-        
-        if (i < 5 - jokersLeft) { 
-            jokerButton.classList.add('used');
-            jokerButton.disabled = true;
-        } else {
-            jokerButton.disabled = false;
-        }
-        
-        jokerButton.addEventListener("click", handleJoker);
-        jokerBar.appendChild(jokerButton);
-    }
-    document.getElementById("joker-bar").classList.remove('hidden');
-}
-
 function startJokerTimer() {
   clearInterval(jokerTimerId);
   const jokerBar = document.getElementById("joker-bar");
+  const jokerTimerMessage = document.getElementById("joker-timer-message");
   
-  if (!jokerBar) return;
-
   jokerBar.innerHTML = '';
-  
-  const jokerTimerMessage = document.createElement('div');
-  jokerTimerMessage.id = 'joker-timer-message';
-  jokerTimerMessage.classList.add('hidden');
   jokerBar.appendChild(jokerTimerMessage);
-  
+
   if (jokersLeft > 0) {
     jokerTimerMessage.classList.remove('hidden');
     jokerTimerMessage.classList.add('blink-text');
@@ -337,18 +296,48 @@ function startJokerTimer() {
         jokerTimerMessage.textContent = `Joker werden in ${jokerTimeLeft}s aktiviert...`;
       }
       
-      if (jokerTimeLeft < 0) { 
+      if (jokerTimeLeft <= 0) {
         clearInterval(jokerTimerId);
         jokerTimerMessage.classList.add('hidden');
         jokerTimerMessage.classList.remove('blink-text');
         
-        createJokerButtons(); 
+        // Buttons erstellen und anzeigen
+        for (let i = 0; i < 5; i++) {
+          const jokerButton = document.createElement("button");
+          jokerButton.id = `joker-btn-${i}`;
+          jokerButton.className = "joker-btn";
+          jokerButton.textContent = '50:50';
+          
+          if (jokersLeft <= i) {
+            jokerButton.classList.add('used');
+            jokerButton.disabled = true;
+          } else {
+            jokerButton.disabled = false;
+          }
+          
+          jokerButton.addEventListener("click", handleJoker);
+          jokerBar.appendChild(jokerButton);
+        }
       }
     }, 1000);
   } else {
     jokerTimerMessage.classList.add('hidden');
     jokerTimerMessage.classList.remove('blink-text');
-    createJokerButtons();
+    
+    // Buttons erstellen und anzeigen
+    for (let i = 0; i < 5; i++) {
+      const jokerButton = document.createElement("button");
+      jokerButton.id = `joker-btn-${i}`;
+      jokerButton.className = "joker-btn";
+      jokerButton.textContent = '50:50';
+      
+      jokerButton.classList.add('used');
+      jokerButton.disabled = true;
+      
+      jokerBar.appendChild(jokerButton);
+    }
+    
+    document.getElementById("joker-bar").classList.remove('hidden');
   }
 }
 
@@ -368,7 +357,8 @@ function checkAnswer(selectedAnswer, correctAnswer) {
   });
 
   const resultDiv = document.getElementById("result");
-  const bonusTime = questionTimeLeft > 0 ? questionTimeLeft : 0;
+  // Bonuszeit jetzt basierend auf der verbleibenden Zeit des 30s-Timers
+  const bonusTime = questionTimeLeft;
   if (selectedAnswer === correctAnswer) {
     score += 10 + bonusTime;
     correctCount++;
@@ -395,13 +385,15 @@ function handleJoker() {
     let removedCount = 0;
     const answerLabels = document.querySelectorAll('.answer-label');
 
-    document.querySelectorAll('.joker-btn').forEach((btn, index) => {
-      if (index === 5 - jokersLeft - 1 && !btn.classList.contains('used')) {
-          btn.classList.add('used');
-      }
-      btn.disabled = true; 
-    });
+    // Den genutzten Joker-Button markieren und deaktivieren
+    document.querySelectorAll('.joker-btn')[usedJokers - 1].classList.add('used');
+    document.querySelectorAll('.joker-btn')[usedJokers - 1].disabled = true;
     
+    // Alle Joker-Buttons deaktivieren, wenn sie genutzt wurden
+    document.querySelectorAll('.joker-btn').forEach(btn => {
+      btn.disabled = true;
+    });
+
     while (removedCount < 2) {
       const randomIndex = Math.floor(Math.random() * answerLabels.length);
       const answerToRemoveLabel = answerLabels[randomIndex];
@@ -427,37 +419,10 @@ function startTotalTimer() {
   clearInterval(totalTimerId);
   const totalBar = document.getElementById("total-bar");
   const totalText = document.getElementById("total-text");
-  
-  if (totalBar) {
-    totalBar.style.background = '#6fba3c';
-  }
-  if (totalText) {
-    totalText.style.color = '#ffe88c';
-  }
-
   totalTimerId = setInterval(() => {
     remainingTime--;
-    
-    const percentage = (remainingTime / totalTime) * 100;
-
-    if (totalBar) {
-        totalBar.style.width = `${percentage}%`;
-        if (percentage <= 25) {
-            totalBar.style.background = '#d42e2e'; 
-        } else {
-            totalBar.style.background = '#6fba3c'; 
-        }
-    }
-
-    if (totalText) {
-        totalText.textContent = `${remainingTime}s`;
-        if (percentage <= 25) {
-            totalText.style.color = '#d42e2e'; 
-        } else {
-            totalText.style.color = '#ffe88c'; 
-        }
-    }
-    
+    totalText.textContent = `${remainingTime}s`;
+    totalBar.style.width = `${(remainingTime / totalTime) * 100}%`;
     if (remainingTime <= 0) {
       clearInterval(totalTimerId);
       endGame();
@@ -470,23 +435,21 @@ function endGame() {
   clearInterval(totalTimerId);
   let bonus = correctCount * 10;
   let bonus2 = falseCount * 5;
-  let penalty3 = timeOverCount * 15;
-  let penalty4 = usedJokers * 20;
+  let bonus3 = timeOverCount * 15;
+  let bonus4 = usedJokers * 20;
   let bonus5 = jokersLeft * 15;
-  
-  // Gesamter Final Score
-  let finalScore = score + bonus + bonus2 + remainingTime - penalty3 - penalty4 + bonus5;
+  let finalScore = score + bonus + bonus2 + remainingTime - bonus3 - bonus4 + bonus5;
 
   showScreen('end-screen');
   document.getElementById("end-content").innerHTML = `
     <h2>Quiz beendet!</h2>
     <p>Dein Punktestand: <strong style="color:#ffe88c">${score}</strong></p>
     <p>Deine Restzeit: <strong style="color:#ffe88c">${remainingTime}</strong></p>
-    <p>Deine richtigen Antworten: <strong style="color:#ffe88c">${correctCount}</strong> <span style="color:green">(+${bonus} Bonuspunkte)</span></p>
-    <p>Deine falschen Antworten: <strong style="color:#ffe88c">${falseCount}</strong> <span style="color:orange">(+${bonus2} Bonuspunkte)</span></p>
-    <p>Abgelaufene Zeit: <strong style="color:#ffe88c">${timeOverCount}</strong> <span style="color:red">(-${penalty3} Punkte)</span></p>
-    <p>Genutzte Joker: <strong style="color:#ffe88c">${usedJokers}</strong> <span style="color:red">(-${penalty4} Punkte)</span></p>
-    <p>Nicht genutzte Joker: <strong style="color:#ffe88c">${jokersLeft}</strong> <span style="color:green">(+${bonus5} Punkte)</span></p>
+    <p>Deine richtigen Antworten: <strong style="color:#ffe88c">${correctCount}</strong> <span style="color:green\">(+${bonus} Bonuspunkte)</span></p>
+    <p>Deine falschen Antworten: <strong style="color:#ffe88c">${falseCount}</strong> <span style="color:orange\">(+${bonus2} Bonuspunkte)</span></p>
+    <p>Abgelaufene Zeit: <strong style="color:#ffe88c">${timeOverCount}</strong> <span style="color:red\">(-\${bonus3} Punkte)</span></p>
+    <p>Genutzte Joker: <strong style="color:#ffe88c">${usedJokers}</strong> <span style="color:red\">(-\${bonus4} Punkte)</span></p>
+    <p>Nicht genutzte Joker: <strong style="color:#ffe88c">${jokersLeft}</strong> <span style="color:green\">(+\${bonus5})</span></p>
     <hr style="border-color: #bfa259; margin: 20px 0;">
     <h2>Dein Endpunktestand: <strong style="color:#ffe88c">${finalScore}</strong></h2>
   `;

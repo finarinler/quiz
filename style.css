@@ -32,10 +32,9 @@ body {
   position: static;
 }
 
-/* NEU: Keine Änderungen am total-wrapper, da text-align: left beibehalten wurde */
 .total-wrapper {
   width: 100%;
-  margin-bottom: 25px; /* Mehr Abstand zum Inhalt darunter */
+  margin-bottom: 15px;
   text-align: left;
 }
 
@@ -140,59 +139,32 @@ button:hover {
   background: linear-gradient(90deg, #6fba3c, #6fba3c);
   transition: width 1s linear, background 0.25s linear;
   box-shadow: 0 0 10px rgba(255, 200, 50, 0.7), 0 0 20px rgba(255, 200, 50, 0.5);
-  animation: pulse-timer 1.5s infinite;
+  animation: pulse-timer 1.5s infinite; /* Animation wieder aktiviert */
 }
 
-/* Regeln für den Fragen-Timer-Text */
 .time-text {
-  position: absolute;
+  position: absolute; /* Positionierung über dem Balken */
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 2;
+  z-index: 2; /* Über den Balken gelegt */
   font-weight: bold;
-  color: #f0e6d2;
+  color: #f0e6d2; /* Helle Textfarbe */
   text-shadow: 1px 1px 2px #000;
 }
 
-/* NEU: Spezifische Regeln für den Gesamt-Timer-Text, um die Positionierung zu korrigieren */
-#total-text {
-    /* Überschreibt die absolute Positionierung des .time-text */
-    position: static; 
-    display: block; /* Stellt sicher, dass es eine eigene Zeile belegt */
-    
-    /* Setzt die korrekte goldene Farbe */
-    color: #ffe88c; 
-    font-size: 1.1em;
-    font-weight: bold;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
-    
-    /* Abstand zum Balken darunter */
-    margin-bottom: 5px; 
-    
-    /* Rückgängig machen von Transformationen, falls geerbt */
-    transform: none;
-    left: auto;
-    top: auto;
-    z-index: auto;
-}
-
-
-/* Regel für den Gesamt-Timer-Container */
 .total-container {
-  height: 18px; /* Standardhöhe wie progress-bar-container */
+  height: 22px;
   margin-top: 5px;
 }
 
-/* Regel für den Gesamt-Timer-Balken */
 .total-bar {
   height: 100%;
   width: 100%;
-  /* Hintergrund auf eine einzelne Farbe setzen, damit JS den Farbwechsel steuern kann */
-  background: #6fba3c;
+  background: linear-gradient(90deg, #6fba3c, #6fba3c);
   transition: width 1s linear, background 0.25s linear;
   box-shadow: 0 0 10px rgba(255, 200, 50, 0.7), 0 0 20px rgba(255, 200, 50, 0.5);
-  animation: pulse-timer 1.5s infinite;
+  animation: pulse-timer 1.5s infinite; /* Animation wieder aktiviert */
 }
 
 .result, .score, .countdown {
