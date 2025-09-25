@@ -513,7 +513,7 @@ function endGame() {
         <input type="text" id="player-name-input" placeholder="Gib deinen Namen ein" maxlength="20" style="padding: 10px; margin: 10px auto; display: block; width: 80%; max-width: 300px; background-color: #1a1a1a; color: #f0e6d2; border: 1px solid #bfa259; border-radius: 5px;">
         <button id="submit-score-btn" style="margin-top: 10px;">Punktzahl in Bestenliste speichern</button>
         <p id="leaderboard-message" style="margin-top: 10px; color: orange;"></p>
-        <button onclick="location.reload()" style="margin-top: 20px;">Neues Spiel</button>
+        <button onclick="window.location.href = 'index.html'" style="margin-top: 20px;">Zum Hauptmenü</button>
 
         <button id="show-leaderboard-btn" style="margin-top: 20px;">Bestenliste aktualisieren</button>
         <div id="leaderboard-display" style="margin-top: 20px;"></div>
@@ -542,7 +542,7 @@ async function sendScore(name, score) {
     const messageElement = document.getElementById('leaderboard-message');
     
     // Prüfen, ob die API URL gesetzt ist
-    if (SHEET_API_URL === "HIER_IHRE_GENERIERTE_API_URL_EINSETZEN") {
+    if (SHEET_API_URL === "https://sheetdb.io/api/v1/n06cty279499m") {
         messageElement.textContent = 'FEHLER: Bitte ersetze "HIER_IHRE_GENERIERTE_API_URL_EINSETZEN" in quiz_main.js durch deine tatsächliche Sheet API URL.';
         return;
     }
@@ -585,7 +585,7 @@ async function getScores() {
     const displayElement = document.getElementById('leaderboard-display');
     
     // Prüfen, ob die API URL gesetzt ist
-    if (SHEET_API_URL === "HIER_IHRE_GENERIERTE_API_URL_EINSETZEN") {
+    if (SHEET_API_URL === "https://sheetdb.io/api/v1/n06cty279499m") {
         displayElement.innerHTML = '<p style="color:red;">FEHLER: Bitte ersetze die Platzhalter-API-URL in quiz_main.js, um die Bestenliste zu laden.</p>';
         return;
     }
