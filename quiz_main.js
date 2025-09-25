@@ -328,7 +328,7 @@ function checkAnswer(event) {
 function handleTimeOut() {
     isAnswerBlocked = true;
     timeOverCount++;
-    stopAllTimers();
+    stopAllTimers(); // Deaktiviert Joker durch Aufruf von stopAllTimers()
 
     document.querySelectorAll('.answer-label').forEach(label => {
         label.removeEventListener('click', checkAnswer);
@@ -352,6 +352,11 @@ function stopAllTimers() {
     clearInterval(jokerTimerId);
     elements.jokerBar.classList.add('hidden');
     elements.jokerTimerMessage.classList.add('hidden');
+    
+    // Deaktiviere alle Joker-Buttons, wenn der Timer stoppt (z.B. bei Zeitablauf oder Beantwortung)
+    document.querySelectorAll('.joker-btn').forEach(btn => {
+        btn.disabled = true;
+    });
 }
 
 // Geht zur nächsten Frage
