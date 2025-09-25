@@ -22,9 +22,8 @@
       <p>Jede falsch beantwortete Frage gibt dir ein paar Bonuspunkte für den Versuch</p>
       <p>Durch Zeitablauf werden dir Punkte abgezogen</p>
       <p>Du sammelst nochmals Bonuspunkte aber auch Minuspunkte am Ende ein</p>
-      <p>Am Ende wird die Gesamtrestzeit zu deinen Punkten addiert</p>
-      <br>
-      <h1><strong>Viel Spaß!</strong></h1>
+      <p>Am Ende wird die Gesamtrestzeit...</p>
+      <p>Deine Punktezahl wird dann angezeigt</p>
     </details>
   </div>
 
@@ -54,18 +53,17 @@
         <div id="answers"></div>
         <div id="answer-generation-message" class="hidden">Antworten werden generiert...</div>
   
-        <div class="joker-bar hidden" id="joker-bar">
-        <div id="joker-timer-message" class="hidden"></div>
-      </div>
+        <div class="joker-bar hidden" id="joker-bar"></div>
+      
+        <div class="timer-container">
+          <div id="timer-bar" class="timer-bar"></div>
+          <span id="time-text">30s</span>
+        </div>
   
-      <div class="timer-container">
-        <div id="timer-bar" class="timer-bar"></div>
-        <span id="time-text">30s</span>
-      </div>
-  
-      <div id="result"></div>
-        <div id="next-btn-container"></div>
-        <div id="score">Punkte: <span style="color:#ffe88c">0</span></div>
+        <div id="result"></div>
+        <div id="next-btn-container">
+          <button id="next-question-btn">Nächste Frage</button>
+        </div>
       </div>
     </div>
   </div>
@@ -73,8 +71,11 @@
   <div class="quiz-container" id="end-screen">
     <div id="end-content">
       </div>
+    <button id="restart-btn">Neustart</button>
   </div>
-  <div id="version-number">v0.7.2</div>
+
+  <div id="version-number">v1.1</div>
+
   <script src="quiz_main.js"></script>
 </body>
 </html>

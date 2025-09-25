@@ -34,8 +34,9 @@ body {
 
 .total-wrapper {
   width: 100%;
-  margin-bottom: 15px;
+  margin-bottom: 25px;
   text-align: left;
+  position: relative; 
 }
 
 h1, h2 {
@@ -139,32 +140,47 @@ button:hover {
   background: linear-gradient(90deg, #6fba3c, #6fba3c);
   transition: width 1s linear, background 0.25s linear;
   box-shadow: 0 0 10px rgba(255, 200, 50, 0.7), 0 0 20px rgba(255, 200, 50, 0.5);
-  animation: pulse-timer 1.5s infinite; /* Animation wieder aktiviert */
+  animation: pulse-timer 1.5s infinite;
 }
 
 .time-text {
-  position: absolute; /* Positionierung über dem Balken */
+  position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 2; /* Über den Balken gelegt */
+  z-index: 2;
   font-weight: bold;
-  color: #f0e6d2; /* Helle Textfarbe */
+  color: #f0e6d2;
   text-shadow: 1px 1px 2px #000;
 }
 
+#total-text {
+  position: static; 
+  display: block;
+  color: #ffe88c; 
+  font-size: 1.1em;
+  font-weight: bold;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+  margin-bottom: 5px; 
+  transform: none;
+  left: auto;
+  top: auto;
+  z-index: auto;
+  transition: none;
+}
+
 .total-container {
-  height: 22px;
+  height: 18px;
   margin-top: 5px;
 }
 
 .total-bar {
   height: 100%;
   width: 100%;
-  background: linear-gradient(90deg, #6fba3c, #6fba3c);
+  background: #6fba3c;
   transition: width 1s linear, background 0.25s linear;
   box-shadow: 0 0 10px rgba(255, 200, 50, 0.7), 0 0 20px rgba(255, 200, 50, 0.5);
-  animation: pulse-timer 1.5s infinite; /* Animation wieder aktiviert */
+  animation: pulse-timer 1.5s infinite;
 }
 
 .result, .score, .countdown {
