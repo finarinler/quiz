@@ -253,11 +253,15 @@ function displayQuestionAndAnswers() {
             setTimeout(() => label.classList.add('visible'), 50);
         });
         
-        // NEUE LOGIK: Entscheidet, wie und wann die Joker-Leiste angezeigt wird
+        // Logik für Joker-Anzeige
         if (jokersLeft > 0) {
-            startJokerCountdown(); // Startet den 15s Countdown, wenn Joker verfügbar sind
+            startJokerCountdown();
         } else {
-            elements.jokerBar.classList.remove('hidden'); // Zeigt die "verbrauchten" Joker sofort an
+            // **KORREKTUR:** Kurze Verzögerung, um sicherzustellen,
+            // dass die Joker nicht vor den Antworten erscheinen.
+            setTimeout(() => {
+                elements.jokerBar.classList.remove('hidden');
+            }, 100); 
         }
         
     }, 5000);
@@ -473,7 +477,7 @@ function endGame() {
     elements.endContent.innerHTML = `
         <h2>Quiz beendet!</h2>
         <p>Dein finaler Punktestand: <strong style="color:#ffe88c; font-size:1.5em">${finalScore}</strong></p>
-        <hr style="border-color: #bfa259; margin: 20px 0;">
+        <hr>
         <p>Restzeit: <strong style="color:#ffe88c">${remainingTime}s</strong></p>
         <p>Richtige Antworten: <strong style="color:green">${correctCount}</strong> (+${bonusCorrect} Bonuspunkte)</p>
         <p>Falsche Antworten: <strong style="color:orange">${falseCount}</strong> (+${bonusFalse} Bonuspunkte)</p>
