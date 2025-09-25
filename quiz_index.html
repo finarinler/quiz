@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <title>WoW Quiz</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="quiz-container active" id="start-screen">
+    <h1>Willkommen zum WoW-Quiz</h1><br>
+    <p>Klicke auf den Button, um zu starten.</p>
+    <button id="start-btn">Quiz starten</button>
+    
+    <details>
+      <summary><h2>Wie funktioniert das Quiz?</h2></summary>
+      <br>
+      <p>Beantworte alle Fragen die dir gestellt werden</p>
+      <p>Pro Frage hast du 30 Sekunden Zeit</p>
+      <p>Falls du dir mal nicht sicher bist, stehen dir 5 '50:50-Joker' zur verfügung</p>
+      <p>Jede richtig beantwortete Frage gibt dir 10 + die Restzeit der Frage an Punkte</p>
+      <p>Jede falsch beantwortete Frage gibt dir ein paar Bonuspunkte für den Versuch</p>
+      <p>Durch Zeitablauf werden dir Punkte abgezogen</p>
+      <p>Du sammelst nochmals Bonuspunkte aber auch Minuspunkte am Ende ein</p>
+      <p>Am Ende wird die Gesamtrestzeit zu deinen Punkten addiert</p>
+      <br>
+      <h1><strong>Viel Spaß!</strong></h1>
+    </details>
+  </div>
+
+  <div class="quiz-container" id="countdown-screen">
+    <h2>Bereit?</h2>
+    <div class="countdown" id="countdown">5</div>
+  </div>
+
+  <div class="quiz-container" id="game-screen">
+    <div class="total-wrapper">
+      <span class="time-text" id="total-text">600s</span>
+      <div class="total-container">
+        <div class="total-bar" id="total-bar"></div>
+      </div>
+    </div>
+    
+    <div id="dynamic-content">
+      <div class="progress-container">
+        <span id="progress-text">Frage 1 von 20</span>
+        <div class="progress-bar-container">
+          <div id="progress-bar"></div>
+        </div>
+      </div>
+      
+      <div class="quiz-content">
+        <h2 id="question">Lade Frage...</h2>
+        <div id="answers"></div>
+        <div id="answer-generation-message" class="hidden">Antworten werden generiert...</div>
+  
+        <div class="joker-bar hidden" id="joker-bar">
+        <div id="joker-timer-message" class="hidden"></div>
+      </div>
+  
+      <div class="timer-container">
+        <div id="timer-bar" class="timer-bar"></div>
+        <span id="time-text">30s</span>
+      </div>
+  
+      <div id="result"></div>
+        <div id="next-btn-container"></div>
+        <div id="score">Punkte: <span style="color:#ffe88c">0</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="quiz-container" id="end-screen">
+    <div id="end-content">
+      </div>
+  </div>
+  <div id="version-number">v0.7.2</div>
+  <script src="quiz.js"></script>
+</body>
+</html>
