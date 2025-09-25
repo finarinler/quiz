@@ -142,10 +142,16 @@ button:hover {
 .timer-bar {
   height: 100%;
   width: 100%;
-  background: linear-gradient(90deg, #6fba3c, #6fba3c);
+  /* Geänderte Regel: Smoother Farbverlauf von Rot nach Grün (von links nach rechts) */
+  /* Die Farbe ändert sich basierend auf dem Anteil des Balkens, der noch sichtbar ist. */
+  /* Da die Breite des Balkens von 100% auf 0% geht, verwenden wir einen festen Verlauf. */
+  background: linear-gradient(to right, #d42e2e 0%, #ffc107 50%, #6fba3c 100%);
   transition: width 1s linear, background 0.25s linear;
   box-shadow: 0 0 10px rgba(255, 200, 50, 0.7), 0 0 20px rgba(255, 200, 50, 0.5);
   animation: pulse-timer 1.5s infinite;
+  /* Maskierung, um den Farbverlauf richtig darzustellen: */
+  mask-image: linear-gradient(to right, #000, #000); 
+  mask-size: 100% 100%;
 }
 
 #time-text {
@@ -176,10 +182,14 @@ button:hover {
 .total-bar {
   height: 100%;
   width: 100%;
-  background: #6fba3c;
+  /* Geänderte Regel: Smoother Farbverlauf von Rot nach Grün (von links nach rechts) */
+  background: linear-gradient(to right, #d42e2e 0%, #ffc107 50%, #6fba3c 100%);
   transition: width 1s linear, background 0.25s linear;
   box-shadow: 0 0 10px rgba(255, 200, 50, 0.7), 0 0 20px rgba(255, 200, 50, 0.5);
   animation: pulse-timer 1.5s infinite;
+  /* Maskierung, um den Farbverlauf richtig darzustellen: */
+  mask-image: linear-gradient(to right, #000, #000); 
+  mask-size: 100% 100%;
 }
 
 .result, .score, .countdown {

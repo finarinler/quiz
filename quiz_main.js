@@ -376,7 +376,7 @@ function startTotalTimer() {
 function updateTotalTimerDisplay() {
   const percentage = (remainingTime / totalTime) * 100;
   elements.totalBar.style.width = `${percentage}%`;
-  elements.totalBar.style.background = percentage <= 25 ? '#d42e2e' : '#6fba3c';
+  // elements.totalBar.style.background = percentage <= 25 ? '#d42e2e' : '#6fba3c'; // ENTFERNT: Farbe wird nun durch CSS-Verlauf gesteuert
   elements.totalText.textContent = `${remainingTime}s`;
 }
 
@@ -386,7 +386,7 @@ function startQuestionTimer() {
   questionTimeLeft = questionTime;
 
   elements.timerBar.style.width = '100%';
-  elements.timerBar.style.background = 'linear-gradient(90deg, #6fba3c, #6fba3c)';
+  // elements.timerBar.style.background = 'linear-gradient(90deg, #6fba3c, #6fba3c)'; // ENTFERNT: Farbe wird nun durch CSS-Verlauf gesteuert
   elements.timeText.textContent = `${questionTimeLeft}s`;
 
   timerId = setInterval(() => {
@@ -395,9 +395,9 @@ function startQuestionTimer() {
     elements.timerBar.style.width = `${percentage}%`;
     elements.timeText.textContent = `${questionTimeLeft}s`;
 
-    if (percentage <= 25) {
-      elements.timerBar.style.background = 'linear-gradient(90deg, #d42e2e, #ff6666)';
-    }
+    // if (percentage <= 25) { // ENTFERNT: Farbe wird nun durch CSS-Verlauf gesteuert
+    //   elements.timerBar.style.background = 'linear-gradient(90deg, #d42e2e, #ff6666)';
+    // }
 
     if (questionTimeLeft <= 0) {
       handleTimeOut();
@@ -482,7 +482,7 @@ function endGame() {
     elements.endContent.innerHTML = `
         <h2>Quiz beendet!</h2>
         <p>Dein finaler Punktestand: <strong style="color:#ffe88c; font-size:1.5em">${finalScore}</strong></p>
-        <hr>
+        <hr style="border-color: #bfa259; margin: 20px 0;">
         <p>Restzeit: <strong style="color:#ffe88c">${remainingTime}s</strong></p>
         <p>Richtige Antworten: <strong style="color:green">${correctCount}</strong> (+${bonusCorrect} Bonuspunkte)</p>
         <p>Falsche Antworten: <strong style="color:orange">${falseCount}</strong> (+${bonusFalse} Bonuspunkte)</p>
