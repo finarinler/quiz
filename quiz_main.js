@@ -421,7 +421,7 @@ function startQuestionTimer() {
       clearInterval(jokerTimerId);
       isAnswerBlocked = true;
       handleTimeOut();
-      setTimeout(nextQuestion, 2000);
+      // setTimeout(nextQuestion, 2000); <-- DIESER AUTOMATISCHE AUFRUF WURDE ENTFERNT
     }
   }, 1000);
 }
