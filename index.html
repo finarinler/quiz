@@ -7,67 +7,8 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="quiz-container active" id="main-menu-screen">
-    <h1>Willkommen zum WoW-Quiz</h1>
-    <p>Wähle eine Kategorie, um dein Wissen zu testen.</p>
-    
-    <div class="menu-grid">
-      <a href="quiz_main.html" class="menu-box active-content">
-        <h2>Das Quiz</h2>
-        <p>Starte das World of Warcraft Quiz!</p>
-      </a>
-      
-      <div class="menu-box coming-soon">
-        <h2>Dungeons</h2>
-        <p>Coming Soon</p>
-      </div>
-      <div class="menu-box coming-soon">
-        <h2>Raids</h2>
-        <p>Coming Soon</p>
-      </div>
-      <div class="menu-box coming-soon">
-        <h2>Berufe</h2>
-        <p>Under Construction</p>
-      </div>
-      <div class="menu-box coming-soon">
-        <h2>Klassen</h2>
-        <p>Coming Soon</p>
-      </div>
-      <div class="menu-box coming-soon">
-        <h2>Instanzen</h2>
-        <p>Coming Soon</p>
-      </div>
-      <div class="menu-box coming-soon">
-        <h2>Transmog</h2>
-        <p>Coming Soon</p>
-      </div>
-      <div class="menu-box coming-soon">
-        <h2>PvP-Könige</h2>
-        <p>Under Construction</p>
-      </div>
-      <div class="menu-box coming-soon">
-        <h2>Classic-Wissen</h2>
-        <p>Coming Soon</p>
-      </div>
-      <div class="menu-box coming-soon">
-        <h2>Legendäre Items</h2>
-        <p>Under Construction</p>
-      </div>
-      <div class="menu-box coming-soon">
-        <h2>Erweiterungen</h2>
-        <p>Coming Soon</p>
-      </div>
-      <div class="menu-box coming-soon">
-        <h2>Gebiete</h2>
-        <p>Coming Soon</p>
-      </div>
-    </div>
-    
-    <hr style="border-color: #bfa259; margin: 30px 0;">
-    
-    <details>
-      <summary><h2>Wie funktioniert das Quiz?</h2></summary>
-      <br>
+  <div id="main-menu-wrapper"> <div class="side-panel" id="rules-panel">
+      <h2>Wie wird gespielt?</h2>
       <p>Beantworte alle Fragen, die dir gestellt werden.</p>
       <p>Pro Frage hast du 30 Sekunden Zeit.</p>
       <p>Falls du dir mal nicht sicher bist, stehen dir 5 '50:50-Joker' zur Verfügung.</p>
@@ -76,9 +17,88 @@
       <p>Bei Zeitablauf werden dir Punkte abgezogen.</p>
       <p>Am Ende werden Bonuspunkte und Minuspunkte basierend auf deiner Leistung verrechnet.</p>
       <p>Deine finale Punktezahl wird dann angezeigt.</p>
-    </details>
+    </div>
 
+    <div class="quiz-container active" id="main-menu-screen">
+      <h1>Willkommen zum WoW-Quiz</h1>
+      <p>Wähle eine Kategorie, um dein Wissen zu testen.</p>
+      
+      <div class="menu-grid">
+        <a href="quiz_main.html" class="menu-box active-content" id="main-quiz-box">
+          <h2>Das Haupt-Quiz</h2>
+          <p>Starte das World of Warcraft Quiz mit Fragen aus allen Kategorien!</p>
+        </a>
+        
+        <div class="menu-box coming-soon">
+          <h2>???</h2>
+          <p>Coming Soon</p>
+        </div>
+        
+        <div class="menu-box coming-soon">
+          <h2>???</h2>
+          <p>Under Construction</p>
+        </div>
+        
+        <div class="menu-box coming-soon">
+          <h2>???</h2>
+          <p>Coming Soon</p>
+        </div>
+        
+        <div class="menu-box coming-soon">
+          <h2>???</h2>
+          <p>Coming Soon</p>
+        </div>
+        
+        <div class="menu-box coming-soon">
+          <h2>???</h2>
+          <p>Coming Soon</p>
+        </div>
+        
+        <div class="menu-box coming-soon">
+          <h2>???</h2>
+          <p>Under Construction</p>
+        </div>
+        
+        <div class="menu-box coming-soon">
+          <h2>???</h2>
+          <p>Coming Soon</p>
+        </div>
+        
+        <div class="menu-box coming-soon">
+          <h2>???</h2>
+          <p>Under Construction</p>
+        </div>
+        
+        <div class="menu-box coming-soon">
+          <h2>???</h2>
+          <p>Coming Soon</p>
+        </div>
+        
+        <div class="menu-box coming-soon">
+          <h2>???</h2>
+          <p>Coming Soon</p>
+        </div>
+        
+        <div class="menu-box coming-soon">
+          <h2>???</h2>
+          <p>Coming Soon</p>
+        </div>
+      </div>
+      
+      <hr style="border-color: #bfa259; margin: 30px 0;">
+      
+    </div>
+    
+    <div class="side-panel" id="info-box-right">
+      <h2>Wissenswertes</h2>
+      <p>Dieses Quiz enthält über 100 Fragen aus allen WoW-Erweiterungen (Classic bis Dragonflight).</p>
+      <p>Das Haupt-Quiz (Main Quiz) wählt 20 zufällige Fragen aus dem gesamten Fragenpool.</p>
+      <p>Weitere Kategorien (Dungeons, Raids, Lore etc.) folgen.</p>
+      <p style="margin-top: 15px;"><strong>Viel Erfolg!</strong></p>
+    </div>
   </div>
+
   <div id="version-number">v0.4 (Menü-Update)</div>
-  </body>
+
+</body>
 </html>
