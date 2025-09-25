@@ -483,5 +483,4 @@ function endGame() {
         <p>Genutzte Joker: <strong style="color:red">${usedJokers}</strong> (-${penaltyJokers} Punkte)</p>
         <p>Verbleibende Joker: <strong style="color:green">${jokersLeft}</strong> (+${bonusJokersLeft} Bonuspunkte)</p>
     `;
-
 }
