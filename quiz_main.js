@@ -1,5 +1,6 @@
 // Fragen-Pool (global)
 window.allQuestions = [
+    // ...
     // ... (Fragen bleiben unverändert)
     { question: "Wie heißt die Hauptstadt von Dragonflight?", answers: ["Dalaran","Orgrimmar","Dornogal","Valdrakken"], correct: "Valdrakken" },																
     { question: "Wer war kein Anführer der Horde?", answers: ["Arthas","Vol'jin","Thrall","Garrosh"], correct: "Arthas" },																
@@ -376,7 +377,14 @@ function startTotalTimer() {
 function updateTotalTimerDisplay() {
   const percentage = (remainingTime / totalTime) * 100;
   elements.totalBar.style.width = `${percentage}%`;
-  // elements.totalBar.style.background = percentage <= 25 ? '#d42e2e' : '#6fba3c'; // ENTFERNT: Farbe wird nun durch CSS-Verlauf gesteuert
+  
+  // Logik für den smoothen Farbverlauf: 
+  // Verschiebt den im CSS (background-size: 200%) definierten Farbverlauf (Rot...Grün)
+  // so, dass bei 100% nur der grüne Teil sichtbar ist (Verschiebung 100%) 
+  // und bei 0% nur der rote Teil (Verschiebung 0%).
+  const backgroundPositionPercent = percentage;
+  elements.totalBar.style.backgroundPosition = `${backgroundPositionPercent}% 0`; 
+  
   elements.totalText.textContent = `${remainingTime}s`;
 }
 
@@ -386,7 +394,8 @@ function startQuestionTimer() {
   questionTimeLeft = questionTime;
 
   elements.timerBar.style.width = '100%';
-  // elements.timerBar.style.background = 'linear-gradient(90deg, #6fba3c, #6fba3c)'; // ENTFERNT: Farbe wird nun durch CSS-Verlauf gesteuert
+  // Setze die Hintergrundposition auf 100%, um den GRÜNEN Teil des Verlaufs anzuzeigen.
+  elements.timerBar.style.backgroundPosition = '100% 0'; 
   elements.timeText.textContent = `${questionTimeLeft}s`;
 
   timerId = setInterval(() => {
@@ -395,9 +404,11 @@ function startQuestionTimer() {
     elements.timerBar.style.width = `${percentage}%`;
     elements.timeText.textContent = `${questionTimeLeft}s`;
 
-    // if (percentage <= 25) { // ENTFERNT: Farbe wird nun durch CSS-Verlauf gesteuert
-    //   elements.timerBar.style.background = 'linear-gradient(90deg, #d42e2e, #ff6666)';
-    // }
+    // Logik für den smoothen Farbverlauf:
+    // Die Hintergrundposition wird proportional zur verbleibenden Zeit eingestellt.
+    // Bei 100% Zeit -> 100% Position (Grün). Bei 0% Zeit -> 0% Position (Rot).
+    const backgroundPositionPercent = percentage;
+    elements.timerBar.style.backgroundPosition = `${backgroundPositionPercent}% 0`; 
 
     if (questionTimeLeft <= 0) {
       handleTimeOut();
