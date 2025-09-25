@@ -493,3 +493,20 @@ details p {
     max-width: 720px; /* Gleiche maximale Breite wie die Hauptbox */
   }
 }
+
+/* Muss im style.css sein, um Radio-Buttons zu verstecken */
+.answer-input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Muss im style.css sein, um Buttons untereinander anzuordnen */
+.answer-label {
+  /* ... andere Stile ... */
+  display: block; /* Wichtig für die Anordnung untereinander */
+  /* ... andere Stile ... */
+  opacity: 0; 
+  transform: translateY(10px); 
+  pointer-events: none;
+}

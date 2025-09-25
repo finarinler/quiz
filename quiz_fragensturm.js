@@ -1,20 +1,17 @@
 // Globale Variablen
 let questions = []; 
 let currentQuestionIndex = 0;
-// Punktzahl-Variablen entfernt
-// let score = 0; 
+// KEIN SCORE/PUNKTE, nur Zähler für Statistik
 let correctCount = 0;
 let falseCount = 0;
 let timeOverCount = 0;
 
 // Die Fragen werden aus dem gesamten Pool geladen, der in questions.js als window.allQuestions gespeichert ist.
-// Wir nehmen den gesamten Pool und mischen ihn.
 const fullQuestionPool = window.allQuestions || [];
 // Die maximale Anzahl der Fragen ist die gesamte verfügbare Menge
 const maxQuestions = fullQuestionPool.length;
 
-// Gesamt-Timer und Joker-Variablen entfernt
-
+// KEIN Gesamt-Timer und KEINE Joker-Variablen
 const questionTime = 30;
 let questionTimeLeft = questionTime;
 let timerId;
@@ -22,7 +19,7 @@ let timerId;
 let isAnswerBlocked = false;
 let currentCorrectAnswer = null;
 
-// DOM-Elemente
+// DOM-Elemente (Gesamt-Timer/Joker-Elemente entfernt)
 const elements = {
     startButton: document.getElementById('start-btn'),
     nextButton: document.getElementById('next-question-btn'),
@@ -32,53 +29,57 @@ const elements = {
     resultElement: document.getElementById('result'),
     progressText: document.getElementById('progress-text'),
     progressBar: document.getElementById('progress-bar'),
-    // Gesamt-Timer Elemente entfernt
+    // Gesamt-Timer Elemente entfernt (keine totalBar, kein totalText)
     timerBar: document.getElementById('timer-bar'),
     timeText: document.getElementById('time-text'),
     answerGenerationMessage: document.getElementById('answer-generation-message'),
-    // Joker-Elemente entfernt
+    gameScreen: document.getElementById('game-screen'),
+    endScreen: document.getElementById('end-screen'),
     endContent: document.getElementById('end-content'),
     restartButton: document.getElementById('restart-btn'),
     mainMenuButton: document.getElementById('main-menu-btn'),
+    startScreen: document.getElementById('start-screen'),
+    countdownScreen: document.getElementById('countdown-screen'),
 };
 
-// Hilfsfunktion zum Mischen eines Arrays (Fisher-Yates)
+// Hilfsfunktion zum Mischen eines Arrays (Fisher-Yates Algorithmus)
 function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [array[i], array[j]] = [array[j], array[i]];
     }
+    return array;
 }
 
-// Bildschirmwechsel-Funktion
+// Zeigt den angegebenen Screen an und versteckt alle anderen
 function showScreen(screenId) {
-    document.querySelectorAll('.quiz-container').forEach(container => {
-        container.classList.remove('active');
-        container.style.display = 'none'; // Versteckt sie auch
+    [elements.startScreen, elements.countdownScreen, elements.gameScreen, elements.endScreen].forEach(screen => {
+        if (screen) {
+            if (screen.id === screenId) {
+                screen.classList.add('active');
+            } else {
+                screen.classList.remove('active');
+            }
+        }
     });
-    const activeScreen = document.getElementById(screenId);
-    if (activeScreen) {
-        activeScreen.classList.add('active');
-        activeScreen.style.display = 'block'; // Zeigt sie an
-    }
 }
 
-// Initialisiere das Quiz
 function initializeQuiz() {
-    // Klonen und Mischen des gesamten Fragenpools
-    questions = [...fullQuestionPool]; 
-    shuffleArray(questions);
-
+    // Setzt Zähler zurück
     currentQuestionIndex = 0;
-    // score entfernt
     correctCount = 0;
     falseCount = 0;
     timeOverCount = 0;
-    isAnswerBlocked = false;
-    currentCorrectAnswer = null;
+    
+    // Fragt alle verfügbaren Fragen ab und mischt sie
+    questions = shuffleArray([...fullQuestionPool]);
+    
+    // Bereinigt den Spielbildschirm
+    elements.resultElement.textContent = '';
+    elements.nextButton.classList.add('hidden');
+    elements.answersDiv.innerHTML = '';
 }
 
-// Countdown starten
 function startCountdown() {
     showScreen('countdown-screen');
     let count = 5;
@@ -90,160 +91,198 @@ function startCountdown() {
         
         if (count === 0) {
             clearInterval(countdownId);
-            startGame();
+            showScreen('game-screen');
+            loadQuestion();
         }
     }, 1000);
 }
 
-// Hauptspiel starten
-function startGame() {
-    showScreen('game-screen');
-    loadQuestion();
-}
-
-// Timer pro Frage starten
-function startQuestionTimer() {
-    questionTimeLeft = questionTime;
-    elements.timeText.textContent = `${questionTime}s`;
-    elements.timerBar.style.width = '100%';
-    elements.timerBar.classList.remove('time-low');
+// Funktion zum Erzeugen und Anzeigen der Antwortmöglichkeiten (MIT KORREKTUR für Sichtbarkeit)
+function createAnswerOptions(questionObj) {
+    elements.answersDiv.innerHTML = '';
     
-    timerId = setInterval(() => {
-        questionTimeLeft--;
+    // Sortiert die Antworten zufällig
+    const shuffledAnswers = shuffleArray(questionObj.answers);
+    
+    shuffledAnswers.forEach((answer, index) => {
+        const inputId = `answer${index}`;
         
-        // Timer-Anzeige aktualisieren
-        elements.timeText.textContent = `${questionTimeLeft}s`;
-        const percentage = (questionTimeLeft / questionTime) * 100;
-        elements.timerBar.style.width = `${percentage}%`;
+        // 1. Das versteckte Radio-Input-Element
+        const input = document.createElement('input');
+        input.type = 'radio';
+        input.name = 'answer';
+        input.id = inputId;
+        input.value = answer;
+        input.classList.add('answer-input'); 
+        
+        // 2. Das Label (der Button-Ersatz)
+        const label = document.createElement('label');
+        label.htmlFor = inputId;
+        label.textContent = answer;
+        
+        // WICHTIG: Fügt die Styling-Klasse hinzu
+        label.classList.add('answer-label'); 
+        
+        // KORREKTUR: Fügt die Klasse 'visible' hinzu, um die Buttons sichtbar und klickbar zu machen
+        label.classList.add('visible'); 
+        
+        label.addEventListener('click', (event) => {
+            // Wählt das zugehörige Input aus, um sicherzustellen, dass es gecheckt wird
+            document.getElementById(inputId).checked = true;
+            setTimeout(() => checkAnswer(event, answer), 50); 
+        });
 
-        // Farbe ändern, wenn wenig Zeit verbleibt
-        if (questionTimeLeft <= 5) {
-            elements.timerBar.classList.add('time-low');
-        }
-
-        if (questionTimeLeft <= 0) {
-            clearInterval(timerId);
-            handleTimeOver();
-        }
-    }, 1000);
+        elements.answersDiv.appendChild(input);
+        elements.answersDiv.appendChild(label);
+    });
 }
 
-// Frage laden
+
 function loadQuestion() {
-    clearInterval(timerId); // Vorherigen Timer stoppen
-    
-    // Prüfen, ob alle Fragen beantwortet wurden
     if (currentQuestionIndex >= maxQuestions) {
         endQuiz();
         return;
     }
 
-    const currentQuestion = questions[currentQuestionIndex];
-    currentCorrectAnswer = currentQuestion.correct;
-    isAnswerBlocked = false;
+    const questionObj = questions[currentQuestionIndex];
+    currentCorrectAnswer = questionObj.correct;
     
-    // Elemente zurücksetzen
-    elements.resultElement.textContent = '';
+    // Zustand zurücksetzen
+    isAnswerBlocked = false;
     elements.nextButton.classList.add('hidden');
-    elements.answersDiv.innerHTML = '';
-    elements.answerGenerationMessage.classList.remove('hidden');
+    elements.resultElement.textContent = '';
+    
+    // Frage und Antworten anzeigen
+    elements.questionElement.textContent = questionObj.question;
+    elements.answerGenerationMessage.classList.add('hidden');
+    
+    // Dynamisches Erzeugen der Antwort-Buttons
+    createAnswerOptions(questionObj);
     
     // Fortschrittsanzeige aktualisieren
     elements.progressText.textContent = `Frage ${currentQuestionIndex + 1} von ${maxQuestions}`;
-    elements.progressBar.style.width = `${((currentQuestionIndex + 1) / maxQuestions) * 100}%`;
+    const progressPercent = ((currentQuestionIndex) / maxQuestions) * 100;
+    elements.progressBar.style.width = `${progressPercent}%`;
 
-    elements.questionElement.textContent = currentQuestion.question;
-
-    // Antworten mischen (optional, aber gut für Variation)
-    let mixedAnswers = [...currentQuestion.answers];
-    shuffleArray(mixedAnswers);
-
-    // Antworten erstellen
-    mixedAnswers.forEach(answer => {
-        const button = document.createElement('button');
-        button.textContent = answer;
-        button.classList.add('answer-btn');
-        button.addEventListener('click', () => handleAnswer(button, answer === currentCorrectAnswer));
-        elements.answersDiv.appendChild(button);
-    });
-
-    elements.answerGenerationMessage.classList.add('hidden');
+    // Startet den Frage-Timer
+    questionTimeLeft = questionTime;
+    updateQuestionTimer(questionTimeLeft);
     startQuestionTimer();
 }
 
-// Antwort behandeln
-function handleAnswer(button, isCorrect) {
+// KORREKTUR DES TIMERS FÜR SICHTBAREN ABLAUF
+function startQuestionTimer() {
+    clearInterval(timerId); 
+
+    // 1. Transition ausschalten und Breite auf 100% setzen (Startpunkt der Animation)
+    elements.timerBar.style.transition = 'none';
+    elements.timerBar.style.width = '100%'; 
+    
+    // 2. Timeout für einen kurzen DOM-Refresh, bevor die Transition aktiviert wird.
+    // Dies stellt sicher, dass der 100%-Startzustand übernommen wird.
+    setTimeout(() => {
+        // 3. Transition für die Laufzeit aktivieren
+        elements.timerBar.style.transition = `width ${questionTime}s linear`;
+        
+        // 4. Die Zielbreite auf 0% setzen, wodurch die Transition startet und der Balken schrumpft.
+        elements.timerBar.style.width = '0%';
+    }, 50); // Kleiner Delay (50ms)
+
+    
+    timerId = setInterval(() => {
+        questionTimeLeft--;
+        updateQuestionTimer(questionTimeLeft);
+
+        if (questionTimeLeft <= 0) {
+            handleTimeOver();
+        }
+    }, 1000);
+}
+
+function updateQuestionTimer(time) {
+    elements.timeText.textContent = `${time}s`;
+    
+    if (time <= 10 && time > 0) {
+        elements.timerBar.classList.add('warning');
+    } else {
+        elements.timerBar.classList.remove('warning');
+    }
+}
+
+function checkAnswer(event, selectedAnswer) {
     if (isAnswerBlocked) return;
     isAnswerBlocked = true;
-    clearInterval(timerId);
+    clearInterval(timerId); 
+    
+    elements.timerBar.style.transition = 'none'; 
+    elements.timerBar.classList.remove('warning');
 
-    const allButtons = elements.answersDiv.querySelectorAll('.answer-btn');
-    allButtons.forEach(btn => btn.disabled = true);
+    // Findet das geklickte Label (oder Input, falls es das Event-Target ist)
+    const selectedLabel = event.target.tagName === 'LABEL' ? event.target : document.querySelector(`label[for="${event.target.id}"]`);
+    
+    // Deaktiviert alle Labels für weitere Klicks
+    document.querySelectorAll('.answer-label').forEach(label => label.style.pointerEvents = 'none');
 
-    if (isCorrect) {
-        button.classList.add('correct');
-        elements.resultElement.textContent = 'Richtig!';
-        elements.resultElement.style.color = 'green';
-        // Punkteberechnung entfernt
+    if (selectedAnswer === currentCorrectAnswer) {
         correctCount++;
+        selectedLabel.classList.add('correct');
+        elements.resultElement.innerHTML = `<span style="color:green; font-weight:bold;">Richtig!</span>`; 
     } else {
-        button.classList.add('wrong');
-        elements.resultElement.textContent = 'Falsch!';
-        elements.resultElement.style.color = 'red';
         falseCount++;
-        // Korrekte Antwort markieren
-        allButtons.forEach(btn => {
-            if (btn.textContent === currentCorrectAnswer) {
-                btn.classList.add('correct');
+        selectedLabel.classList.add('wrong');
+        elements.resultElement.innerHTML = `<span style="color:red; font-weight:bold;">Falsch! Die richtige Antwort war: ${currentCorrectAnswer}</span>`; 
+        
+        // Richtige Antwort hervorheben
+        document.querySelectorAll('.answer-input').forEach(input => {
+            if (input.value === currentCorrectAnswer) {
+                document.querySelector(`label[for="${input.id}"]`).classList.add('correct');
             }
         });
     }
 
-    elements.nextButton.classList.remove('hidden');
+    // Zeigt den "Nächste Frage"-Button nach kurzer Verzögerung
+    setTimeout(() => {
+        elements.nextButton.classList.remove('hidden');
+    }, 1500);
 }
 
-// Zeit abgelaufen
 function handleTimeOver() {
     if (isAnswerBlocked) return;
     isAnswerBlocked = true;
     clearInterval(timerId);
-
-    const allButtons = elements.answersDiv.querySelectorAll('.answer-btn');
-    allButtons.forEach(btn => btn.disabled = true);
-    
-    elements.resultElement.textContent = 'Zeit abgelaufen!';
-    elements.resultElement.style.color = 'orange';
     timeOverCount++;
     
-    // Korrekte Antwort markieren
-    allButtons.forEach(btn => {
-        if (btn.textContent === currentCorrectAnswer) {
-            btn.classList.add('correct');
+    elements.timerBar.style.transition = 'none';
+    elements.timerBar.classList.remove('warning');
+
+    elements.resultElement.innerHTML = `<span style="color:red; font-weight:bold;">Zeit abgelaufen! Die richtige Antwort war: ${currentCorrectAnswer}</span>`;
+
+    // Richtige Antwort hervorheben
+    document.querySelectorAll('.answer-input').forEach(input => {
+        if (input.value === currentCorrectAnswer) {
+            document.querySelector(`label[for="${input.id}"]`).classList.add('correct');
         }
     });
-
-    elements.nextButton.classList.remove('hidden');
+    
+    // Deaktiviert alle Labels
+    document.querySelectorAll('.answer-label').forEach(label => label.style.pointerEvents = 'none');
+    
+    setTimeout(() => {
+        elements.nextButton.classList.remove('hidden');
+    }, 1500);
 }
 
-// Nächste Frage laden
 function nextQuestion() {
     currentQuestionIndex++;
-    loadQuestion();
+    if (currentQuestionIndex < maxQuestions) {
+        loadQuestion();
+    } else {
+        endQuiz();
+    }
 }
 
-// Quiz beenden
+// Ende des Quiz: Zeigt nur die Zähler, KEINE Punkte
 function endQuiz() {
-    clearInterval(timerId);
-    showScreen('end-screen');
-    displayResult();
-}
-
-// Endergebnisse anzeigen
-function displayResult() {
-    const maxQuestions = questions.length;
-    const questionsAnswered = correctCount + falseCount + timeOverCount;
-    
-    // Punkte- und Bonusberechnungen ENTFERNT
     
     elements.endContent.innerHTML = `
         <h2>Quiz beendet!</h2>
@@ -254,7 +293,14 @@ function displayResult() {
         <p>Falsche Antworten: <strong style="color:orange">${falseCount}</strong></p>
         <p>Zeit abgelaufen: <strong style="color:red">${timeOverCount}</strong></p>
         <hr style="border-color: #bfa259; margin: 20px 0;">
+
+        <button onclick="window.location.href = 'index.html'" style="margin-top: 20px;">Zum Hauptmenü</button>
     `;
+    
+    // Letzter Fortschrittsbalken auf 100%
+    elements.progressBar.style.width = '100%'; 
+
+    showScreen('end-screen');
 }
 
 // Event-Listener
@@ -278,12 +324,7 @@ if (elements.restartButton) {
 
 if (elements.mainMenuButton) {
     elements.mainMenuButton.addEventListener('click', () => {
-        // Annahme: Hauptmenü ist index.html
+        // Angenommen, das Hauptmenü ist index.html oder eine andere spezifische Seite
         window.location.href = 'index.html'; 
     });
 }
-
-// Initialisiere den Startbildschirm beim Laden
-document.addEventListener('DOMContentLoaded', () => {
-    showScreen('start-screen');
-});
