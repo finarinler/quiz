@@ -429,7 +429,13 @@ function startTotalTimer() {
   const totalText = document.getElementById("total-text");
   
   if (totalBar) {
+    // Initialer Zustand des Balkens (Grün)
     totalBar.style.background = '#6fba3c';
+  }
+  
+  // Setze die Textfarbe initial auf Gold
+  if (totalText) {
+    totalText.style.color = '#ffe88c';
   }
 
   totalTimerId = setInterval(() => {
@@ -445,20 +451,9 @@ function startTotalTimer() {
             totalBar.style.background = '#6fba3c'; 
         }
     }
-    
+  
     if (totalText) {
         totalText.textContent = `${remainingTime}s`;
-        
-        const rightPosition = 100 - percentage;
-        
-        let calculatedRight = `calc(${rightPosition}% - 30px)`;
-        
-        if (percentage < 5) {
-            calculatedRight = `calc(100% - 5px)`; 
-        }
-        
-        totalText.style.right = calculatedRight;
-    
         if (percentage <= 25) {
             totalText.style.color = '#d42e2e'; 
         } else {

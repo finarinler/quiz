@@ -331,6 +331,7 @@ summary h2 {
 .total-wrapper {
   width: 100%;
   margin-bottom: 25px; 
+  text-align: left; 
   position: relative;
 }
 
@@ -350,14 +351,16 @@ summary h2 {
 }
 
 #total-text {
-  position: absolute;
-  top: -20px;
-  right: 0;
+  display: block; 
+  margin-bottom: 5px;
   color: #ffe88c; 
   font-size: 1.1em;
   font-weight: bold;
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
-  transition: right 1s linear; 
-  white-space: nowrap;
-  z-index: 10;
+  position: static; 
+  right: auto;
+  top: auto;
+  transform: none;
+  transition: none;
+  z-index: auto;
 }
