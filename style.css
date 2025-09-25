@@ -30,13 +30,17 @@ body {
   opacity: 1;
   visibility: visible;
   position: static;
+  display: block;
+}
+
+.quiz-container {
+  display: none;
 }
 
 .total-wrapper {
   width: 100%;
   margin-bottom: 25px;
   text-align: left;
-  position: relative; 
 }
 
 h1, h2 {
@@ -78,6 +82,9 @@ button:hover {
   text-align: center;
   font-size: 18px;
   font-weight: bold;
+  opacity: 0; 
+  transform: translateY(10px); 
+  pointer-events: none;
 }
 
 .answer-label:hover {
@@ -102,6 +109,7 @@ button:hover {
 .answer-label.visible {
   opacity: 1;
   transform: translateY(0);
+  pointer-events: auto;
 }
 
 .progress-bar-container, .timer-container, .total-container {
@@ -143,7 +151,7 @@ button:hover {
   animation: pulse-timer 1.5s infinite;
 }
 
-.time-text {
+#time-text {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -154,24 +162,13 @@ button:hover {
   text-shadow: 1px 1px 2px #000;
 }
 
-.timer-text-display {
-    text-align: center;
-    margin-top: 5px;
-}
-
 #total-text {
-  position: static; 
   display: block;
   color: #ffe88c; 
   font-size: 1.1em;
   font-weight: bold;
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
   margin-bottom: 5px; 
-  transform: none;
-  left: auto;
-  top: auto;
-  z-index: auto;
-  transition: none;
 }
 
 .total-container {
@@ -216,31 +213,10 @@ summary h2 {
   display: inline;
 }
 
-.quiz-container {
-  display: none;
-}
-
-.quiz-container.active {
-  display: block;
-}
-
 #question {
   font-size: 28px;
   font-weight: bold;
   margin-bottom: 20px;
-}
-
-.answer-label {
-  opacity: 0;
-  transform: translateY(10px);
-  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
-  pointer-events: none;
-}
-
-.answer-label.visible {
-  opacity: 1;
-  transform: translateY(0);
-  pointer-events: auto;
 }
 
 @keyframes blink {
@@ -267,6 +243,7 @@ summary h2 {
   justify-content: center;
   gap: 10px;
   margin-top: 15px;
+  flex-wrap: wrap;
 }
 
 .joker-btn {
@@ -288,12 +265,16 @@ summary h2 {
 
 .joker-btn:hover:not(:disabled) {
   background: #cfae64;
+  transform: scale(1.05);
+  box-shadow: 0 0 10px rgba(255, 255, 150, 0.5);
 }
 
 .joker-btn:disabled {
   background-color: #555;
   color: #999;
   cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
 }
 
 .joker-btn.used {
@@ -324,17 +305,13 @@ summary h2 {
   margin-top: 20px;
 }
 
-.joker-button-hidden {
-  visibility: hidden;
-  opacity: 0;
-}
-
 #joker-timer-message {
   font-size: 12px;
   font-weight: bold;
   color: #f0d07b;
   text-shadow: 2px 2px 5px #000;
   margin-top: 20px;
+  width: 100%;
 }
 
 #version-number {

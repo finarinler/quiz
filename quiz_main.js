@@ -72,7 +72,7 @@ window.allQuestions = [
 { question: "Wie heißt der erste Raid in Burning Crusade?", answers: ["Gruuls Unterschlupf","Karazhan","Magtheridons Kammer","Hyjalgipfel"], correct: "Karazhan" },																
 { question: "Welcher Boss in Ulduar war optional und besonders schwer?", answers: ["Algalon der Beobachter","Yogg-Saron","Mimiron","Thorim"], correct: "Algalon der Beobachter" },																
 { question: "Wie viele Flügel hat Naxxramas?", answers: ["3","4","5","6"], correct: "4" },																
-{ question: "Welcher Raid endete mit dem Kampf gegen Gul’dan?", answers: ["Die Nachtfestung","Höllenfeuerzitadelle","Grabmal des Sargeras","Schwarzfelsgießerei"], correct: "Die Nachtfestung" },																
+{ question: "Welcher Raid endete mit dem Kampf gegen Gul’dan?", answers: ["Die Nachtfestung","Höllenfeuerzitadelle","Grabmal des Sargeras","Schwarzfelsgießerei"], correct: "Grabmal des Sargeras" },																
 { question: "Welches Volk lebt in Eiskrone im Gebiet der Kalu’ak?", answers: ["Trolle","Taunka","Murlocs","Goblins"], correct: "Taunka" },																
 { question: "Welcher alte Gott lag unter Ulduar?", answers: ["C’Thun","N’Zoth","Yogg-Saron","Y’Shaarj"], correct: "Yogg-Saron" },																
 { question: "Was war das Maximallevel in Mists of Pandaria?", answers: ["85","90","95","100"], correct: "90" },																
@@ -112,23 +112,21 @@ window.allQuestions = [
 ];
 
 // Globale Variablen
-let questions = []; // Array der aktuellen Fragen
+let questions = []; 
 let currentQuestionIndex = 0;
 let score = 0;
 let correctCount = 0;
 let falseCount = 0;
 let timeOverCount = 0;
 
-let totalTime = 600; // 10 Minuten Gesamtzeit
+const totalTime = 600; // 10 Minuten Gesamtzeit
 let remainingTime = totalTime;
 let totalTimerId;
 
-let questionTime = 30;
+const questionTime = 30;
 let questionTimeLeft = questionTime;
 let timerId;
 
-let jokerTime = 5; // Wird nicht mehr in startJokerTimer() verwendet
-let jokerTimeLeft = jokerTime; // Wird nicht mehr in startJokerTimer() verwendet
 let jokerTimerId;
 let jokersLeft = 5;
 let usedJokers = 0;
@@ -136,7 +134,7 @@ let usedJokers = 0;
 let isAnswerBlocked = false; // Blockiert Klicks während der Verzögerung
 let currentCorrectAnswer = null;
 
-// Initialisierung bei DOM-Load (RESTART ENTFERNT)
+// Initialisierung bei DOM-Load
 document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('start-btn').addEventListener('click', startQuiz);
     document.getElementById('next-question-btn').addEventListener('click', nextQuestion);
@@ -236,19 +234,15 @@ function displayQuestionAndAnswers() {
             label.textContent = answer;
             label.dataset.answer = answer;
             
-            // Verzögerte Anzeige der Antworten mit Animation
-            setTimeout(() => {
-                label.classList.add('visible');
-                label.addEventListener('click', checkAnswer);
-            }, 100); 
+            label.classList.add('visible');
+            label.addEventListener('click', checkAnswer);
 
             answersDiv.appendChild(label);
         });
         
-    }, 5000); // 5 Sekunden für Antwort-Anzeige (wie gewünscht)
+    }, 5000); // 5 Sekunden für Antwort-Anzeige
 
     // 3. Joker-Countdown und Anzeige nach 20 Sekunden (5s Antwort-Verzögerung + 15s extra)
-    // Die Joker erscheinen, wenn der Frage-Timer bei 10s ist.
     setTimeout(() => {
         showJokerBar(); // Startet den Joker-Countdown (15s)
     }, 5000); // Joker-Logik startet, sobald Antworten sichtbar sind (nach 5s)
@@ -267,7 +261,7 @@ function checkAnswer(event) {
     clearInterval(timerId); // Frage-Timer stoppen
     clearInterval(jokerTimerId); // Joker-Timer stoppen
 
-    // FIX 3: Joker Bar ausblenden, nachdem geantwortet wurde
+    // Joker Bar ausblenden, nachdem geantwortet wurde
     document.getElementById("joker-bar").classList.add('hidden'); 
 
     const selectedLabel = event.target;
@@ -308,7 +302,6 @@ function checkAnswer(event) {
     // Nächste Frage Button anzeigen
     setTimeout(() => {
         document.getElementById('next-question-btn').classList.remove('hidden');
-        isAnswerBlocked = false; // Blockierung für das Warten auf den Button aufheben (nötig für handleJoker)
     }, 1000);
 }
 
@@ -318,7 +311,7 @@ function handleTimeOut() {
     clearInterval(timerId);
     clearInterval(jokerTimerId);
 
-    // FIX 3: Joker Bar ausblenden, wenn die Zeit abgelaufen ist
+    // Joker Bar ausblenden, wenn die Zeit abgelaufen ist
     document.getElementById("joker-bar").classList.add('hidden');
 
     document.querySelectorAll('.answer-label').forEach(label => {
@@ -350,7 +343,7 @@ function nextQuestion() {
 }
 
 
-// FIX 2c: Neue Hilfsfunktion für die Aktualisierung der Gesamtzeitanzeige
+// Hilfsfunktion für die Aktualisierung der Gesamtzeitanzeige
 function updateTotalTimerDisplay() {
   const totalBar = document.getElementById("total-bar");
   const totalText = document.getElementById("total-text");
@@ -371,30 +364,20 @@ function updateTotalTimerDisplay() {
       totalBar.style.background = '#6fba3c'; 
   }
   
-  // 2. Aktualisiere den Text (Wert und Warnfarbe)
+  // 2. Aktualisiere den Text (Wert)
   totalText.textContent = `${remainingTime}s`;
-  
-  // Textfarbe: Gold ist Standard, Rot bei geringer Zeit
-  if (percentage <= 25) {
-       // Text wird rot, wenn die Zeit kritisch ist
-      totalText.style.color = '#d42e2e'; 
-  } else {
-       // Text bleibt Golden
-      totalText.style.color = '#ffe88c'; 
-  }
 }
 
 // Startet den Timer für die Gesamtzeit
 function startTotalTimer() {
   clearInterval(totalTimerId);
   
-  // FIX 2a: Timer-Anzeige sofort aktualisieren, um 1s Verzögerung zu vermeiden
   updateTotalTimerDisplay();
   
   totalTimerId = setInterval(() => {
     remainingTime--;
     
-    updateTotalTimerDisplay(); // FIX 2b: Hilfsfunktion nutzen
+    updateTotalTimerDisplay();
 
     if (remainingTime <= 0) {
       clearInterval(totalTimerId);
@@ -409,7 +392,6 @@ function startQuestionTimer() {
   const timerBar = document.getElementById("timer-bar");
   const timeText = document.getElementById("time-text");
   
-  // Wichtig: Prüfen, ob die Elemente gefunden wurden, um Fehler zu vermeiden!
   if (!timerBar || !timeText) {
     return; 
   }
@@ -434,7 +416,6 @@ function startQuestionTimer() {
       clearInterval(jokerTimerId);
       isAnswerBlocked = true;
       handleTimeOut();
-      // Automatische Weiterleitung wurde entfernt
     }
   }, 1000);
 }
@@ -459,9 +440,6 @@ function startJokerCountdown() {
     // Nachricht anzeigen
     msgElement.classList.remove('hidden'); 
 
-    // FIX 4: Die fehlerhafte Zeile, die die Buttons versteckt hat, wurde entfernt.
-    // document.querySelectorAll('.joker-btn').forEach(btn => btn.classList.add('hidden')); 
-
     const countdownInterval = setInterval(() => {
         countdown--;
         countdownElement.textContent = countdown;
@@ -476,12 +454,7 @@ function startJokerCountdown() {
 
 // Startet den Joker-Timer (Erstellt Joker Buttons)
 function startJokerTimer() {
-    clearInterval(jokerTimerId); // Stoppt den alten Timer (falls vorhanden)
-    const jokerBar = document.getElementById("joker-bar");
-    
-    if (!jokerBar) return; // Sicherheits-Check
-
-    // Die Joker-Buttons werden jetzt erstellt und angezeigt.
+    clearInterval(jokerTimerId); 
     createJokerButtons(); 
 }
 
@@ -497,7 +470,7 @@ function createJokerButtons() {
         jokerButton.id = `joker-btn-${i}`;
         jokerButton.className = "joker-btn";
         jokerButton.textContent = '50:50';
-        jokerButton.classList.remove('hidden'); // Wichtig: Sichtbar machen
+        jokerButton.classList.remove('hidden'); 
         
         // Index i < (5 - jokersLeft) bedeutet, dass der Button bereits benutzt ist.
         if (i < 5 - jokersLeft) { 
@@ -516,8 +489,7 @@ function createJokerButtons() {
 function handleJoker(event) {
     if (jokersLeft <= 0) return;
     
-    // Die originale Logik ist hier korrekt, um nur einen Joker pro Frage zu erlauben:
-    // 1. Der geklickte Button wird entfernt.
+    // Den geklickten Button als "used" markieren
     const jokerButton = event.target;
     jokerButton.removeEventListener('click', handleJoker);
     jokerButton.classList.add('used');
@@ -538,12 +510,11 @@ function handleJoker(event) {
     
     for (let i = 0; i < 2 && i < wrongAnswers.length; i++) {
         const removedLabel = wrongAnswers[i];
-        removedLabel.classList.remove('visible');
-        removedLabel.removeEventListener('click', checkAnswer);
-        removedLabel.classList.add('joker-button-hidden');
+        // Entfernen des Labels aus dem DOM ist effektiver
+        removedLabel.remove();
     }
     
-    // 2. Die restlichen, ungenutzten Joker-Buttons werden deaktiviert.
+    // Die restlichen, ungenutzten Joker-Buttons werden deaktiviert.
     document.querySelectorAll('.joker-btn').forEach(btn => {
         if (!btn.classList.contains('used')) {
             btn.removeEventListener('click', handleJoker);
