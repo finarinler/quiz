@@ -96,11 +96,11 @@ window.quizCategories = {
         { question: "Was war das Maximallevel in Mists of Pandaria?", answers: ["85","90","95","100"], correct: "90" },
     ],
     "Warlords of Draenor": [
-        { question: "Welches dieser Addons hatte kein Levelcap von 120?", answers: ["Legion","Battle for Azeroth","Warlords of Draenor","Shadowlands"], correct: "Warlords of Draenor" },
         { question: "Welches Volk, das in Warlords of Draenor eingeführt wurde?", answers: ["Vulpera","Orcs","Oger","Kein neues Volk"], correct: "Kein neues Volk" },
         { question: "Wie hieß die letzte Instanz in Warlords of Draenor?", answers: ["Schwarzfelsgießerei","Hochfels","Höllenfeuerzitadelle","Obere Schwarzfelsspitze"], correct: "Höllenfeuerzitadelle" },
     ],
     "Legion": [
+        { question: "Welches dieser Addons hatte ein Levelcap von 120?", answers: ["Battle for Azeroth","Mists of Pandaria","Warlords of Draenor","Shadowlands"], correct: "Battle for Azeroth" },
         { question: "Wann ging es zurück nach Karazhan?", answers: ["Battle for Azeroth","Warlords of Draenor","Legion","Cataclysm"], correct: "Legion" },
         { question: "Welche spielbare Rasse wurde in Legion eingeführt?", answers: ["Vulpera","Leerenelfen","Dämonenjäger","Keine Rasse, sondern eine Klasse"], correct: "Keine Rasse, sondern eine Klasse" },
         { question: "Wie heißt die Hauptstadt der Nachtgeborenen?", answers: ["Shattrath","Suramar","Silbermond","Telogrus"], correct: "Suramar" },
