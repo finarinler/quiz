@@ -259,7 +259,7 @@ function displayQuestionAndAnswers() {
         } else {
             setTimeout(() => {
                 elements.jokerBar.classList.remove('hidden');
-            }, 100); 
+            }, 15000); 
         }
         
     }, 5000);
@@ -483,4 +483,5 @@ function endGame() {
         <p>Genutzte Joker: <strong style="color:red">${usedJokers}</strong> (-${penaltyJokers} Punkte)</p>
         <p>Verbleibende Joker: <strong style="color:green">${jokersLeft}</strong> (+${bonusJokersLeft} Bonuspunkte)</p>
     `;
+
 }
