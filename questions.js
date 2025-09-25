@@ -29,6 +29,7 @@ window.quizCategories = {
         { question: "Wie heißt der Vater von König Varian Wrynn?", answers: ["Anduin Wrynn", "Llane Wrynn", "Turalyon Wrynn", "Terenas Menethil"], correct: "Llane Wrynn" },
         { question: "Wie heißt die schwebende Stadt der Kirin Tor?", answers: ["Shattrath", "Boralus", "Dalaran", "Oribos"], correct: "Dalaran" },
         { question: "Wie heißt der große Baum, den die Nachtelfen nach der Zerstörung des ersten Brunnen der Ewigkeit pflanzten?", answers: ["Nordrassil", "Teldrassil", "Vordrassil", "Andrassil"], correct: "Nordrassil" },
+        { question: "Welches dieser Addons hatte ein Levelcap von 120?", answers: ["Battle for Azeroth","Mists of Pandaria","Warlords of Draenor","Shadowlands"], correct: "Battle for Azeroth" },
     ],
     "Classic": [
         { question: "Wo war Hemet Nesingwary erstmals mit seiner Jagdgesellschaft?", answers: ["Azurblaues Gebirge - Dragonflight","Nagrand - Burning Crusade","Schlingendorntal - Classic","Zuldazar - Battle for Azeroth"], correct: "Schlingendorntal - Classic" },
@@ -100,7 +101,6 @@ window.quizCategories = {
         { question: "Wie hieß die letzte Instanz in Warlords of Draenor?", answers: ["Schwarzfelsgießerei","Hochfels","Höllenfeuerzitadelle","Obere Schwarzfelsspitze"], correct: "Höllenfeuerzitadelle" },
     ],
     "Legion": [
-        { question: "Welches dieser Addons hatte ein Levelcap von 120?", answers: ["Battle for Azeroth","Mists of Pandaria","Warlords of Draenor","Shadowlands"], correct: "Battle for Azeroth" },
         { question: "Wann ging es zurück nach Karazhan?", answers: ["Battle for Azeroth","Warlords of Draenor","Legion","Cataclysm"], correct: "Legion" },
         { question: "Welche spielbare Rasse wurde in Legion eingeführt?", answers: ["Vulpera","Leerenelfen","Dämonenjäger","Keine Rasse, sondern eine Klasse"], correct: "Keine Rasse, sondern eine Klasse" },
         { question: "Wie heißt die Hauptstadt der Nachtgeborenen?", answers: ["Shattrath","Suramar","Silbermond","Telogrus"], correct: "Suramar" },
