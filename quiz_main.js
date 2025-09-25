@@ -267,6 +267,9 @@ function checkAnswer(event) {
     clearInterval(timerId); // Frage-Timer stoppen
     clearInterval(jokerTimerId); // Joker-Timer stoppen
 
+    // FIX 3: Joker Bar ausblenden, nachdem geantwortet wurde
+    document.getElementById("joker-bar").classList.add('hidden'); 
+
     const selectedLabel = event.target;
     const selectedAnswer = selectedLabel.dataset.answer;
     
@@ -315,6 +318,9 @@ function handleTimeOut() {
     clearInterval(timerId);
     clearInterval(jokerTimerId);
 
+    // FIX 3: Joker Bar ausblenden, wenn die Zeit abgelaufen ist
+    document.getElementById("joker-bar").classList.add('hidden');
+
     document.querySelectorAll('.answer-label').forEach(label => {
         label.removeEventListener('click', checkAnswer);
         label.classList.remove('visible');
@@ -343,51 +349,53 @@ function nextQuestion() {
     displayQuestionAndAnswers();
 }
 
-// Startet den Timer für die Gesamtzeit
-function startTotalTimer() {
-  clearInterval(totalTimerId);
+
+// FIX 2c: Neue Hilfsfunktion für die Aktualisierung der Gesamtzeitanzeige
+function updateTotalTimerDisplay() {
   const totalBar = document.getElementById("total-bar");
   const totalText = document.getElementById("total-text");
   
-  if (totalBar) {
-    totalBar.style.background = '#6fba3c'; // Startfarbe Grün
+  if (!totalBar || !totalText) {
+    return;
   }
   
-  if (totalText) {
-    totalText.style.color = '#ffe88c'; // Startfarbe Gold
-  }
+  const percentage = (remainingTime / totalTime) * 100;
 
+  // 1. Aktualisiere den Balken-Stil (Farben und Breite)
+  totalBar.style.width = `${percentage}%`;
+  
+  // Farbwechsel-Logik für den Balken (Grün -> Rot)
+  if (percentage <= 25) {
+      totalBar.style.background = '#d42e2e'; 
+  } else {
+      totalBar.style.background = '#6fba3c'; 
+  }
+  
+  // 2. Aktualisiere den Text (Wert und Warnfarbe)
+  totalText.textContent = `${remainingTime}s`;
+  
+  // Textfarbe: Gold ist Standard, Rot bei geringer Zeit
+  if (percentage <= 25) {
+       // Text wird rot, wenn die Zeit kritisch ist
+      totalText.style.color = '#d42e2e'; 
+  } else {
+       // Text bleibt Golden
+      totalText.style.color = '#ffe88c'; 
+  }
+}
+
+// Startet den Timer für die Gesamtzeit
+function startTotalTimer() {
+  clearInterval(totalTimerId);
+  
+  // FIX 2a: Timer-Anzeige sofort aktualisieren, um 1s Verzögerung zu vermeiden
+  updateTotalTimerDisplay();
+  
   totalTimerId = setInterval(() => {
     remainingTime--;
     
-    const percentage = (remainingTime / totalTime) * 100;
+    updateTotalTimerDisplay(); // FIX 2b: Hilfsfunktion nutzen
 
-    // 1. Aktualisiere den Balken-Stil (Farben und Breite)
-    if (totalBar) {
-        totalBar.style.width = `${percentage}%`;
-        
-        // Farbwechsel-Logik für den Balken (Grün -> Rot)
-        if (percentage <= 25) {
-            totalBar.style.background = '#d42e2e'; 
-        } else {
-            totalBar.style.background = '#6fba3c'; 
-        }
-    }
-    
-    // 2. Aktualisiere den Text (Wert und Warnfarbe)
-    if (totalText) {
-        totalText.textContent = `${remainingTime}s`;
-        
-        // Textfarbe: Gold ist Standard, Rot bei geringer Zeit
-        if (percentage <= 25) {
-             // Text wird rot, wenn die Zeit kritisch ist
-            totalText.style.color = '#d42e2e'; 
-        } else {
-             // Text bleibt Golden
-            totalText.style.color = '#ffe88c'; 
-        }
-    }
-    
     if (remainingTime <= 0) {
       clearInterval(totalTimerId);
       endGame();
@@ -451,8 +459,8 @@ function startJokerCountdown() {
     // Nachricht anzeigen
     msgElement.classList.remove('hidden'); 
 
-    // Alle Buttons (falls aus vorheriger Runde vorhanden) verstecken
-    document.querySelectorAll('.joker-btn').forEach(btn => btn.classList.add('hidden'));
+    // FIX 4: Die fehlerhafte Zeile, die die Buttons versteckt hat, wurde entfernt.
+    // document.querySelectorAll('.joker-btn').forEach(btn => btn.classList.add('hidden')); 
 
     const countdownInterval = setInterval(() => {
         countdown--;
@@ -508,6 +516,8 @@ function createJokerButtons() {
 function handleJoker(event) {
     if (jokersLeft <= 0) return;
     
+    // Die originale Logik ist hier korrekt, um nur einen Joker pro Frage zu erlauben:
+    // 1. Der geklickte Button wird entfernt.
     const jokerButton = event.target;
     jokerButton.removeEventListener('click', handleJoker);
     jokerButton.classList.add('used');
@@ -533,7 +543,7 @@ function handleJoker(event) {
         removedLabel.classList.add('joker-button-hidden');
     }
     
-    // Alle Joker-Buttons deaktivieren, damit nur ein Joker pro Frage benutzt wird
+    // 2. Die restlichen, ungenutzten Joker-Buttons werden deaktiviert.
     document.querySelectorAll('.joker-btn').forEach(btn => {
         if (!btn.classList.contains('used')) {
             btn.removeEventListener('click', handleJoker);
