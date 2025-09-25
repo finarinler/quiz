@@ -1,4 +1,6 @@
 // Fragen-Pool (global)
+
+
 window.allQuestions = [
 { question: "Wie heißt die Hauptstadt von Dragonflight?", answers: ["Dalaran","Orgrimmar","Dornogal","Valdrakken"], correct: "Valdrakken" },																
 { question: "Wer war kein Anführer der Horde?", answers: ["Arthas","Vol'jin","Thrall","Garrosh"], correct: "Arthas" },																
@@ -135,13 +137,7 @@ document.getElementById("start-btn").addEventListener("click", () => {
   startCountdown();
 });
 
-// Der Neustart-Button existiert nur im Endbildschirm
-document.addEventListener("click", (event) => {
-  if (event.target.id === "restart-btn") {
-    restartGame();
-  }
-});
-
+// Die Neustart-Logik wird entfernt.
 
 function shuffleArray(array) {
   for (let i = array.length - 1; i > 0; i--) {
@@ -250,6 +246,11 @@ function startQuestionTimer() {
   clearInterval(timerId);
   const timerBar = document.getElementById("timer-bar");
   const timeText = document.getElementById("time-text");
+  
+  if (!timerBar || !timeText) {
+    return; 
+  }
+
   questionTimeLeft = 30; // Globale Variable setzen
   timerBar.style.width = '100%';
   timerBar.style.background = 'linear-gradient(90deg, #6fba3c, #6fba3c)';
@@ -269,10 +270,54 @@ function startQuestionTimer() {
       clearInterval(timerId);
       clearInterval(jokerTimerId);
       isAnswerBlocked = true;
-      timeOverCount++;
+      handleTimeOut();
       setTimeout(nextQuestion, 2000);
     }
   }, 1000);
+}
+
+// NEUE Funktion: Behandelt das Zeitlimit
+function handleTimeOut() {
+  timeOverCount++;
+  score -= 10; // Sofortiger Abzug, wie bei falscher Antwort
+  document.getElementById("score").innerHTML = `Punkte: <span style="color:#ffe88c">${score}</span>`;
+  const resultDiv = document.getElementById("result");
+  const currentQuestion = questions[currentQuestionIndex];
+  
+  // Markiere die richtige Antwort
+  document.querySelectorAll('.answer-label').forEach(label => {
+    if (label.textContent === currentQuestion.correct) {
+      label.classList.add('correct');
+    }
+  });
+  
+  resultDiv.textContent = `Die Zeit ist abgelaufen! Die richtige Antwort war "${currentQuestion.correct}". Du verlierst 10 Punkte.`;
+  currentQuestionIndex++;
+}
+
+
+// NEU: Funktion zum Erstellen der Joker-Buttons
+function createJokerButtons() {
+    const jokerBar = document.getElementById("joker-bar");
+    // Buttons erstellen und anzeigen
+    for (let i = 0; i < 5; i++) {
+        const jokerButton = document.createElement("button");
+        jokerButton.id = `joker-btn-${i}`;
+        jokerButton.className = "joker-btn";
+        jokerButton.textContent = '50:50';
+        
+        // Alle bereits benutzten Joker (Index 0 bis (4 - jokersLeft))
+        if (i < 5 - jokersLeft) { 
+            jokerButton.classList.add('used');
+            jokerButton.disabled = true;
+        } else {
+            jokerButton.disabled = false;
+        }
+        
+        jokerButton.addEventListener("click", handleJoker);
+        jokerBar.appendChild(jokerButton);
+    }
+    document.getElementById("joker-bar").classList.remove('hidden');
 }
 
 function startJokerTimer() {
@@ -296,48 +341,18 @@ function startJokerTimer() {
         jokerTimerMessage.textContent = `Joker werden in ${jokerTimeLeft}s aktiviert...`;
       }
       
-      if (jokerTimeLeft <= 0) {
+      if (jokerTimeLeft < 0) { 
         clearInterval(jokerTimerId);
         jokerTimerMessage.classList.add('hidden');
         jokerTimerMessage.classList.remove('blink-text');
         
-        // Buttons erstellen und anzeigen
-        for (let i = 0; i < 5; i++) {
-          const jokerButton = document.createElement("button");
-          jokerButton.id = `joker-btn-${i}`;
-          jokerButton.className = "joker-btn";
-          jokerButton.textContent = '50:50';
-          
-          if (jokersLeft <= i) {
-            jokerButton.classList.add('used');
-            jokerButton.disabled = true;
-          } else {
-            jokerButton.disabled = false;
-          }
-          
-          jokerButton.addEventListener("click", handleJoker);
-          jokerBar.appendChild(jokerButton);
-        }
+        createJokerButtons(); 
       }
     }, 1000);
   } else {
     jokerTimerMessage.classList.add('hidden');
     jokerTimerMessage.classList.remove('blink-text');
-    
-    // Buttons erstellen und anzeigen
-    for (let i = 0; i < 5; i++) {
-      const jokerButton = document.createElement("button");
-      jokerButton.id = `joker-btn-${i}`;
-      jokerButton.className = "joker-btn";
-      jokerButton.textContent = '50:50';
-      
-      jokerButton.classList.add('used');
-      jokerButton.disabled = true;
-      
-      jokerBar.appendChild(jokerButton);
-    }
-    
-    document.getElementById("joker-bar").classList.remove('hidden');
+    createJokerButtons(); // Buttons auch anzeigen, wenn Joker 0 sind (alle als 'used')
   }
 }
 
@@ -358,7 +373,7 @@ function checkAnswer(selectedAnswer, correctAnswer) {
 
   const resultDiv = document.getElementById("result");
   // Bonuszeit jetzt basierend auf der verbleibenden Zeit des 30s-Timers
-  const bonusTime = questionTimeLeft;
+  const bonusTime = questionTimeLeft > 0 ? questionTimeLeft : 0;
   if (selectedAnswer === correctAnswer) {
     score += 10 + bonusTime;
     correctCount++;
@@ -385,15 +400,15 @@ function handleJoker() {
     let removedCount = 0;
     const answerLabels = document.querySelectorAll('.answer-label');
 
-    // Den genutzten Joker-Button markieren und deaktivieren
-    document.querySelectorAll('.joker-btn')[usedJokers - 1].classList.add('used');
-    document.querySelectorAll('.joker-btn')[usedJokers - 1].disabled = true;
-    
-    // Alle Joker-Buttons deaktivieren, wenn sie genutzt wurden
-    document.querySelectorAll('.joker-btn').forEach(btn => {
-      btn.disabled = true;
+    // Alle Joker-Buttons deaktivieren, um Mehrfachnutzung zu verhindern
+    document.querySelectorAll('.joker-btn').forEach((btn, index) => {
+      // Den gerade genutzten Button als 'used' markieren
+      if (index === 5 - jokersLeft - 1 && !btn.classList.contains('used')) {
+          btn.classList.add('used');
+      }
+      btn.disabled = true; 
     });
-
+    
     while (removedCount < 2) {
       const randomIndex = Math.floor(Math.random() * answerLabels.length);
       const answerToRemoveLabel = answerLabels[randomIndex];
@@ -435,21 +450,23 @@ function endGame() {
   clearInterval(totalTimerId);
   let bonus = correctCount * 10;
   let bonus2 = falseCount * 5;
-  let bonus3 = timeOverCount * 15;
-  let bonus4 = usedJokers * 20;
-  let bonus5 = jokersLeft * 15;
-  let finalScore = score + bonus + bonus2 + remainingTime - bonus3 - bonus4 + bonus5;
+  let penalty3 = timeOverCount * 15; // Abzug für Zeitablauf
+  let penalty4 = usedJokers * 20; // Abzug für genutzte Joker
+  let bonus5 = jokersLeft * 15; // Bonus für ungenutzte Joker
+  
+  // Gesamter Final Score
+  let finalScore = score + bonus + bonus2 + remainingTime - penalty3 - penalty4 + bonus5;
 
   showScreen('end-screen');
   document.getElementById("end-content").innerHTML = `
     <h2>Quiz beendet!</h2>
     <p>Dein Punktestand: <strong style="color:#ffe88c">${score}</strong></p>
     <p>Deine Restzeit: <strong style="color:#ffe88c">${remainingTime}</strong></p>
-    <p>Deine richtigen Antworten: <strong style="color:#ffe88c">${correctCount}</strong> <span style="color:green\">(+${bonus} Bonuspunkte)</span></p>
-    <p>Deine falschen Antworten: <strong style="color:#ffe88c">${falseCount}</strong> <span style="color:orange\">(+${bonus2} Bonuspunkte)</span></p>
-    <p>Abgelaufene Zeit: <strong style="color:#ffe88c">${timeOverCount}</strong> <span style="color:red\">(-\${bonus3} Punkte)</span></p>
-    <p>Genutzte Joker: <strong style="color:#ffe88c">${usedJokers}</strong> <span style="color:red\">(-\${bonus4} Punkte)</span></p>
-    <p>Nicht genutzte Joker: <strong style="color:#ffe88c">${jokersLeft}</strong> <span style="color:green\">(+\${bonus5})</span></p>
+    <p>Deine richtigen Antworten: <strong style="color:#ffe88c">${correctCount}</strong> <span style="color:green">(+${bonus} Bonuspunkte)</span></p>
+    <p>Deine falschen Antworten: <strong style="color:#ffe88c">${falseCount}</strong> <span style="color:orange">(+${bonus2} Bonuspunkte)</span></p>
+    <p>Abgelaufene Zeit: <strong style="color:#ffe88c">${timeOverCount}</strong> <span style="color:red">(-${penalty3} Punkte)</span></p>
+    <p>Genutzte Joker: <strong style="color:#ffe88c">${usedJokers}</strong> <span style="color:red">(-${penalty4} Punkte)</span></p>
+    <p>Nicht genutzte Joker: <strong style="color:#ffe88c">${jokersLeft}</strong> <span style="color:green">(+${bonus5} Punkte)</span></p>
     <hr style="border-color: #bfa259; margin: 20px 0;">
     <h2>Dein Endpunktestand: <strong style="color:#ffe88c">${finalScore}</strong></h2>
   `;
