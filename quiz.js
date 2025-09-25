@@ -235,24 +235,8 @@ function showJokerBar() {
 
   const jokerText = document.createElement("span");
   jokerText.id = "joker-text";
-  jokerBar.appendChild(jokerText);
-
-  for (let i = 0; i < 5; i++) {
-    const jokerButton = document.createElement("button");
-    jokerButton.id = `joker-btn-${i}`;
-    jokerButton.className = "joker-btn joker-button-hidden"; // Buttons standardmäßig verstecken
-    jokerButton.textContent = '50:50';
-
-    if (jokersLeft <= i) {
-      jokerButton.classList.add('used');
-      jokerButton.disabled = true;
-    } else {
-      jokerButton.disabled = false;
-    }
-
-    jokerButton.addEventListener("click", handleJoker);
-    jokerBar.appendChild(jokerButton);
-  }
+  
+  // Buttons initial nicht hinzufügen, das macht der Timer
 }
 
 function startQuestionTimer() {
@@ -284,27 +268,72 @@ function startQuestionTimer() {
 
 function startJokerTimer() {
   clearInterval(jokerTimerId);
-  const jokerText = document.getElementById("joker-text");
-  jokerTimeLeft = jokerTime;
+  const jokerBar = document.getElementById("joker-bar");
+  const jokerTimerMessage = document.getElementById("joker-timer-message");
+  
+  jokerBar.innerHTML = ''; // Vorherigen Inhalt löschen
+  jokerBar.appendChild(jokerTimerMessage);
 
   if (jokersLeft > 0) {
-    jokerText.textContent = `${jokersLeft} verbleibende Joker in ${jokerTimeLeft}s`;
+    jokerTimerMessage.classList.remove('hidden');
+    jokerTimerMessage.classList.add('blink-text');
+    
+    let time = jokerTime;
+    jokerTimerMessage.textContent = `Joker werden in ${time}s aktiviert...`;
+    
     jokerTimerId = setInterval(() => {
-      jokerTimeLeft--;
-      jokerText.textContent = `${jokersLeft} verbleibende Joker in ${jokerTimeLeft}s`;
-      if (jokerTimeLeft <= 0) {
+      time--;
+      if(time >= 0) {
+        jokerTimerMessage.textContent = `Joker werden in ${time}s aktiviert...`;
+      }
+      
+      if (time <= 0) {
         clearInterval(jokerTimerId);
-        jokerText.textContent = `Joker sind jetzt aktiv!`;
-        document.querySelectorAll('.joker-btn').forEach(btn => {
-          btn.classList.remove('joker-button-hidden'); // Buttons anzeigen
-        });
+        jokerTimerMessage.classList.add('hidden');
+        jokerTimerMessage.classList.remove('blink-text');
+        
+        // Buttons erstellen und anzeigen
+        for (let i = 0; i < 5; i++) {
+          const jokerButton = document.createElement("button");
+          jokerButton.id = `joker-btn-${i}`;
+          jokerButton.className = "joker-btn";
+          jokerButton.textContent = '50:50';
+          
+          if (jokersLeft <= i) {
+            jokerButton.classList.add('used');
+            jokerButton.disabled = true;
+          } else {
+            jokerButton.disabled = false;
+          }
+          
+          jokerButton.addEventListener("click", handleJoker);
+          jokerBar.appendChild(jokerButton);
+        }
       }
     }, 1000);
   } else {
-    jokerText.textContent = `Keine Joker mehr verbleibend.`;
-    document.querySelectorAll('.joker-btn').forEach(btn => {
-      btn.classList.remove('joker-button-hidden'); // Buttons direkt anzeigen
-    });
+    jokerTimerMessage.classList.add('hidden');
+    jokerTimerMessage.classList.remove('blink-text');
+    
+    // Buttons erstellen und anzeigen
+    for (let i = 0; i < 5; i++) {
+      const jokerButton = document.createElement("button");
+      jokerButton.id = `joker-btn-${i}`;
+      jokerButton.className = "joker-btn";
+      jokerButton.textContent = '50:50';
+      
+      if (jokersLeft <= i) {
+        jokerButton.classList.add('used');
+        jokerButton.disabled = true;
+      } else {
+        jokerButton.disabled = false;
+      }
+      
+      jokerButton.addEventListener("click", handleJoker);
+      jokerBar.appendChild(jokerButton);
+    }
+    
+    document.getElementById("joker-bar").classList.remove('hidden');
   }
 }
 
