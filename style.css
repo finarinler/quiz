@@ -342,6 +342,18 @@ summary h2 {
   text-shadow: 1px 1px 2px #000;
 }
 
+#creator-info {
+  position: fixed;
+  bottom: 15px;
+  right: 15px; /* Rechts unten positioniert */
+  font-size: 12px;
+  color: #bfa259;
+  z-index: 1000;
+  opacity: 0.7;
+  font-family: 'Arial', sans-serif;
+  text-shadow: 1px 1px 2px #000;
+}
+
 /* --- Hauptmenü-Grid Styling --- */
 .menu-grid {
   display: grid;
