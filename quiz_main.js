@@ -237,9 +237,14 @@ function displayQuestionAndAnswers() {
     isAnswerBlocked = true;
     startQuestionTimer();
 
+    elements.answerGenerationMessage.classList.remove('hidden');
+    elements.answerGenerationMessage.textContent = 'Antworten werden generiert...';
+    elements.answerGenerationMessage.classList.add('blink-text');
+
     // Antworten nach 5 Sekunden anzeigen
     setTimeout(() => {
         elements.answerGenerationMessage.classList.add('hidden');
+        elements.answerGenerationMessage.classList.remove('blink-text');
         isAnswerBlocked = false;
 
         const shuffledAnswers = shuffleArray([...currentQuestion.answers]);
@@ -405,6 +410,7 @@ function startJokerCountdown() {
     let countdown = 15;
     elements.jokerCountdown.textContent = countdown;
     elements.jokerTimerMessage.classList.remove('hidden');
+    elements.jokerTimerMessage.classList.add('blink-text'); 
 
     jokerTimerId = setInterval(() => {
         countdown--;
@@ -413,6 +419,7 @@ function startJokerCountdown() {
         if (countdown <= 0) {
             clearInterval(jokerTimerId);
             elements.jokerTimerMessage.classList.add('hidden');
+            elements.jokerTimerMessage.classList.remove('blink-text'); 
             elements.jokerBar.classList.remove('hidden');
             document.querySelectorAll('.joker-btn:not(.used)').forEach(btn => {
                 btn.disabled = false;
