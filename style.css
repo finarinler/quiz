@@ -330,11 +330,11 @@ summary h2 {
 
 .total-wrapper {
   width: 100%;
-  margin-bottom: 15px;
+  margin-bottom: 25px;
 }
 
 .total-container {
-  height: 10px;
+  height: 25px;
   background-color: #333;
   border-radius: 5px;
   overflow: hidden;
@@ -343,21 +343,23 @@ summary h2 {
 }
 
 .total-bar {
-  height: 25px;
+  height: 100%;
   background: linear-gradient(90deg, #bfa259, #e6c374);
   border-radius: 5px;
   width: 100%;
   transition: width 1s linear;
-  position: relative; 
+  position: relative;
 }
 
 #total-text {
   position: absolute;
   right: 5px;
   top: 50%;
-  transform: translateY(-50%); 
+  transform: translateY(-50%);  
   font-size: 0.9em;
   font-weight: bold;
-  color: #2b2b2b; 
-  text-shadow: 0 0 2px rgba(255, 255, 255, 0.5); 
+  color: #2b2b2b;
+  padding: 0 3px;
+  z-index: 10;
+  white-space: nowrap;
 }

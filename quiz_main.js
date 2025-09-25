@@ -433,13 +433,16 @@ function startTotalTimer() {
     
     const percentage = (remainingTime / totalTime) * 100;
 
-    totalBar.style.width = `${percentage}%`;
-    totalText.textContent = `${remainingTime}s`;
-    
-    if (percentage <= 10) {
-        totalText.style.color = '#d42e2e';
-    } else {
-        totalText.style.color = '#2b2b2b';
+    if (totalBar) {
+        totalBar.style.width = `${percentage}%`;
+    }
+    if (totalText) {
+        totalText.textContent = `${remainingTime}s`;
+        if (percentage <= 10) {
+            totalText.style.color = '#d42e2e'; 
+        } else {
+            totalText.style.color = '#2b2b2b'; 
+        }
     }
     
     if (remainingTime <= 0) {
@@ -448,7 +451,6 @@ function startTotalTimer() {
     }
   }, 1000);
 }
-
 function endGame() {
   clearInterval(timerId);
   clearInterval(totalTimerId);
