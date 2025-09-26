@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <title>WoW Quiz - Hardcore</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="quiz-container active" id="start-screen">
+    <h1>Der Hardcore-Modus</h1><br>
+    <p>Mit Fragen aus allen Kategorien</p>
+    <p>1 falsche Antwort beendet das Spiel</p>
+    <button id="start-btn">Quiz starten</button>
+  </div>
+
+  <div class="quiz-container" id="countdown-screen">
+    <h2>Bereit?</h2>
+    <div class="countdown" id="countdown">5</div>
+  </div>
+
+  <div class="quiz-container" id="game-screen">
+    <div class="total-wrapper">
+      <span class="time-text" id="total-text">200s</span>
+      <div class="total-container">
+        <div class="total-bar" id="total-bar"></div>
+      </div>
+    </div>
+    
+    <div id="dynamic-content">
+      <div class="progress-container">
+        <span id="progress-text">Frage 1 von 10</span>
+        <div class="progress-bar-container">
+          <div id="progress-bar"></div>
+        </div>
+      </div>
+      
+      <div class="quiz-content">
+        <h2 id="question">Lade Frage...</h2>
+        <div id="answers"></div>
+        <div id="answer-generation-message" class="hidden">Antworten werden generiert...</div>
+  
+        <div class="joker-bar hidden" id="joker-bar">
+          </div>
+        <div id="joker-timer-message" class="hidden">Joker verfügbar in <span id="joker-countdown">15</span>s</div>
+      
+        <div class="timer-container">
+          <div id="timer-bar" class="timer-bar"></div>
+          <span id="time-text">20s</span>
+        </div>
+  
+        <div id="result"></div>
+        <div id="next-btn-container">
+          <button id="next-question-btn" class="hidden">Nächste Frage</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="quiz-container" id="end-screen">
+    <div id="end-content">
+      </div>
+  </div>
+
+  <div id="version-number">v0.9.1.1 (Hardcore-Update)</div>
+  <div id="creator-info">Created by 'finarinler' in Cooperation with KI</div>
+
+  <script src="questions.js"></script> <script src="quiz_hardcore.js"></script>
+</body>
+</html>
