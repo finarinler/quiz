@@ -197,10 +197,12 @@ function checkAnswer(event) {
     });
 
     if (selectedAnswer === currentCorrectAnswer) {
-        score += 10 + questionTimeLeft;
+        // *** ÄNDERUNG: 10 auf 20 erhöht ***
+        const points = 20 + questionTimeLeft; 
+        score += points;
         correctCount++;
         selectedLabel.classList.add('correct');
-        elements.resultElement.innerHTML = `<span style="color:green; font-weight:bold;">Richtig! (+${10 + questionTimeLeft} Punkte)</span>`;
+        elements.resultElement.innerHTML = `<span style="color:green; font-weight:bold;">Richtig! (+${points} Punkte)</span>`;
         
         setTimeout(() => {
             elements.nextButton.classList.remove('hidden');
@@ -403,8 +405,9 @@ function endGame(reason = 'completed') {
     const timeBonus = isGameOver ? 0 : remainingTime;
     
     // Berechnung des finalen Scores
+    // *** ÄNDERUNG: 10 auf 20 erhöht ***
+    const bonusCorrect = correctCount * 20; // 20 Punkte für jede richtige Frage
     const usedJokers = totalJokers - jokersLeft;
-    const bonusCorrect = correctCount * 10;
     const penaltyJokers = usedJokers * 25;
     const bonusJokersLeft = jokersLeft * 50;
     
