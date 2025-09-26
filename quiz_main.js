@@ -190,8 +190,10 @@ function checkAnswer(event) {
     const selectedLabel = event.target;
     const selectedAnswer = selectedLabel.dataset.answer;
     
+    // Entferne Listener von allen Antworten (inkl. joker-disabled, falls vorhanden)
     document.querySelectorAll('.answer-label').forEach(label => {
         label.removeEventListener('click', checkAnswer);
+        label.style.pointerEvents = 'none'; // Stellt sicher, dass nichts mehr klickbar ist
     });
 
     if (selectedAnswer === currentCorrectAnswer) {
@@ -225,6 +227,7 @@ function handleTimeOut() {
 
     document.querySelectorAll('.answer-label').forEach(label => {
         label.removeEventListener('click', checkAnswer);
+        label.style.pointerEvents = 'none'; // Stellt sicher, dass nichts mehr klickbar ist
         if (label.dataset.answer === currentCorrectAnswer) {
             label.classList.add('correct');
         }
@@ -356,13 +359,17 @@ function handleJoker(event) {
     jokersLeft--;
 
     const wrongAnswers = Array.from(document.querySelectorAll('.answer-label')).filter(
-        label => label.dataset.answer !== currentCorrectAnswer
+        label => label.dataset.answer !== currentCorrectAnswer && !label.classList.contains('joker-disabled')
     );
 
     const shuffledWrongAnswers = shuffleArray(wrongAnswers);
-    // Entferne bis zu 2 falsche Antworten (oder alle, wenn weniger als 2 da sind)
+    
+    // Wähle bis zu 2 falsche Antworten (oder alle, wenn weniger als 2 da sind)
     for (let i = 0; i < 2 && i < shuffledWrongAnswers.length; i++) {
-        shuffledWrongAnswers[i].remove();
+        const answerToDisable = shuffledWrongAnswers[i];
+        answerToDisable.classList.add('joker-disabled'); // Neue Klasse hinzufügen
+        answerToDisable.removeEventListener('click', checkAnswer); // Klickbarkeit entfernen
+        answerToDisable.style.pointerEvents = 'none'; // Klicks via CSS zusätzlich unterbinden
     }
     
     // Deaktiviere alle Joker-Buttons außer den bereits benutzten

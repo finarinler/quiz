@@ -510,3 +510,15 @@ details p {
   transform: translateY(10px); 
   pointer-events: none;
 }
+
+/* Styling für vom Joker deaktivierte Antworten */
+.answer-label.joker-disabled {
+  background: rgba(30, 30, 30, 0.7) !important;
+  border: 1px dashed #5a5a5a;
+  color: #8c8c8c;
+  cursor: not-allowed;
+  text-shadow: none;
+  opacity: 0.8;
+  transform: none; /* Kein Hover-Effekt mehr */
+  box-shadow: none;
+}
