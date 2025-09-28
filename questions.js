@@ -31,9 +31,7 @@ window.quizCategories = {
     ],
     "Pets and Mounts": [
         { question: "Wie heißen die Reittiere, die man mit Ruhm bei den Kirin Tor in Wrath of the Lich King freischalten konnte?", answers: ["Phönixe","Greifen","Wasserstoffballons","Arkanwyrmlinge"], correct: "Arkanwyrmlinge" },
-        { question: "Wie viele Reittiere braucht man für den Erfolg 'Reittiermeister'?", answers: ["50","100","150","250"], correct: "100" },
         { question: "Welches Mount droppt mit extrem niedriger Chance in Stratholme?", answers: ["Totenschwurs Todesstreitross","Al'ars Asche","Anzu","Unbesiegbar"], correct: "Totenschwurs Todesstreitross" },
-        { question: "Wie Viele Haustiere muss man für den Erfolg 'Haustierkämpfer von Azeroth' sammeln?", answers: ["150","200","300","400"], correct: "200" },
         { question: "Welches Haustier bekam man für den 10. Geburtstag von WoW?", answers: ["Klein-Ragnaros","Klein-Illidan","Murloc mit Geburtstagskappe","Geschmolzenes Kernhündchen"], correct: "Geschmolzenes Kernhündchen" },
         { question: "Wie heißt das kleine Mini-Murloc-Maskottchen, das auf vielen BlizzCons verteilt wurde?", answers: ["Murky","Grunty","Murkablo","Mini-Diablo"], correct: "Murky" },
         { question: "Welches Pet bekam man in der Collectors Edition von Burning Crusade?", answers: ["Turtle","Wyrmling","Netherwelpe","Zergling"], correct: "Netherwelpe" },
@@ -44,6 +42,7 @@ window.quizCategories = {
         { question: "Welches Haustier ist eine Anspielung auf den Chefentwickler von WoW und wurde bei der BlizzCon verteilt?", answers: ["Klein-Thrall","Murky","Mini-Diablo","Der kleine Beobachter"], correct: "Murky" },
     ],
     "Achievements": [
+        { question: "Wie Viele Haustiere muss man für den Erfolg 'Haustierkämpfer von Azeroth' sammeln?", answers: ["150","200","300","400"], correct: "200" },
         { question: "Welcher Erfolg schaltet den Titel 'der Verrückte' frei?", answers: ["Der Wahnsinnige","Der Unermüdliche","Der Unerschrockene","Der Verwegene"], correct: "Der Wahnsinnige" },
         { question: "Welchen Titel erhielt man, wenn man alle Ruf-Fraktionen in Classic auf Ehrfürchtig hatte?", answers: ["Der Ehrfürchtige", "Der Wahnsinnige", "Der Diplomat", "Der Makellose"], correct: "Der Diplomat" },
         { question: "Welchen Titel erhielt man für das Töten des Lichkönigs im 25-Spieler-Modus (Heroisch) in der Eiskronenzitadelle?", answers: ["Der Eiskrone-Held","Der Lichtbringer","Der Sturmfresser","Der Königsmörder"], correct: "Der Königsmörder" },
@@ -244,4 +243,5 @@ window.allQuestions = [].concat(
     window.quizCategories["Quests and Regions"],
     window.quizCategories["NPCs"],
     window.quizCategories["Items & Currencys"]
+
 );
