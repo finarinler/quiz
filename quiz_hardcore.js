@@ -1,3 +1,29 @@
+/**
+ * Kontrolliert, welcher Bildschirm aktiv ist.
+ * Fügt die 'active' Klasse zum gewählten Container hinzu und entfernt sie von allen anderen.
+ * @param {string} screenId - Die ID des Containers, der angezeigt werden soll (z.B. 'start-screen').
+ */
+function showScreen(screenId) {
+    // Alle Quiz-Container finden
+    const allScreens = document.querySelectorAll('.quiz-container');
+    
+    // Alle Container deaktivieren
+    allScreens.forEach(screen => {
+        screen.classList.remove('active');
+        screen.style.display = 'none';
+        screen.setAttribute('aria-hidden', 'true');
+    });
+
+    // Den gewünschten Container aktivieren
+    const activeScreen = document.getElementById(screenId);
+    if (activeScreen) {
+        activeScreen.classList.add('active');
+        activeScreen.style.display = 'block';
+        activeScreen.setAttribute('aria-hidden', 'false');
+    }
+}
+
+
 // Globale Variablen
 let questions = []; 
 let currentQuestionIndex = 0;
@@ -7,8 +33,10 @@ let falseCount = 0;
 let timeOverCount = 0;
 
 // Geht davon aus, dass window.allQuestions in questions.js definiert wird
-const totalTime = 150; // Hardcore: 150s Gesamtzeit
-let remainingTime = totalTime;
+let totalTime = 0; // Dynamische Gesamtzeit
+let selectedQuestionCount = 0; // Gewählte Fragenanzahl
+
+let remainingTime = 0;
 let totalTimerId;
 
 const questionTime = 15; // Hardcore: 15s pro Frage
@@ -37,34 +65,39 @@ const elements = {
     timerBar: document.getElementById('timer-bar'),
     timeText: document.getElementById('time-text'),
     answerGenerationMessage: document.getElementById('answer-generation-message'),
-    // *** KORREKTUR START: Joker-Elemente entfernt ***
-    // jokerBar: document.getElementById('joker-bar'), 
-    // jokerTimerMessage: document.getElementById('joker-timer-message'), 
-    // jokerCountdown: document.getElementById('joker-countdown'), 
-    // *** KORREKTUR ENDE ***
-    endContent: document.getElementById('end-content') 
+    endContent: document.getElementById('end-content'),
+    // NEU: Elemente für die Auswahl
+    selectionButtons: document.querySelectorAll('#question-selection .selection-btn') 
 };
 
 // Initialisierung
 document.addEventListener('DOMContentLoaded', () => {
-    elements.startButton.addEventListener('click', startQuiz);
+    // Start-Button wechselt nun zur Auswahl
+    elements.startButton.addEventListener('click', showSelectionScreen); 
     elements.nextButton.addEventListener('click', nextQuestion);
+    
+    // NEU: Listener für die Auswahl-Buttons
+    elements.selectionButtons.forEach(button => {
+        button.addEventListener('click', (event) => {
+            const count = parseInt(event.target.dataset.count);
+            
+            // KORRIGIERTE BERECHNUNG: Gesamtzeit = Fragenanzahl * 15 Sekunden
+            const time = 15 * count; 
+            
+            startQuiz(count, time);
+        });
+    });
+
     showScreen('start-screen');
 });
 
-// Steuert die Bildschirmanzeige
-function showScreen(screenId) {
-    document.querySelectorAll('.quiz-container').forEach(container => {
-        container.classList.remove('active');
-    });
-    const screen = document.getElementById(screenId);
-    if (screen) {
-        screen.classList.add('active');
-    }
+// NEU: Zeigt den Auswahl-Bildschirm an
+function showSelectionScreen() {
+    showScreen('selection-screen');
 }
 
-// Startet das Quiz
-function startQuiz() {
+// Startet das Quiz (JETZT MIT PARAMETERN)
+function startQuiz(questionCount, initialTotalTime) {
     // Stellt sicher, dass allQuestions verfügbar ist, bevor es verwendet wird
     if (!window.allQuestions || window.allQuestions.length === 0) {
         console.error("Fehler: Fragen-Pool (window.allQuestions) ist leer oder nicht definiert.");
@@ -72,7 +105,16 @@ function startQuiz() {
         return;
     }
 
-    questions = shuffleArray([...window.allQuestions]).slice(0, 10); // Hardcore: 10 Fragen
+    // Werte speichern
+    selectedQuestionCount = questionCount;
+    totalTime = initialTotalTime;
+    
+    // Fragen-Set basierend auf der Auswahl erstellen
+    // Es wird die kleinere Menge zwischen der Auswahl und der tatsächlich verfügbaren Fragenanzahl verwendet
+    const availableQuestions = window.allQuestions.length;
+    const finalQuestionCount = Math.min(questionCount, availableQuestions);
+    
+    questions = shuffleArray([...window.allQuestions]).slice(0, finalQuestionCount);
     
     // Spielzustand zurücksetzen
     currentQuestionIndex = 0;
@@ -80,7 +122,7 @@ function startQuiz() {
     correctCount = 0;
     falseCount = 0;
     timeOverCount = 0;
-    remainingTime = totalTime;
+    remainingTime = totalTime; // Nutzt die dynamisch berechnete Gesamtzeit
     jokersLeft = totalJokers;
     
     showScreen('countdown-screen');
@@ -120,8 +162,9 @@ function displayQuestionAndAnswers() {
     const currentQuestion = questions[currentQuestionIndex];
     currentCorrectAnswer = currentQuestion.correct;
     
+    // Nutzt die dynamische Fragenanzahl
     elements.questionElement.textContent = currentQuestion.question;
-    elements.progressText.textContent = `Frage ${currentQuestionIndex + 1} von ${questions.length}`;
+    elements.progressText.textContent = `Frage ${currentQuestionIndex + 1} von ${questions.length}`; 
     
     // Zeigt den aktuellen Fortschritt (Index + 1)
     elements.progressBar.style.width = `${((currentQuestionIndex + 1) / questions.length) * 100}%`;
@@ -158,10 +201,6 @@ function resetQuestionUI() {
     elements.resultElement.textContent = '';
     elements.answerGenerationMessage.classList.remove('hidden');
     elements.nextButton.classList.add('hidden');
-    // *** KORREKTUR START: Joker-Usage entfernt ***
-    // elements.jokerBar.classList.add('hidden');
-    // elements.jokerTimerMessage.classList.add('hidden');
-    // *** KORREKTUR ENDE ***
 }
 
 // Überprüft die ausgewählte Antwort
@@ -234,10 +273,6 @@ function handleTimeOut() {
 // Stoppt alle laufenden Timer
 function stopAllTimers() {
     clearInterval(timerId);
-    // *** KORREKTUR START: Joker-Usage entfernt ***
-    // elements.jokerBar.classList.add('hidden');
-    // elements.jokerTimerMessage.classList.add('hidden');
-    // *** KORREKTUR ENDE ***
 }
 
 // Geht zur nächsten Frage
@@ -263,7 +298,8 @@ function startTotalTimer() {
 }
 
 function updateTotalTimerDisplay() {
-  const percentage = (remainingTime / totalTime) * 100;
+  // Nutzt die dynamische Gesamtzeit (totalTime)
+  const percentage = (remainingTime / totalTime) * 100; 
   elements.totalBar.style.width = `${percentage}%`;
   
   // Logik für den smoothen Farbverlauf: 
