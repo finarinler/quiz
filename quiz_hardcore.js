@@ -7,16 +7,16 @@ let falseCount = 0;
 let timeOverCount = 0;
 
 // Geht davon aus, dass window.allQuestions in questions.js definiert wird
-const totalTime = 200; // Hardcore: 200s Gesamtzeit (10 Fragen * 20s)
+const totalTime = 150; // Hardcore: 150s Gesamtzeit
 let remainingTime = totalTime;
 let totalTimerId;
 
-const questionTime = 20; // Hardcore: 20s pro Frage
+const questionTime = 15; // Hardcore: 15s pro Frage
 let questionTimeLeft = questionTime;
 let timerId;
 
-let jokerTimerId;
-const totalJokers = 1; // Hardcore: Nur 1 Joker
+// Joker entfernt
+const totalJokers = 0; 
 let jokersLeft = totalJokers;
 
 let isAnswerBlocked = false;
@@ -37,9 +37,11 @@ const elements = {
     timerBar: document.getElementById('timer-bar'),
     timeText: document.getElementById('time-text'),
     answerGenerationMessage: document.getElementById('answer-generation-message'),
-    jokerBar: document.getElementById('joker-bar'),
-    jokerTimerMessage: document.getElementById('joker-timer-message'),
-    jokerCountdown: document.getElementById('joker-countdown'),
+    // *** KORREKTUR START: Joker-Elemente entfernt ***
+    // jokerBar: document.getElementById('joker-bar'), 
+    // jokerTimerMessage: document.getElementById('joker-timer-message'), 
+    // jokerCountdown: document.getElementById('joker-countdown'), 
+    // *** KORREKTUR ENDE ***
     endContent: document.getElementById('end-content') 
 };
 
@@ -48,7 +50,6 @@ document.addEventListener('DOMContentLoaded', () => {
     elements.startButton.addEventListener('click', startQuiz);
     elements.nextButton.addEventListener('click', nextQuestion);
     showScreen('start-screen');
-    createJokerButtons();
 });
 
 // Steuert die Bildschirmanzeige
@@ -82,11 +83,6 @@ function startQuiz() {
     remainingTime = totalTime;
     jokersLeft = totalJokers;
     
-    document.querySelectorAll('.joker-btn').forEach(btn => {
-        btn.classList.remove('used');
-        btn.disabled = true;
-    });
-
     showScreen('countdown-screen');
     let countdown = 5;
     elements.countdownElement.textContent = countdown;
@@ -127,7 +123,7 @@ function displayQuestionAndAnswers() {
     elements.questionElement.textContent = currentQuestion.question;
     elements.progressText.textContent = `Frage ${currentQuestionIndex + 1} von ${questions.length}`;
     
-    // KORRIGIERTE LOGIK: Zeigt den aktuellen Fortschritt (Index + 1)
+    // Zeigt den aktuellen Fortschritt (Index + 1)
     elements.progressBar.style.width = `${((currentQuestionIndex + 1) / questions.length) * 100}%`;
     
     isAnswerBlocked = true;
@@ -153,16 +149,6 @@ function displayQuestionAndAnswers() {
             elements.answersDiv.appendChild(label);
             setTimeout(() => label.classList.add('visible'), 50);
         });
-        
-        // Logik für Joker-Anzeige
-        if (jokersLeft > 0) {
-            startJokerCountdown();
-        } else {
-            setTimeout(() => {
-                elements.jokerBar.classList.remove('hidden');
-            }, 100); 
-        }
-        
     }, 5000);
 }
 
@@ -172,12 +158,10 @@ function resetQuestionUI() {
     elements.resultElement.textContent = '';
     elements.answerGenerationMessage.classList.remove('hidden');
     elements.nextButton.classList.add('hidden');
-    elements.jokerBar.classList.add('hidden');
-    elements.jokerTimerMessage.classList.add('hidden');
-    
-    document.querySelectorAll('.joker-btn:not(.used)').forEach(btn => {
-        btn.disabled = true;
-    });
+    // *** KORREKTUR START: Joker-Usage entfernt ***
+    // elements.jokerBar.classList.add('hidden');
+    // elements.jokerTimerMessage.classList.add('hidden');
+    // *** KORREKTUR ENDE ***
 }
 
 // Überprüft die ausgewählte Antwort
@@ -190,14 +174,14 @@ function checkAnswer(event) {
     const selectedLabel = event.target;
     const selectedAnswer = selectedLabel.dataset.answer;
     
-    // Entferne Listener von allen Antworten (inkl. joker-disabled, falls vorhanden)
+    // Entferne Listener von allen Antworten
     document.querySelectorAll('.answer-label').forEach(label => {
         label.removeEventListener('click', checkAnswer);
         label.style.pointerEvents = 'none'; // Stellt sicher, dass nichts mehr klickbar ist
     });
 
     if (selectedAnswer === currentCorrectAnswer) {
-        // *** ÄNDERUNG: 10 auf 20 erhöht ***
+        // Punkte: 20 Basis + verbleibende Zeit
         const points = 20 + questionTimeLeft; 
         score += points;
         correctCount++;
@@ -220,11 +204,8 @@ function checkAnswer(event) {
         
         elements.resultElement.innerHTML = `<span style="color:red; font-weight:bold;">Falsch! Die richtige Antwort war: ${currentCorrectAnswer}</span>`;
         
-        // Sofortiges Beenden des Spiels nach kurzer Wartezeit
-        setTimeout(() => {
-            endGame('wrongAnswer'); // Übergabe des Grundes
-        }, 3000); 
-        return; // Beende die Funktion hier
+        endGame('wrongAnswer'); 
+        return; 
     }
 }
 
@@ -233,11 +214,11 @@ function checkAnswer(event) {
 function handleTimeOut() {
     isAnswerBlocked = true;
     timeOverCount++;
-    stopAllTimers(); // Deaktiviert Joker durch Aufruf von stopAllTimers()
+    stopAllTimers(); 
 
     document.querySelectorAll('.answer-label').forEach(label => {
         label.removeEventListener('click', checkAnswer);
-        label.style.pointerEvents = 'none'; // Stellt sicher, dass nichts mehr klickbar ist
+        label.style.pointerEvents = 'none'; 
         if (label.dataset.answer === currentCorrectAnswer) {
             label.classList.add('correct');
         }
@@ -247,23 +228,16 @@ function handleTimeOut() {
 
     elements.resultElement.innerHTML = `<span style="color:red; font-weight:bold;">Zeit abgelaufen! Die richtige Antwort war: ${currentCorrectAnswer} (-5 Punkte)</span>`;
     
-    // *** ÄNDERUNG: Sofortiges Beenden des Spiels nach kurzer Wartezeit bei Zeitüberschreitung ***
-    setTimeout(() => {
-        endGame('timeOver'); // Übergabe des Grundes
-    }, 3000);
+    endGame('timeOver');
 }
 
 // Stoppt alle laufenden Timer
 function stopAllTimers() {
     clearInterval(timerId);
-    clearInterval(jokerTimerId);
-    elements.jokerBar.classList.add('hidden');
-    elements.jokerTimerMessage.classList.add('hidden');
-    
-    // Deaktiviere alle Joker-Buttons, wenn der Timer stoppt (z.B. bei Zeitablauf oder Beantwortung)
-    document.querySelectorAll('.joker-btn').forEach(btn => {
-        btn.disabled = true;
-    });
+    // *** KORREKTUR START: Joker-Usage entfernt ***
+    // elements.jokerBar.classList.add('hidden');
+    // elements.jokerTimerMessage.classList.add('hidden');
+    // *** KORREKTUR ENDE ***
 }
 
 // Geht zur nächsten Frage
@@ -324,72 +298,6 @@ function startQuestionTimer() {
   }, 1000);
 }
 
-// Startet den Countdown für die Joker-Verfügbarkeit
-function startJokerCountdown() {
-    // *** ÄNDERUNG: Von 15 auf 5 reduziert ***
-    let countdown = 5; 
-    elements.jokerCountdown.textContent = countdown;
-    elements.jokerTimerMessage.classList.remove('hidden');
-    elements.jokerTimerMessage.classList.add('blink-text'); 
-
-    jokerTimerId = setInterval(() => {
-        countdown--;
-        elements.jokerCountdown.textContent = countdown;
-        
-        if (countdown <= 0) {
-            clearInterval(jokerTimerId);
-            elements.jokerTimerMessage.classList.add('hidden');
-            elements.jokerTimerMessage.classList.remove('blink-text'); 
-            elements.jokerBar.classList.remove('hidden');
-            document.querySelectorAll('.joker-btn:not(.used)').forEach(btn => {
-                btn.disabled = false;
-            });
-        }
-    }, 1000);
-}
-
-// Erstellt die Joker-Buttons einmalig beim Laden der Seite
-function createJokerButtons() {
-    elements.jokerBar.innerHTML = '';
-    for (let i = 0; i < totalJokers; i++) {
-        const jokerButton = document.createElement("button");
-        jokerButton.className = "joker-btn";
-        jokerButton.textContent = '50:50';
-        jokerButton.disabled = true;
-        jokerButton.addEventListener("click", handleJoker);
-        elements.jokerBar.appendChild(jokerButton);
-    }
-}
-
-// Verarbeitet die Joker-Nutzung
-function handleJoker(event) {
-    if (isAnswerBlocked || jokersLeft <= 0) return;
-
-    const jokerButton = event.target;
-    jokerButton.classList.add('used');
-    jokerButton.disabled = true;
-    jokersLeft--;
-
-    const wrongAnswers = Array.from(document.querySelectorAll('.answer-label')).filter(
-        label => label.dataset.answer !== currentCorrectAnswer && !label.classList.contains('joker-disabled')
-    );
-
-    const shuffledWrongAnswers = shuffleArray(wrongAnswers);
-    
-    // Wähle bis zu 2 falsche Antworten (oder alle, wenn weniger als 2 da sind)
-    for (let i = 0; i < 2 && i < shuffledWrongAnswers.length; i++) {
-        const answerToDisable = shuffledWrongAnswers[i];
-        answerToDisable.classList.add('joker-disabled'); // Neue Klasse hinzufügen
-        answerToDisable.removeEventListener('click', checkAnswer); // Klickbarkeit entfernen
-        answerToDisable.style.pointerEvents = 'none'; // Klicks via CSS zusätzlich unterbinden
-    }
-    
-    // Deaktiviere alle Joker-Buttons außer den bereits benutzten
-    document.querySelectorAll('.joker-btn:not(.used)').forEach(btn => {
-        btn.disabled = true;
-    });
-}
-
 // =========================================================================================
 // ENDGAME
 // =========================================================================================
@@ -401,15 +309,15 @@ function endGame(reason = 'completed') {
 
     const isGameOver = reason === 'wrongAnswer' || reason === 'timeOver' || reason === 'totalTimeOver';
     
-    // *** WUNSCH ERFÜLLT: remainingTime bleibt bestehen, aber timeBonus wird bei Game Over auf 0 gesetzt ***
     const timeBonus = isGameOver ? 0 : remainingTime;
     
     // Berechnung des finalen Scores
-    // *** ÄNDERUNG: 10 auf 20 erhöht ***
     const bonusCorrect = correctCount * 20; // 20 Punkte für jede richtige Frage
-    const usedJokers = totalJokers - jokersLeft;
-    const penaltyJokers = usedJokers * 25;
-    const bonusJokersLeft = jokersLeft * 50;
+    
+    // Joker-Variablen auf 0, da Joker entfernt wurden
+    const usedJokers = 0; 
+    const penaltyJokers = 0; 
+    const bonusJokersLeft = 0; 
     
     const rawFinalScore = score + bonusCorrect + timeBonus - penaltyJokers + bonusJokersLeft;
     const finalDisplayScore = Math.max(0, rawFinalScore); // Score kann nicht negativ sein
@@ -444,8 +352,7 @@ function endGame(reason = 'completed') {
         <hr style="border-color: #bfa259; margin: 20px 0;">
         ${timeDisplay}
         <p>Richtige Antworten: <strong style="color:green">${correctCount}</strong> (+${bonusCorrect} Bonuspunkte)</p>
-        <p>Genutzte Joker: <strong style="color:red">${usedJokers}</strong> (-${penaltyJokers} Punkte)</p>
-        <p>Verbleibende Joker: <strong style="color:green">${jokersLeft}</strong> (+${bonusJokersLeft} Bonuspunkte)</p>
+        
         <hr style="border-color: #bfa259; margin: 20px 0;">
         
         ${bottomMessage}
